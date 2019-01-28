@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      19.2
+// @version      20.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -155,17 +155,20 @@
 
     /* Добавляем пункты в верхнее меню */
     function addMenuItemtoLeft(link = "", text = "") {
-        $('.t-menu__leftitems').append('<a href="' + link + '" class="t-menu__item">' + text + '</a>');
+        var tag = `<a href="${link}" class="t-menu__item">${text}</a>`;
+        $('.t-menu__leftitems').append(tag);
     }
 
     function addMenuItemtoLeftCRM(link = "", text = "") {
-        $('[href*="identity/plan"]').before('<a href="' + link + '" class="t-menu__item">' + text + '</a>');
+        var tag = `<a href="${link}" class="t-menu__item">${text}</a>`;
+        $('[href*="identity/plan"]').before(tag);
     }
 
     function addMenuItemtoRight(link = "", text = "") {
-        if ($('[href="/login/exit/"]').before('<a href="' + link + '" class="t-menu__item">' + text + '</a>')) {
-            if ($('[href="/logout/"]').before('<a href="' + link + '" class="t-menu__item">' + text + '</a>')) {
-                $('[href="/exit"]').before('<a href="' + link + '" class="t-menu__item">' + text + '</a>');
+        var tag = `<a href="${link}" class="t-menu__item">${text}</a>`;
+        if ($('[href="/login/exit/"]').before(tag)) {
+            if ($('[href="/logout/"]').before(tag)) {
+                $('[href="/exit"]').before(tag);
             }
         }
     }
