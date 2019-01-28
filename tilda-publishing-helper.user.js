@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      19.1
+// @version      19.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -47,18 +47,62 @@
     $("div.record").each(function (index) {
         var recordid = $(this).attr("recordid");
         var recid = "#rec" + recordid;
-        var copy = `var temp = $('<input>'); $('body').append(temp); temp.val('#rec' + $('#record${recordid}').attr('recordid')).select(); document.execCommand('copy'); temp.remove();`
-        $(this).children("div#mainleft").children("div")
-            .append(`<div class="tp-record-edit-icons-left__one-right-space"></div>` +
-                `<div class="tp-record-edit-icons-left__one" style="cursor: pointer;" title="Скопировать id этого блока">` +
-                `<div class="tp-record-edit-icons-left__item-title">` +
-                `<span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>` +
-                `</div>` +
-                `</div>`);
+        var copy = `var temp = $('<input>');
+    $('body').append(temp);
+    temp.val('#rec' + $('#record${recordid}').attr('recordid')).select();
+    document.execCommand('copy');
+    temp.remove();`;
 
-        $("#record" + recordid + " > div:nth-child(1):not(.mainright)").appendTo($(this)
-            .children("div#mainleft").children("div")).removeClass().css("padding", "7px 15px");
+        $(this).children("div#mainleft").children("div").append(`
+    <div class="tp-record-edit-icons-left__one-right-space"></div>
+    <div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
+        <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
+        <span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
+        </div>
+    </div>
+    <div class="tp-record-edit-icons-left__one-right-space"></div>`);
+
+        $("#record" + recordid + " > div:nth-child(1):not(.mainright)")
+            .appendTo($(this).children("div#mainleft").children("div"))
+            .removeClass().css("padding", "7px 15px");
     });
+
+    $('body').append(`<style>
+    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
+        background: #ffffff;
+        border-radius: 5px;
+        bottom: -30px;
+        right: -100px;
+        box-shadow: 0 0 10px #3d3d3d;
+        box-shadow: 0 0 10px rgba(61, 61, 61, .5);
+        box-sizing: border-box;
+        color: #3d3d3d;
+        content: attr(data-title);
+        font-size: 12px;
+        font-weight: 400;
+        min-width: 125px;
+        padding: 5px 10px;
+        position: absolute;
+        text-align: center;
+        z-index: 3;
+        width: auto;
+        white-space: nowrap;
+        overflow: visible;
+    }
+    
+    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
+        border: solid;
+        border-color: #ffffff transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: -5px;
+        right: 36px;
+        content: "";
+        position: absolute;
+        z-index: 4;
+        overflow: visible;
+        transform: rotate(180deg);
+    }
+    </style>`);
 
     /* Опреляем язык по чёрному меню сверху */
     var lang = ($("a[href$='/identity/'].t-menu__item:first").text() == "Профиль" ? "RU" : "EN");
