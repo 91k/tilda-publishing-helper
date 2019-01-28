@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      20.0
+// @version      20.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -47,20 +47,16 @@
     $("div.record").each(function (index) {
         var recordid = $(this).attr("recordid");
         var recid = "#rec" + recordid;
-        var copy = `var temp = $("<input>");
-            $("body").append(temp);
-            temp.val("#rec" + $("#record${recordid}").attr("recordid")).select();
-            document.execCommand("copy");
-        temp.remove();`;
+        var copy = `var temp = $('<input>'); $('body').append(temp); temp.val('#rec' + $('#record${recordid}').attr('recordid')).select(); document.execCommand('copy'); temp.remove();`;
 
-        $(this).children("div#mainleft").children("div").append(`
-            <div class="tp-record-edit-icons-left__one-right-space"></div>
-            <div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
+        $(this).children("div#mainleft").children("div")
+            .append(`<div class="tp-record-edit-icons-left__one-right-space"></div>
+                <div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
                 <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
                 <span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
                 </div>
-            </div>
-        <div class="tp-record-edit-icons-left__one-right-space"></div>`);
+                </div>
+                <div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
         $(`#record${recordid} > div:nth-child(1):not(.mainright)`)
             .appendTo($(this).children("div#mainleft").children("div"))
@@ -89,7 +85,7 @@
         white-space: nowrap;
         overflow: visible;
     }
-    
+
     .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
         border: solid;
         border-color: #ffffff transparent;
@@ -124,7 +120,7 @@
                 padding: 16px 30px;
                 font-size: 16px;
             }
-            
+
             .ss-menu__wrapper {
                 margin-bottom: 0px !important;
             }
@@ -151,15 +147,15 @@
         .td-site__settings {
             margin-right: 15px;
         }
-        
+
         .td-site__settings-title {
             font-size: 12px;
         }
-        
+
         .td-site__url-link {
             font-size: 14px;
         }
-        
+
         .td-site__section-two {
             padding: 0 30px;
         }
