@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      20.1
+// @version      20.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -47,20 +47,23 @@
     $("div.record").each(function (index) {
         var recordid = $(this).attr("recordid");
         var recid = "#rec" + recordid;
-        var copy = `var temp = $('<input>'); $('body').append(temp); temp.val('#rec' + $('#record${recordid}').attr('recordid')).select(); document.execCommand('copy'); temp.remove();`;
+        var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('#record${recordid}').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
+        var mainleft = $(this).children("div#mainleft").children("div");
 
-        $(this).children("div#mainleft").children("div")
-            .append(`<div class="tp-record-edit-icons-left__one-right-space"></div>
-                <div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
-                <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
-                <span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
-                </div>
-                </div>
-                <div class="tp-record-edit-icons-left__one-right-space"></div>`);
+        $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
-        $(`#record${recordid} > div:nth-child(1):not(.mainright)`)
-            .appendTo($(this).children("div#mainleft").children("div"))
-            .removeClass().css("padding", "7px 15px");
+        if(!$(`#record${recordid} > div:nth-child(1)`).hasClass('mainright')) {
+            $(mainleft)
+                .append($(`#record${recordid} > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px"))
+                .append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`)
+        }
+
+        $(mainleft)
+            .append(`<div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
+                        <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
+                            <span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
+                        </div>
+                    </div>`);
     });
 
     $("body").append(`<style>
