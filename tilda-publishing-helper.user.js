@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      21.3
+// @version      21.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -46,34 +46,45 @@
     /* Follow the yellow rabbit */
     var yellowRabbit = false;
     var yellow = "rgb(255, 255, 0)";
-    $("body > div.blocksmap + div, body > div.headerfooterpagearea + div").each(function () {
-        if ($(this).css("background-color") === yellow) {
+    $("div[style]").each(function () {
+        console.log($(this).css("background-color") === yellow, $(this).css("z-index"), $(this).css("position"));
+        if ($(this).css("background-color") === yellow && $(this).css("z-index") == "1000" && $(this).css("position") == "fixed") {
             yellowRabbit = true;
+
+            $("body").append(`<style>
+                #rightbuttons,
+                .insertafterrecorbutton {
+                    display: none !important;
+                }
+        
+                .tbtn,
+                .tp-library__tn,
+                .tp-library__tpl-body,
+                .tn-save-btn,
+                .tn-dialog__btn-save,
+                .recordbordertop,
+                .recordborderbottom,
+                .tp-record-edit-icons-left__dropdown-toggle,
+                .tp-shortcuttools__two,
+                .tp-shortcuttools__zero,
+                [href^='javascript:showformEditProjectFonts'],
+                [onclick^='showformAddProject_new'],
+                [href*='/identity/gocrm/'],
+                [href*='/identity/apikeys/'],
+                [href*='/domains/check/'],
+                [href*='/identity/chat/'],
+                [href^='javascript:recoverPage'],
+                [href^='javascript:pay'],
+                [href^='javascript:emailverify'],
+                [href^='/identity/changepassword/'],
+                [href^='/identity/banktransfer/'],
+                button[type="submit"],
+                input[type="submit"] {
+                    pointer-events: none !important;
+                }
+            <style>`);
         }
     });
-
-    if (yellowRabbit) {
-        $("body").append(`<style>
-            #rightbuttons,
-            .insertafterrecorbutton {
-                display: none !important;
-            }
-
-            .tbtn,
-            .tp-library__tn,
-            .tp-library__tpl-body,
-            .recordbordertop,
-            .recordborderbottom,
-            .tp-record-edit-icons-left__dropdown-toggle,
-            .tp-shortcuttools__two,
-            .tp-shortcuttools__zero,
-            [href^='javascript:showformEditProjectFonts'],
-            [href^='https://tilda.cc/identity/gocrm/'],
-            [href^='https://tilda.cc/identity/apikeys/'] {
-                pointer-events: none !important;
-            }
-            <style>`);
-    }
 
     /* Добавляем recid для каждого блока на странице */
     $("div.record").each(function () {
