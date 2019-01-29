@@ -77,17 +77,18 @@
     }
 
     /* Добавляем recid для каждого блока на странице */
-    $("div.record").each(function (index) {
-        var recordid = $(this).attr("recordid");
-        var recid = "#rec" + recordid;
-        var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('#record${recordid}').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
+    $("div.record").each(function () {
+        var rid = $(this).attr("recordid");
+        var recid = `#rec${rid}`;
+        var recordid = `#record${rid}`;
+        var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('${recordid}').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
         var mainleft = $(this).children("div#mainleft").children("div");
 
         $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
-        if(!$(`#record${recordid} > div:nth-child(1)`).hasClass('mainright')) {
+        if (!$(`${recordid} > div:nth-child(1)`).hasClass('mainright')) {
             $(mainleft)
-                .append($(`#record${recordid} > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px"))
+                .append($(`${recordid} > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px"))
                 .append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`)
         }
 
