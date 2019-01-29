@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      20.2
+// @version      21.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -43,6 +43,39 @@
         }
     }
 
+    /* Follow the yellow rabbit */
+    var yellowRabbit = false;
+    var yellow = "rgb(255, 255, 0)";
+    $("body > div.blocksmap + div").each(function () {
+        if ($(this).css("background-color") === yellow) {
+            yellowRabbit = true;
+        }
+    });
+
+    $("body > div.headerfooterpagearea + div").each(function () {
+        if ($(this).css("background-color") === yellow) {
+            yellowRabbit = true;
+        }
+    });
+
+    if (yellowRabbit) {
+        $("body").append(`<style>
+            #rightbuttons,
+            .insertafterrecorbutton {
+                display: none !important;
+            }
+
+            .recordbordertop,
+            .recordborderbottom,
+            .tp-record-edit-icons-left__dropdown-toggle,
+            .tp-shortcuttools__two,
+            .tp-shortcuttools__zero,
+            .tp-library__tpl-body {
+                pointer-events: none !important;
+            }
+            <style>`);
+    }
+
     /* Добавляем recid для каждого блока на странице */
     $("div.record").each(function (index) {
         var recordid = $(this).attr("recordid");
@@ -64,6 +97,11 @@
                             <span onclick="${copy}"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
                         </div>
                     </div>`);
+
+        if ($(this).attr("off") === "y" && yellowRabbit) {
+            $(this).children("div#mainleft").css("display", "block");
+            $(mainleft).children("div:first, div:last").css("display", "none");
+        }
     });
 
     $("body").append(`<style>
