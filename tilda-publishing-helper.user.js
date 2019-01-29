@@ -46,13 +46,7 @@
     /* Follow the yellow rabbit */
     var yellowRabbit = false;
     var yellow = "rgb(255, 255, 0)";
-    $("body > div.blocksmap + div").each(function () {
-        if ($(this).css("background-color") === yellow) {
-            yellowRabbit = true;
-        }
-    });
-
-    $("body > div.headerfooterpagearea + div").each(function () {
+    $("body > div.blocksmap + div, body > div.headerfooterpagearea + div").each(function () {
         if ($(this).css("background-color") === yellow) {
             yellowRabbit = true;
         }
