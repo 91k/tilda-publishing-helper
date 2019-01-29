@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      21.4
+// @version      21.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -47,7 +47,6 @@
     var yellowRabbit = false;
     var yellow = "rgb(255, 255, 0)";
     $("div[style]").each(function () {
-        console.log($(this).css("background-color") === yellow, $(this).css("z-index"), $(this).css("position"));
         if ($(this).css("background-color") === yellow && $(this).css("z-index") == "1000" && $(this).css("position") == "fixed") {
             yellowRabbit = true;
 
@@ -67,7 +66,6 @@
                 .tp-record-edit-icons-left__dropdown-toggle,
                 .tp-shortcuttools__two,
                 .tp-shortcuttools__zero,
-                [href^='javascript:showformEditProjectFonts'],
                 [onclick^='showformAddProject_new'],
                 [href*='/identity/gocrm/'],
                 [href*='/identity/apikeys/'],
@@ -76,6 +74,7 @@
                 [href^='javascript:recoverPage'],
                 [href^='javascript:pay'],
                 [href^='javascript:emailverify'],
+                [href^='javascript:showformEditProjectFonts'],
                 [href^='/identity/changepassword/'],
                 [href^='/identity/banktransfer/'],
                 button[type="submit"],
