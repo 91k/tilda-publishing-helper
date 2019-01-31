@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      21.6
+// @version      21.7
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -72,6 +72,7 @@
                 [href*='/domains/check/'],
                 [href*='/identity/chat/'],
                 [href^='javascript:recoverPage'],
+                [href^='javascript:delPage'],
                 [href^='javascript:pay'],
                 [href^='javascript:emailverify'],
                 [href^='javascript:showformEditProjectFonts'],
@@ -82,7 +83,9 @@
                 [href^='javascript:deleteCollaborator'],
                 [href^='/projects/collaborators/edit/?projectid='],
                 [href^='/identity/changepassword/'],
+                [href^='/identity/deleteaccount/'],
                 [href^='/identity/banktransfer/'],
+                [href^='/identity/payments/'],
                 button[type="submit"],
                 input[type="submit"] {
                     pointer-events: none !important;
@@ -270,37 +273,17 @@
         }
     }
 
-    var domains = 0,
-        apikeys = 0,
-        crm = 0;
+    var domains = 0;
 
     $(".t-menu__item").each(function () {
         var href = $(this).attr("href");
         if (href == "/domains/") {
             domains = 1
         }
-
-        if (href == "/identity/apikeys/") {
-            apikeys = 1
-        }
-
-        if (href == "/identity/gocrm/") {
-            crm = 1
-        } else if (href == "/") {
-            crm = 1
-        }
     });
 
     if (domains == 0) {
         addMenuItem("https://tilda.cc/domains/", lang == "RU" ? "Домены" : "Domains", 1)
-    }
-
-    if (apikeys == 0) {
-        addMenuItem("https://tilda.cc/identity/apikeys/", "Api", 2)
-    }
-
-    if (crm == 0) {
-        addMenuItem("https://tilda.cc/identity/gocrm/", "CRM", 3)
     }
 
     /* Добавляем подсказку по валютам */
