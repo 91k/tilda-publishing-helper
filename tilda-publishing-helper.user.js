@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      21.5
+// @version      21.6
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -75,6 +75,12 @@
                 [href^='javascript:pay'],
                 [href^='javascript:emailverify'],
                 [href^='javascript:showformEditProjectFonts'],
+                [href^='javascript:accepttransferProject'],
+                [href^='javascript:canceltransferProject'],
+                [href^='javascript:javascript:collabs_pay'],
+                [href^='javascript:saveCollaborator'],
+                [href^='javascript:deleteCollaborator'],
+                [href^='/projects/collaborators/edit/?projectid='],
                 [href^='/identity/changepassword/'],
                 [href^='/identity/banktransfer/'],
                 button[type="submit"],
@@ -347,7 +353,8 @@
     </style>`);
 
     var subscription = $(".lr_col_12").text();
-    if (subscription.includes("renewal subscription is off") || subscription.includes("автопродление выключено") || subscription.includes("Отменить автоматические платежи") || subscription.includes("Cancel subscription")) {
+    let payments = ["renewal subscription is off", "автопродление выключено", "Cancel subscription", "Отменить автоматические платежи", "Tilda Business"];
+    if (payments.some(text => subscription.includes(text))) {
         $("[name='paybox']").before(`<div style="font-size:16px; font-weight:normal; background-color:#eee; padding:30px; margin-top:-40px;">
             <a href="https://tilda.cc/identity/payments/" style="color:#ff855D;">${lang == "RU" ? "История платежей" : "Payments history"}</a>
         </div>`);
