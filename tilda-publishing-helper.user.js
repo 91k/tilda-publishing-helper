@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      21.7
+// @version      22.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -11,7 +11,6 @@
 // @match        https://tilda.cc/projects/*
 // @match        https://tilda.cc/identity/*
 // @exclude      https://experts.tilda.cc/*
-// @require      http://code.jquery.com/jquery-1.10.2.min.js
 // @license      MIT
 // ==/UserScript==
 
@@ -19,7 +18,7 @@
     'use strict';
 
     /* Делаем редирект, если страница недоступна для редактирования */
-    var textBody = $("body").text();
+    var textBody = document.querySelector('body').textContent || document.querySelector('body').innerText;
 
     if (textBody == "You can't edit this project.." || textBody == "You can not edit this project..." || textBody == "This page belongs to another account, so you can't see or edit it...") {
         if (window.location.href.indexOf("projectid=") !== -1) {
@@ -55,7 +54,7 @@
                 .insertafterrecorbutton {
                     display: none !important;
                 }
-        
+
                 .tbtn,
                 .tp-library__tn,
                 .tp-library__tpl-body,
