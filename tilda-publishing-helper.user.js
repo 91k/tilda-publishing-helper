@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      23.5
+// @version      23.6
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -59,16 +59,21 @@
                 .tp-library__tn,
                 .tp-library__tpl-body,
                 .tn-save-btn,
+                .js-btn-save,
                 .tn-dialog__btn-save,
+                .tc-help__send-btn,
                 .recordbordertop,
                 .recordborderbottom,
                 .tp-record-edit-icons-left__dropdown-toggle,
                 .tp-shortcuttools__two,
                 .tp-shortcuttools__zero,
                 [onclick^='showformAddProject_new'],
+                [href*='/pagemove/'],
+                [href*='/pagetransfer/'],
                 [href*='/identity/apikeys/'],
                 [href*='/domains/check/'],
-                [href*='/identity/chat/'],
+                [href*='identity/chat'],
+                [href*='pageUnpublish'],
                 [href^='javascript:recoverPage'],
                 [href^='javascript:delPage'],
                 [href^='javascript:pay'],
@@ -79,7 +84,8 @@
                 [href^='javascript:javascript:collabs_pay'],
                 [href^='javascript:saveCollaborator'],
                 [href^='javascript:deleteCollaborator'],
-                [href^='/projects/collaborators/edit/?projectid='],
+                [href^='javascript:dublicatePage'],
+                [href^='/projects/collaborators/edit/'],
                 [href^='/identity/changepassword/'],
                 [href^='/identity/deleteaccount/'],
                 [href^='/identity/banktransfer/'],
@@ -124,6 +130,10 @@
     $("body").append(`<style>
     .td-popup-btn {
         margin: 0 0 0 15px !important;
+    }
+
+    table.td-project-uppanel__button:nth-child(4) {
+        margin-right: 0 !important;
     }
 
     .editrecordcontent_container hr,
