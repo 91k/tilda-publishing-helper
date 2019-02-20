@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      23.6
+// @version      24.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -127,7 +127,65 @@
         }
     });
 
-    $("body").append(`<style>
+    var d = new Date();
+    if ((d.getMonth()+1) === 4 && d.getDate() === 1) {
+        $('.t-help-bubble img').attr('src', 'https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png');
+
+        $("body").append(`
+        <div class="clippy-balloon clippy-top-left"><div class="clippy-tip"></div><div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div></div>
+
+        <style>
+        .t-help-bubble {
+            background-color: unset !important;
+            box-shadow: unset !important;
+            width: unset !important;
+            height: unset !important;
+            right: 15px !important;
+            bottom: 15px !important;
+        }
+
+        .t-help-bubble img {
+            width: 100px !important;
+            height: 100px !important;
+        }
+
+        .clippy-balloon {
+            background: #FFC;
+            color: black;
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 5px;
+            bottom: 130px;
+            right: 55px;
+            display: block;
+            position: absolute;
+        }
+
+        .clippy-top-left .clippy-tip {
+            top: 100%;
+            margin-top: 0px;
+            left: 100%;
+            margin-left: -50px;
+        }
+
+        .clippy-tip {
+            width: 10px;
+            height: 16px;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
+            position: absolute;
+        }
+
+        .clippy-content {
+            height: 63px;
+            width: 200px;
+        }
+        </style>`);
+
+        $('.t-help-bubble').append($('.clippy-balloon.clippy-top-left'));
+    }
+
+    $("body").append(`
+    <style>
     .td-popup-btn {
         margin: 0 0 0 15px !important;
     }
