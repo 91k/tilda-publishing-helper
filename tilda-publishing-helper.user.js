@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      24.2
+// @version      25.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -128,7 +128,7 @@
     });
 
     var d = new Date();
-    if (d.getDate() === 1 && (d.getMonth() + 1) === 4 ) {
+    if (d.getDate() === 1 && (d.getMonth() + 1) === 4) {
         $('.t-help-bubble img').attr('src', 'https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png');
 
         $("body").append(`
@@ -184,9 +184,8 @@
         $('.t-help-bubble').append($('.clippy-balloon.clippy-top-left'));
     }
 
-    $("body").append(`
-    <style>
-    .ss-form-group .ss-label {
+    $("body").append(`<style>
+    .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
         font-size: 18px !important;
         line-height: unset !important;
     }
@@ -365,6 +364,25 @@
     if (domains == 0) {
         addMenuItem("https://tilda.cc/domains/", lang == "RU" ? "Домены" : "Domains", 1)
     }
+
+    /* Подсказка под полями счётчиков */
+    var text = "Добавьте только номер счётчика";
+    $(".js-ga-localinput").after(`<span class='js-ga-localinput' style='display: none;'>${text}<span>`);
+    $(".js-metrika-localinput").after(`<span class='js-metrika-localinput' style='display: none;'>${text}<span>`);
+    $("[name='googletmid']").after(`<span class='js-gtm-localinput'>${text}<span>`);
+
+    /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
+    $('.js-yandexmetrika-connect').removeClass('js-yandexmetrika-connect');
+    $('.js-ga-connect').removeClass('js-ga-connect');
+
+    $('body').append(`<style>
+        span.js-ga-localinput,
+        span.js-metrika-localinput,
+        span.js-gtm-localinput {
+            color: #929292;
+            font-weight: 300;
+        }
+    </style>`)
 
     /* Добавляем подсказку по валютам */
     $("[name=currency_txt] + div").text(lang == "RU" ? "Знак, например: ₽, $, €, ¥, р." : "Sign, e.g.: ₽, $, €, ¥.");
