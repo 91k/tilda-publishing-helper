@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      25.1
+// @version      25.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -367,9 +367,9 @@
 
     /* Подсказка под полями счётчиков */
     var text = "Добавьте только номер счётчика";
-    $(".js-ga-localinput").after(`<span class='js-ga-localinput' style='display: none;'>${text}<span>`);
-    $(".js-metrika-localinput").after(`<span class='js-metrika-localinput' style='display: none;'>${text}<span>`);
-    $("[name='googletmid']").after(`<span class='js-gtm-localinput'>${text}<span>`);
+    $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${text}<span>`);
+    $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${text}<span>`);
+    $("[name='googletmid']").attr("placeholder", "GTM-N842GS").after(`<span class='js-gtm-localinput'>${text}<span>`);
 
     /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
     $('.js-yandexmetrika-connect').removeClass('js-yandexmetrika-connect');
@@ -379,7 +379,7 @@
         span.js-ga-localinput,
         span.js-metrika-localinput,
         span.js-gtm-localinput {
-            color: #929292;
+            color: #525252;
             font-weight: 300;
         }
     </style>`)
