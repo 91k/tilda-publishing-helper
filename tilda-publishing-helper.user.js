@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      26.0
+// @version      26.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -459,26 +459,12 @@
                 [onclick^='showformAddProject_new'],
                 [href*='/pagemove/'],
                 [href*='/pagetransfer/'],
-                [href*='/identity/apikeys/'],
+                [href*='/identity/'],
                 [href*='/domains/check/'],
-                [href*='identity/chat'],
+                [href*='identity/'],
                 [href*='pageUnpublish'],
-                [href^='javascript:recoverPage'],
-                [href^='javascript:delPage'],
-                [href^='javascript:pay'],
-                [href^='javascript:emailverify'],
-                [href^='javascript:showformEditProjectFonts'],
-                [href^='javascript:accepttransferProject'],
-                [href^='javascript:canceltransferProject'],
-                [href^='javascript:javascript:collabs_pay'],
-                [href^='javascript:saveCollaborator'],
-                [href^='javascript:deleteCollaborator'],
-                [href^='javascript:dublicatePage'],
+                [href^='javascript:'],
                 [href^='/projects/collaborators/edit/'],
-                [href^='/identity/changepassword/'],
-                [href^='/identity/deleteaccount/'],
-                [href^='/identity/banktransfer/'],
-                [href^='/identity/payments/'],
                 button[type="submit"],
                 input[type="submit"] {
                     pointer-events: none !important;
