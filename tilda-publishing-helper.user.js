@@ -17,6 +17,14 @@
 (function() {
     "use strict";
 
+    /* Переменная для вывода текста */
+    var text = "";
+
+    /* Опреляем язык по чёрному меню сверху */
+    var lang =
+        $("a[href$='/identity/'].t-menu__item:first").text() == "Профиль"
+            ? "RU"
+            : "EN";
 
     /* Делаем редирект, если страница недоступна для редактирования */
     var textBody =
@@ -122,7 +130,7 @@
         /* Делаем полоску светлеее в Настройках и Контенте блоков */
         .editrecordcontent_container hr,
         .panel-body hr {
-            border-top: 1px solid #ddd !important;
+            border-top: 1px solid #dedede !important;
         }
 
         /* Всплывающая подсказка около ID блока */
@@ -192,9 +200,6 @@
         }
     `;
 
-    /* Опреляем язык по чёрному меню сверху */
-    var lang = ($("a[href$='/identity/'].t-menu__item:first").text() == "Профиль" ? "RU" : "EN");
-
     /* Делаем боковое меню плавающим */
     var isEmail;
     if ($("[data-menu-item='#ss_menu_fonts']")) {
@@ -220,9 +225,17 @@
 
     var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
 
+    if (isEmail == "none") {
+        text = "630";
+    } else if (isFree) {
+        text = "715";
+    } else {
+        text = "770";
+    }
+
     styleBody += `
         .ss-content {
-            margin-top: -${isEmail == "none" ? 630 : (isFree ? 715 : 770)}px;
+            margin-top: -${text}px;
         }
     `;
 
