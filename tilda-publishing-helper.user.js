@@ -270,7 +270,6 @@
         }, 1000);
     });
 
-
     /* Предупреждение для полей для ссылок содержащих кавычку */
     $(".tp-record-edit-icons-left__three").click(function() {
         setTimeout(function() {
