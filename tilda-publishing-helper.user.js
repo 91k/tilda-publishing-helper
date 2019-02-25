@@ -249,6 +249,28 @@
         );
     });
 
+    /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
+    $(".tp-record-edit-icons-left__two").click(function() {
+        setTimeout(function() {
+            $("input").each(function() {
+                var placeholder = String($(this).attr("placeholder"));
+                var value = $(this).val();
+                if (
+                    placeholder.includes("px") &&
+                    !value.includes("px") &&
+                    value !== ""
+                ) {
+                    $(this)
+                        .css("border", "1px solid red")
+                        .before(
+                            '<span style="color: red;">В этом поле нужно указать значение с "px"</span>'
+                        );
+                }
+            });
+        }, 1000);
+    });
+
+
     /* Предупреждение для полей для ссылок содержащих кавычку */
     $(".tp-record-edit-icons-left__three").click(function() {
         setTimeout(function() {
