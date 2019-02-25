@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.0
+// @version      27.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -250,11 +250,19 @@
     });
 
     /* Делаем предупреждение для полей для ссылок содержащих кавычку */
-    $('.tp-record-edit-icons-left__three').click(function() {
+    $(".tp-record-edit-icons-left__three").click(function() {
         setTimeout(function() {
             $('input[name*="link"]').each(function() {
-                if($(this).val().includes('"')) {
-                    $(this).css('border', '1px solid red').before('<span style="color: red;">Уберите, пожалуйста, кавычки из этого поля — они могут привести к проблеме</span>');
+                if (
+                    $(this)
+                        .val()
+                        .includes('"')
+                ) {
+                    $(this)
+                        .css("border", "1px solid red")
+                        .before(
+                            '<span style="color: red;">Уберите, пожалуйста, кавычки из этого поля — они могут привести к проблеме</span>'
+                        );
                 }
             });
         }, 3000);
@@ -573,7 +581,17 @@
                 [href*='/domains/check/'],
                 [href*='identity/'],
                 [href*='pageUnpublish'],
-                [href^='javascript:'],
+                [href^='javascript:recoverPage'],
+                [href^='javascript:delPage'],
+                [href^='javascript:pay'],
+                [href^='javascript:emailverify'],
+                [href^='javascript:showformEditProjectFonts'],
+                [href^='javascript:accepttransferProject'],
+                [href^='javascript:canceltransferProject'],
+                [href^='javascript:javascript:collabs_pay'],
+                [href^='javascript:saveCollaborator'],
+                [href^='javascript:deleteCollaborator'],
+                [href^='javascript:dublicatePage'],
                 [href^='/projects/collaborators/edit/'],
                 button[type="submit"],
                 input[type="submit"] {
