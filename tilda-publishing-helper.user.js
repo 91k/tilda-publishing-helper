@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.10
+// @version      27.11
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -250,8 +250,8 @@
     });
 
     /* Перемещаем «Указать ID шаблона» */
-    if ($("#welcome-middle")) {
-        $('#previewprojex').append('<span>Или укажите номер шаблона</span>');
+    if (typeof $("#welcome-middle").val() != "undefined") {
+        $("#previewprojex").append("<span>Или укажите номер шаблона</span>");
         $("#welcome-middle")
             .next()
             .next()
@@ -299,8 +299,8 @@
     });
 
     /* Предупреждение для поля Google Analytics */
-    if ($("input.js-ga-localinput")) {
-        var value = $("input.js-ga-localinput").val();
+    var value = $("input.js-ga-localinput").val();
+    if (typeof value != "undefined") {
         if (
             value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null &&
             value !== ""
@@ -314,8 +314,8 @@
     }
 
     /* Предупреждение для поля Яндекс.Метрика */
-    if ($("input.js-metrika-localinput")) {
-        var value = $("input.js-metrika-localinput").val();
+    var value = $("input.js-metrika-localinput").val();
+    if (typeof value != "undefined") {
         if (
             value.match(new RegExp("^(([0-9]+){4,})$")) == null &&
             value !== ""
@@ -329,8 +329,8 @@
     }
 
     /* Предупреждение для поля субдомен */
-    if ($("input#ss-input-alias")) {
-        var value = $("input#ss-input-alias").val();
+    var value = $("input#ss-input-alias").val();
+    if (typeof value != "undefined") {
         if (value.includes("_") && value !== "") {
             $("input#ss-input-alias")
                 .css("border", "1px solid red")
