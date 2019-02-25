@@ -319,6 +319,22 @@
         }
     }
 
+    /* Предупреждение для поля субдомен */
+    if ($("input#ss-input-alias")) {
+        var value = $("input#ss-input-alias").val();
+        if (value.includes("_") && value !== "") {
+            $("input#ss-input-alias")
+                .css("border", "1px solid red")
+                .parent()
+                .parent()
+                .parent()
+                .parent()
+                .before(
+                    '<span style="color: red;">Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>'
+                );
+        }
+    }
+
     /* Создаём дополнительные ссылки в карточках проектов */
     $(".td-sites-grid__cell").each(function() {
         var projectid = $(this).attr("id");
