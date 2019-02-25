@@ -249,6 +249,17 @@
         );
     });
 
+    /* Делаем предупреждение для полей для ссылок содержащих кавычку */
+    $('.tp-record-edit-icons-left__three').click(function() {
+        setTimeout(function() {
+            $('input[name*="link"]').each(function() {
+                if($(this).val().includes('"')) {
+                    $(this).css('border', '1px solid red').before('<span style="color: red;">Уберите, пожалуйста, кавычки из этого поля — они могут привести к проблеме</span>');
+                }
+            });
+        }, 3000);
+    });
+
     /* Создаём дополнительные ссылки в карточках проектов */
     $(".td-sites-grid__cell").each(function() {
         var projectid = $(this).attr("id");
