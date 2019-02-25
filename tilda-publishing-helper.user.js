@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.1
+// @version      27.6
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -239,7 +239,7 @@
         }
     `;
 
-    /* Делаем скролл по пунктам в Настройках сайта плавным */
+    /* Скролл по пунктам в Настройках сайта плавным */
     $("li[data-menu-item]").click(function() {
         $("html,body").animate(
             {
@@ -249,7 +249,7 @@
         );
     });
 
-    /* Делаем предупреждение для полей для ссылок содержащих кавычку */
+    /* Предупреждение для полей для ссылок содержащих кавычку */
     $(".tp-record-edit-icons-left__three").click(function() {
         setTimeout(function() {
             $('input[name*="link"]').each(function() {
@@ -261,12 +261,42 @@
                     $(this)
                         .css("border", "1px solid red")
                         .before(
-                            '<span style="color: red;">Уберите, пожалуйста, кавычки из этого поля — они могут привести к проблеме</span>'
+                            '<span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>'
                         );
                 }
             });
         }, 3000);
     });
+
+    /* Предупреждение для поля Google Analytics */
+    if ($("input.js-ga-localinput")) {
+        var value = $("input.js-ga-localinput").val();
+        if (
+            value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null &&
+            value !== ""
+        ) {
+            $("input.js-ga-localinput")
+                .css("border", "1px solid red")
+                .before(
+                    '<span style="color: red;">В этом поле нужно только номер счётчика</span>'
+                );
+        }
+    }
+
+    /* Предупреждение для поля Яндекс.Метрика */
+    if ($("input.js-metrika-localinput")) {
+        var value = $("input.js-metrika-localinput").val();
+        if (
+            value.match(new RegExp("^(([0-9]+){4,})$")) == null &&
+            value !== ""
+        ) {
+            $("input.js-metrika-localinput")
+                .css("border", "1px solid red")
+                .before(
+                    '<span style="color: red;">В этом поле нужно только номер счётчика</span>'
+                );
+        }
+    }
 
     /* Создаём дополнительные ссылки в карточках проектов */
     $(".td-sites-grid__cell").each(function() {
