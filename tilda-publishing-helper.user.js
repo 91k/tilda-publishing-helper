@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.15
+// @version      27.16
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -510,8 +510,8 @@
             /* Добавляем подсказку по валютам */
             $("[name=currency_txt] + div").text(
                 lang == "RU"
-                    ? "Знак, например: ₽, $, €, ¥, р."
-                    : "Sign, e.g.: ₽, $, €, ¥."
+                    ? "Знаки: ₽, $, €, ¥, руб."
+                    : "Signs: ₽, $, €, ¥."
             );
 
             /* Добавляем ссылку на удаление аккаунта */
