@@ -81,7 +81,7 @@
                     ? "RU"
                     : "EN";
 
-            if (typeof $("#topactivityprojects") != "undefined") {
+            if (typeof $("#topactivityprojects").val() != "undefined") {
                 document.querySelector(
                     "body"
                 ).innerHTML = document
