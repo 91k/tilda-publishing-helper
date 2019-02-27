@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.13
+// @version      27.14
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -84,9 +84,14 @@
             if (typeof $("#topactivityprojects") != "undefined") {
                 var html = document.querySelector("body").innerHTML;
                 document.querySelector("body").innerHTML = html.replace(
-                    / OK /g,
-                    "<span style='background: lightgreen;'> OK </span>"
+                    /(OK)/g,
+                    "<span style='background: lightgreen;'>$1</span>"
                 );
+                document.querySelector("body").innerHTML = html.replace(
+                    /(\(-53\): retry time not reached for any host for \'([a-z\.]+)\')/g,
+                    "<span style='background: red;'>$1</span>"
+                );
+                
                 return;
             }
 
