@@ -82,16 +82,23 @@
                     : "EN";
 
             if (typeof $("#topactivityprojects") != "undefined") {
-                var html = document.querySelector("body").innerHTML;
-                document.querySelector("body").innerHTML = html.replace(
-                    /(OK)/g,
-                    "<span style='background: lightgreen;'>$1</span>"
-                );
-                document.querySelector("body").innerHTML = html.replace(
-                    /(\(-53\): retry time not reached for any host for \'([a-z\.]+)\')/g,
-                    "<span style='background: red;'>$1</span>"
-                );
-                
+                document.querySelector(
+                    "body"
+                ).innerHTML = document
+                    .querySelector("body")
+                    .innerHTML.replace(
+                        /(OK)/g,
+                        "<span style='background: lightgreen;'>$1</span>"
+                    );
+                document.querySelector(
+                    "body"
+                ).innerHTML = document
+                    .querySelector("body")
+                    .innerHTML.replace(
+                        /(\(-53\): retry time not reached for any host for \'([a-z\.]+)\')/g,
+                        "<span style='background: red;'>$1</span>"
+                    );
+
                 return;
             }
 
