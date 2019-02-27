@@ -84,9 +84,9 @@
                     $("a[href$='/identity/'].t-menu__item:first").text() ==
                     "Профиль"
                 ) {
-                    text = "RU";
+                    lang = "RU";
                 } else {
-                    text = "EN";
+                    lang = "EN";
                 }
             }
 
