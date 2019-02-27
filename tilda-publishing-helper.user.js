@@ -725,10 +725,10 @@
 
             /* Добавляем новые стили к body */
             $("body").append(`
-            <style>
-                ${styleBody}
-            </style>
-        `);
+                <style>
+                    ${styleBody}
+                </style>
+            `);
         });
     }
 })();
