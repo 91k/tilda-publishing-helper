@@ -224,7 +224,11 @@
                 span.js-ga-localinput,
                 span.js-metrika-localinput,
                 span.js-gtm-localinput {
-                    opacity: 0.4;
+                    opacity: 0.75;
+                    padding-top: 15px;
+                    margin-top: 15px;
+                    font-weight: 300;
+                    font-size: 14px;
                 }
 
                 /* Добавляем кнопку заявок к карточкам проектов */
