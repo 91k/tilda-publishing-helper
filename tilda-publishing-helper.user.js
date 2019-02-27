@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.17
+// @version      27.18
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -293,6 +293,27 @@
                     margin-top: -${text}px;
                 }
             `;
+
+            if (typeof $("#ss_menu_more").val() != "undefined") {
+                $(
+                    "#ss_menu_more > div:nth-child(2) .ss-upload-button"
+                ).remove();
+                $("#ss_menu_more > div:nth-child(2) img").remove();
+                $("#ss_menu_more > div:nth-child(2) br").remove();
+                $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(
+                    `${
+                        lang == "RU"
+                            ? "Загрузить иконку можно в разделе"
+                            : "Upload favicon you can in"
+                    } SEO → <a href="${$(
+                        'a[href^="/projects/favicons/?projectid="]'
+                    ).attr("href")}">${
+                        lang == "RU"
+                            ? "Настройка иконок для сайта"
+                            : "Settings icons for sites"
+                    }</a>`
+                );
+            }
 
             /* Скролл по пунктам в Настройках сайта плавным */
             if (typeof $("li[data-menu-item]").val() != "undefined") {
