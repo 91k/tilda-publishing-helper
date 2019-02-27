@@ -151,94 +151,94 @@
             /* Заносим все новые стили в переменную */
             var styleBody = ``;
             styleBody += `
-            /* Меняем размер подзаголовков в Настройках сайта */
-            .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
-                font-size: 18px !important;
-                line-height: unset !important;
-            }
+                /* Меняем размер подзаголовков в Настройках сайта */
+                .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
+                    font-size: 18px !important;
+                    line-height: unset !important;
+                }
 
-            /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
-            .td-popup-btn {
-                margin: 0 0 0 15px !important;
-            }
+                /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
+                .td-popup-btn {
+                    margin: 0 0 0 15px !important;
+                }
 
-            /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
-            table.td-project-uppanel__button:nth-child(4) {
-                margin-right: 0 !important;
-            }
+                /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
+                table.td-project-uppanel__button:nth-child(4) {
+                    margin-right: 0 !important;
+                }
 
-            /* Делаем полоску светлеее в Настройках и Контенте блоков */
-            .editrecordcontent_container hr,
-            .panel-body hr {
-                border-top: 1px solid #dedede !important;
-            }
+                /* Делаем полоску светлеее в Настройках и Контенте блоков */
+                .editrecordcontent_container hr,
+                .panel-body hr {
+                    border-top: 1px solid #dedede !important;
+                }
 
-            /* Всплывающая подсказка около ID блока */
-            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
-                background: #ffffff;
-                border-radius: 5px;
-                bottom: -30px;
-                right: -100px;
-                box-shadow: 0 0 10px #3d3d3d;
-                box-shadow: 0 0 10px rgba(61, 61, 61, .5);
-                box-sizing: border-box;
-                color: #3d3d3d;
-                content: attr(data-title);
-                font-size: 12px;
-                font-weight: 400;
-                min-width: 125px;
-                padding: 5px 10px;
-                position: absolute;
-                text-align: center;
-                z-index: 3;
-                width: auto;
-                white-space: nowrap;
-                overflow: visible;
-            }
+                /* Всплывающая подсказка около ID блока */
+                .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
+                    background: #ffffff;
+                    border-radius: 5px;
+                    bottom: -30px;
+                    right: -100px;
+                    box-shadow: 0 0 10px #3d3d3d;
+                    box-shadow: 0 0 10px rgba(61, 61, 61, .5);
+                    box-sizing: border-box;
+                    color: #3d3d3d;
+                    content: attr(data-title);
+                    font-size: 12px;
+                    font-weight: 400;
+                    min-width: 125px;
+                    padding: 5px 10px;
+                    position: absolute;
+                    text-align: center;
+                    z-index: 3;
+                    width: auto;
+                    white-space: nowrap;
+                    overflow: visible;
+                }
 
-            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
-                border: solid;
-                border-color: #ffffff transparent;
-                border-width: 6px 6px 0 6px;
-                bottom: -5px;
-                right: 36px;
-                content: "";
-                position: absolute;
-                z-index: 4;
-                overflow: visible;
-                transform: rotate(180deg);
-            }
+                .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
+                    border: solid;
+                    border-color: #ffffff transparent;
+                    border-width: 6px 6px 0 6px;
+                    bottom: -5px;
+                    right: 36px;
+                    content: "";
+                    position: absolute;
+                    z-index: 4;
+                    overflow: visible;
+                    transform: rotate(180deg);
+                }
 
-            /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
-            span.js-ga-localinput,
-            span.js-metrika-localinput,
-            span.js-gtm-localinput {
-                color: #525252;
-                font-weight: 300;
-            }
+                /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
+                span.js-ga-localinput,
+                span.js-metrika-localinput,
+                span.js-gtm-localinput {
+                    color: #525252;
+                    font-weight: 300;
+                }
 
-            /* Добавляем кнопку заявок к карточкам проектов */
-            .td-site__settings {
-                margin-right: 15px;
-            }
-        
-            .td-site__settings-title {
-                font-size: 12px;
-            }
-        
-            .td-site__url-link {
-                font-size: 14px;
-            }
-        
-            .td-site__section-two {
-                padding: 0 30px;
-            }
+                /* Добавляем кнопку заявок к карточкам проектов */
+                .td-site__settings {
+                    margin-right: 15px;
+                }
+            
+                .td-site__settings-title {
+                    font-size: 12px;
+                }
+            
+                .td-site__url-link {
+                    font-size: 14px;
+                }
+            
+                .td-site__section-two {
+                    padding: 0 30px;
+                }
 
-            /* Делаем кнопку «Домой» интерактивной */
-            .td-page__ico-home:hover {
-                filter: opacity(.5); !important;
-            }
-        `;
+                /* Делаем кнопку «Домой» интерактивной */
+                .td-page__ico-home:hover {
+                    filter: opacity(.5); !important;
+                }
+            `;
 
             /* Делаем боковое меню плавающим */
             var isEmail;
@@ -275,10 +275,10 @@
             }
 
             styleBody += `
-            .ss-content {
-                margin-top: -${text}px;
-            }
-        `;
+                .ss-content {
+                    margin-top: -${text}px;
+                }
+            `;
 
             /* Скролл по пунктам в Настройках сайта плавным */
             $("li[data-menu-item]").click(function() {
@@ -292,9 +292,9 @@
 
             /* Перемещаем «Указать ID шаблона» */
             if (typeof $("#welcome-middle").val() != "undefined") {
-                $("#previewprojex").append(
-                    "<span>Или укажите номер шаблона</span>"
-                );
+                $("#previewprojex").append(`
+                    <span>Или укажите номер шаблона</span>
+                `);
                 $("#welcome-middle")
                     .next()
                     .next()
@@ -312,11 +312,9 @@
                             !value.includes("px") &&
                             value !== ""
                         ) {
-                            $(this)
-                                .css("border", "1px solid red")
-                                .before(
-                                    '<span style="color: red;">В этом поле нужно указать значение с "px"</span>'
-                                );
+                            $(this).css("border", "1px solid red").before(`
+                                    <span style="color: red;">В этом поле нужно указать значение с "px"</span>
+                                `);
                         }
                     });
                 }, 1000);
@@ -325,17 +323,15 @@
             /* Предупреждение для полей для ссылок содержащих кавычку */
             $(".tp-record-edit-icons-left__three").click(function() {
                 setTimeout(function() {
-                    $('input[name*="link"]').each(function() {
+                    $("input[name*='link']").each(function() {
                         if (
                             $(this)
                                 .val()
-                                .includes('"')
+                                .includes("\"")
                         ) {
-                            $(this)
-                                .css("border", "1px solid red")
-                                .before(
-                                    '<span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>'
-                                );
+                            $(this).css("border", "1px solid red").before(`
+                                    <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
+                                `);
                         }
                     });
                 }, 3000);
