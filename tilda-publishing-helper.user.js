@@ -224,8 +224,7 @@
                 span.js-ga-localinput,
                 span.js-metrika-localinput,
                 span.js-gtm-localinput {
-                    color: #525252;
-                    font-weight: 300;
+                    opacity: 0.4;
                 }
 
                 /* Добавляем кнопку заявок к карточкам проектов */
