@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.19
+// @version      27.20
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -94,24 +94,30 @@
             var styleBody = "";
 
             if (typeof $("#topactivityprojects").val() != "undefined") {
-                document.querySelector(
-                    "body"
-                ).innerHTML = document
-                    .querySelector("body")
-                    .innerHTML.replace(
-                        /(OK|Ok: queued on ([a-z0-9]+).mail.yandex.net)/g,
-                        "<span style='background: lightgreen;'>$1</span>"
-                    );
-                document.querySelector(
-                    "body"
-                ).innerHTML = document
-                    .querySelector("body")
-                    .innerHTML.replace(
-                        /(\(-53\): retry time not reached for any host for \'([a-z0-9\-\.]+)\'|SMTP error from remote mail server after end of data: 550 spam message rejected\.)/g,
-                        "<span style='background: red;'>$1</span>"
-                    );
+                if (
+                    document
+                        .querySelector("body")
+                        .innerHTML.includes("bool(false)")
+                ) {
+                    document.querySelector(
+                        "body"
+                    ).innerHTML = document
+                        .querySelector("body")
+                        .innerHTML.replace(
+                            /(OK|Ok: queued on ([a-z0-9]+).mail.yandex.net)/g,
+                            "<span style='background: lightgreen;'>$1</span>"
+                        );
+                    document.querySelector(
+                        "body"
+                    ).innerHTML = document
+                        .querySelector("body")
+                        .innerHTML.replace(
+                            /(\(-53\): retry time not reached for any host for \'([a-z0-9\-\.]+)\'|SMTP error from remote mail server after end of data: 550 spam message rejected\.)/g,
+                            "<span style='background: red;'>$1</span>"
+                        );
 
-                return;
+                    return;
+                }
             }
 
             /* Добавляем recid для каждого блока на странице */
