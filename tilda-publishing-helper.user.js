@@ -270,7 +270,11 @@
             if ($("#page_menu_publishlink").val() != "undefined") {
                 $("#page_menu_publishlink").click(function () {
                     setTimeout(function () {
-                        $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                        if(lang == "RU") {
+                            $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                        } else {
+                            $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
+                        }
                     }, 2000);
                 });
             }
