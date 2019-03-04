@@ -203,6 +203,21 @@
                 .td-page__ico-home:hover {
                     filter: opacity(.5); !important;
                 }
+
+                .js-publish-noteunderbutton {
+                    width: 92% !important;
+                    color: #333 !important;
+                    font-family: unset !important;
+                }
+
+                .modal-body {
+                    font-weight: 300;
+                }
+
+                .js-publish-noteunderbutton a,
+                .pub-left-bottom-link a {
+                    text-decoration: underline;
+                }
             `;
 
             /* Делаем боковое меню плавающим */
@@ -249,6 +264,15 @@
                 $("#ss_menu_more > div:nth-child(2) img").remove();
                 $("#ss_menu_more > div:nth-child(2) br").remove();
                 $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang == "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang == "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
+            }
+
+            /* Другая подсказка после публикации страницы  */
+            if ($("#page_menu_publishlink").val() != "undefined") {
+                $("#page_menu_publishlink").click(function () {
+                    setTimeout(function () {
+                        $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                    }, 2000);
+                });
             }
 
             /* Скролл по пунктам в Настройках сайта плавным */
