@@ -359,11 +359,22 @@
                             var option = "";
                             var name = $(this).attr('name');
                             $("#allrecords .record .r center b").each(function () {
-                                option += `<span onclick="$('[name=${name}]').val('${$(this).text()}')" style="padding-right:15px; font-size:11px; cursor:context-menu; display: inline-block;">${$(this).text()}</span>`;
+                                var value = $(this).text();
+
+                                /* Если блок T173 Якорная ссылка */
+                                if ($(this).parents('[data-record-type="215"]').length) {
+                                    value = "#" + value;
+                                }
+
+                                option += `
+                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; font-size: 11px; cursor: context-menu; display: inline-block;">
+                                        ${value}
+                                    </span>
+                                `;
                             });
                             $(this).parent().parent().find(".pe-hint").after(`
                                 <div class="pe-field-link-more" style="margin-top: 10px;">
-                                    <span style="display: inline-block; font-size:11px; ">Быстрое заполнение поля:</span>
+                                    <span style="display: inline-block; font-size: 11px;">Быстрое заполнение поля:</span>
                                     ${option}
                                 </div>
                             `);
