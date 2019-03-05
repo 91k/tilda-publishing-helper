@@ -341,7 +341,7 @@
                             $("input[name*='link'][value^='#popup']").each(function () {
                                 if (!$("#allrecords").text().includes($(this).val())) {
                                     $(this).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Линкхук недействителен. Такой попап отсутствует на этой странице</span>
+                                        <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
                                     `);
                                 }
                             });
