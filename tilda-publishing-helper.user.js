@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.25
+// @version      28.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -97,7 +97,7 @@
 
                 $(mainleft).append(`<div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
                             <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
-                                <span onclick="${ copy }"class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
+                                <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
                             </div>
                         </div>`);
 
@@ -354,6 +354,20 @@
                                 }
                             });
                         }
+
+                        $("input[name*='link']").each(function () {
+                            var option = "";
+                            var name = $(this).attr('name');
+                            $("#allrecords .record .r center b").each(function () {
+                                option += `<span onclick="$('[name=${name}]').val('${$(this).text()}')" style="padding-right:15px; font-size:11px; cursor:context-menu; display: inline-block;">${$(this).text()}</span>`;
+                            });
+                            $(this).parent().parent().find(".pe-hint").after(`
+                                <div>
+                                    <span style="display: inline-block; font-size:11px; ">Быстрое заполнение:</span>
+                                    ${option}
+                                </div>
+                            `);
+                        });
                     }, 3000);
                 });
             }
