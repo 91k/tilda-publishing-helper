@@ -362,8 +362,8 @@
                                 option += `<span onclick="$('[name=${name}]').val('${$(this).text()}')" style="padding-right:15px; font-size:11px; cursor:context-menu; display: inline-block;">${$(this).text()}</span>`;
                             });
                             $(this).parent().parent().find(".pe-hint").after(`
-                                <div>
-                                    <span style="display: inline-block; font-size:11px; ">Быстрое заполнение:</span>
+                                <div class="pe-field-link-more" style="margin-top: 10px;">
+                                    <span style="display: inline-block; font-size:11px; ">Быстрое заполнение поля:</span>
                                     ${option}
                                 </div>
                             `);
