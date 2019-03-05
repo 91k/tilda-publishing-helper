@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      27.22
+// @version      27.23
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -356,6 +356,14 @@
             if (typeof value != "undefined") {
                 if (value.includes("_") && value !== "") {
                     $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before('<span style="color: red;">Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>');
+                }
+            }
+
+            /* Предупреждение для css link */
+            value = $("[name='customcssfile']").val();
+            if (typeof value != "undefined") {
+                if (value.includes("rel=stylesheet") && value !== "") {
+                    $("[name='customcssfile']").css("border", "1px solid red").parent().before('<span style="color: red;">Некорректная ссылка на файл. Проверьте чтобы в ней в конце не было «rel=stylesheet»</span>');
                 }
             }
 
