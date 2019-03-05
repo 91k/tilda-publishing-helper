@@ -259,6 +259,7 @@
                 }
             `;
 
+            /* Убираем подсказу из Настроек сайта → Ещё */
             if (typeof $("#ss_menu_more").val() != "undefined") {
                 $("#ss_menu_more > div:nth-child(2) .ss-upload-button").remove();
                 $("#ss_menu_more > div:nth-child(2) img").remove();
@@ -270,7 +271,7 @@
             if ($("#page_menu_publishlink").val() != "undefined") {
                 $("#page_menu_publishlink").click(function () {
                     setTimeout(function () {
-                        if(lang == "RU") {
+                        if (lang == "RU") {
                             $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
                         } else {
                             $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
@@ -278,6 +279,12 @@
                     }, 2000);
                 });
             }
+
+            /* Делаем более заметней галочку «Выключить тестовый режим» */
+            var text = $("[name^='testmodeoff']").parent().html();
+            text = text.replace('Выключить', 'в<b>Ы</b>ключить');
+            $("[name='testmodeoff-cb']").parent().html(text);
+            $("[name='testmodeoff-cb']").parent().parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
 
             /* Скролл по пунктам в Настройках сайта плавным */
             if (typeof $("li[data-menu-item]").val() != "undefined") {
