@@ -339,7 +339,7 @@
                         /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
                         if (typeof $(".headerfooterpagearea").val() == "undefined") {
                             $("input[name*='link'][value^='#popup']").each(function () {
-                                if (!$("body").text().includes($(this).val())) {
+                                if (!$("#allrecords").text().includes($(this).val())) {
                                     $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Линкхук недействителен. Такой попап отсутствует на этой странице</span>
                                     `);
@@ -347,7 +347,7 @@
                             });
 
                             $("input[name*='link'][value^='#rec']").each(function () {
-                                if (typeof $("body").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
+                                if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
                                     $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
                                     `);
