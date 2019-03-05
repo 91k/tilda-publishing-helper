@@ -250,7 +250,7 @@
             } else if (isFree) {
                 text = "715";
             } else {
-                text = "770";
+                text = "820";
             }
 
             styleBody += `
