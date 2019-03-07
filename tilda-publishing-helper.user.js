@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      29.0
+// @version      29.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -297,37 +297,34 @@
                     }, 300);
                 });
 
-                var response = '';
                 var projectid = document.querySelector("input[name='projectid']").value;
                 $.ajax({
                     type: "GET",
-                    url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css?${Math.random()}`,
-                    async: false,
+                    url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css}`,
+                    async: true,
                     success: function (text) {
-                        response = text;
+                        if (text.indexOf("@font-face{font-family:'") != -1) {
+                            $("input[name$='font']").each(function () {
+                                var option = "";
+                                var name = $(this).attr('name');
+                                var value = text.substring(text.indexOf("@font-face{font-family:'") + 24, text.indexOf("';src:url('https://static.tildacdn.com"));
+
+                                option += `
+                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить имя шрифта">
+                                        ${value}
+                                    </span>
+                                `;
+
+                                $(this).after(`
+                                    <div class="pe-field-link-more" style="margin-top: 10px; font-size: 14px;">
+                                        <span style="display: inline-block;">${lang == "RU" ? "Имя шрифта, которое вы загрузили" : "Name of the font you uploaded" }:</span>
+                                        ${option}
+                                    </div>
+                                `);
+                            });
+                        }
                     }
                 });
-
-                if(response.indexOf("@font-face{font-family:'") != -1) {
-                    $("input[name$='font']").each(function () {
-                        var option = "";
-                        var name = $(this).attr('name');
-                        var value = response.substring(response.indexOf("@font-face{font-family:'") + 24, response.indexOf("';src:url('https://static.tildacdn.com"));
-
-                        option += `
-                            <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить имя шрифта">
-                                ${value}
-                            </span>
-                        `;
-
-                        $(this).after(`
-                            <div class="pe-field-link-more" style="margin-top: 10px; font-size: 14px;">
-                                <span style="display: inline-block;">${lang == "RU" ? "Имя шрифта, которое вы загрузили" : "Name of the font you uploaded" }:</span>
-                                ${option}
-                            </div>
-                        `);
-                    });
-                }
             }
 
             /* Перемещаем «Указать ID шаблона» */
