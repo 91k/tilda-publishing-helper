@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      30.0
+// @version      30.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -678,9 +678,24 @@
                     async: true,
                     success: function (text) {
                         if (text != null) {
-                            text = text.match(new RegExp("Disallow: /\n"));
+                            /* Стоит ли пароль на сайт */
+                            var auth = text.match(new RegExp("<b>Authorization Required\.</b>"));
+                            if (!isEmpty(auth)) {
+                                $(".td-project-uppanel__url tbody").append(`<tr>
+                                    <td>
+                                    </td>
+                                    <td class="td-project-uppanel__url">
+                                        <span style="font-size: 12px;">
+                                            На весь сайт стоит пароль.
+                                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_privacy" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Снять</a>.
+                                        </span>
+                                    </td>
+                                </tr>`);
+                            }
 
-                            if (!isEmpty(text)) {
+                            /* Стоит ли запрет на идексацию сайта */
+                            var index = text.match(new RegExp("Disallow: /\n"));
+                            if (!isEmpty(index)) {
                                 $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
                                     </td>
