@@ -697,6 +697,28 @@
                 });
             }
 
+            /* Есть ли на странице иконка */
+            if (typeof $("#preview16icon").val() != "undefined") {
+                var url = $('.ss-menu-pane__title').text().match(new RegExp("									(.*)\n"))[1];
+
+                $(".ss-tl__page-container tbody").prepend(`
+                <tr valign="top">
+                    <td>
+                        <img src="https://favicon.yandex.net/favicon/${url}" style="width: 16px; height: 16px">
+                    </td>
+                    <td style="padding-left: 20px;">
+                        <div class="ss-form-group">
+                            <label class="ss-label">Иконка в Яндекс.Поиске</label>							
+                            <div class="ss-form-group__hint">
+                                Фавиконка — это небольшая картинка, которая отображается в сниппете в результатах поиска Яндекса, рядом с адресом сайта в адресной строке браузера, около названия сайта в Избранном или в Закладках браузера. 
+                                Подробная инструкция <a href="https://yandex.ru/support/webmaster/search-results/favicon.html" target="_blank" noopener nofollow>здесь</a>.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                `);
+            }
+
             /* Добавляем ссылку «История платежей» после тарифа */
             if (typeof $("[name='paybox']").val() != "undefined") {
                 var subscription = $(".lr_col_12").text();
