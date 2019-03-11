@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      29.2
+// @version      29.3
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -80,6 +80,60 @@
                     return;
                 }
             }
+
+            /* Follow the yellow rabbit */
+            var yellowRabbit = false;
+            var yellow = "rgb(255, 255, 0)";
+            $("div[style]").each(function () {
+                if ($(this).css("background-color") === yellow && $(this).css("z-index") == "1000" && $(this).css("position") == "fixed") {
+                    yellowRabbit = true;
+
+                    styleBody += `
+                        #rightbuttons,
+                        .insertafterrecorbutton {
+                            display: none !important;
+                        }
+
+                        .record:hover #mainleft {
+                            display: block !important;
+                        }
+
+                        .tbtn,
+                        .tp-library__tn,
+                        .tp-library__tpl-body,
+                        .tn-save-btn,
+                        .js-btn-save,
+                        .tn-dialog__btn-save,
+                        .tc-help__send-btn,
+                        .recordbordertop,
+                        .recordborderbottom,
+                        .tp-record-edit-icons-left__dropdown-toggle,
+                        .tp-shortcuttools__two,
+                        .tp-shortcuttools__zero,
+                        [onclick^='showformAddProject_new'],
+                        [href*='/pagemove/'],
+                        [href*='/pagetransfer/'],
+                        [href*='/domains/check/'],
+                        [href*='pageUnpublish'],
+                        [href^='javascript:recoverPage'],
+                        [href^='javascript:delPage'],
+                        [href^='javascript:pay'],
+                        [href^='javascript:emailverify'],
+                        [href^='javascript:showformEditProjectFonts'],
+                        [href^='javascript:accepttransferProject'],
+                        [href^='javascript:canceltransferProject'],
+                        [href^='javascript:javascript:collabs_pay'],
+                        [href^='javascript:saveCollaborator'],
+                        [href^='javascript:deleteCollaborator'],
+                        [href^='javascript:dublicatePage'],
+                        [href^='/projects/collaborators/edit/'],
+                        button[type="submit"],
+                        input[type="submit"] {
+                            pointer-events: none !important;
+                        }
+                    `;
+                }
+            });
 
             /* Добавляем recid для каждого блока на странице */
             $("div.record").each(function () {
@@ -653,56 +707,6 @@
                     }
                 `;
             }
-
-            /* Follow the yellow rabbit */
-            var yellowRabbit = false;
-            var yellow = "rgb(255, 255, 0)";
-            $("div[style]").each(function () {
-                if ($(this).css("background-color") === yellow && $(this).css("z-index") == "1000" && $(this).css("position") == "fixed") {
-                    yellowRabbit = true;
-
-                    styleBody += `
-                        #rightbuttons,
-                        .insertafterrecorbutton {
-                            display: none !important;
-                        }
-
-                        .tbtn,
-                        .tp-library__tn,
-                        .tp-library__tpl-body,
-                        .tn-save-btn,
-                        .js-btn-save,
-                        .tn-dialog__btn-save,
-                        .tc-help__send-btn,
-                        .recordbordertop,
-                        .recordborderbottom,
-                        .tp-record-edit-icons-left__dropdown-toggle,
-                        .tp-shortcuttools__two,
-                        .tp-shortcuttools__zero,
-                        [onclick^='showformAddProject_new'],
-                        [href*='/pagemove/'],
-                        [href*='/pagetransfer/'],
-                        [href*='/domains/check/'],
-                        [href*='pageUnpublish'],
-                        [href^='javascript:recoverPage'],
-                        [href^='javascript:delPage'],
-                        [href^='javascript:pay'],
-                        [href^='javascript:emailverify'],
-                        [href^='javascript:showformEditProjectFonts'],
-                        [href^='javascript:accepttransferProject'],
-                        [href^='javascript:canceltransferProject'],
-                        [href^='javascript:javascript:collabs_pay'],
-                        [href^='javascript:saveCollaborator'],
-                        [href^='javascript:deleteCollaborator'],
-                        [href^='javascript:dublicatePage'],
-                        [href^='/projects/collaborators/edit/'],
-                        button[type="submit"],
-                        input[type="submit"] {
-                            pointer-events: none !important;
-                        }
-                    `;
-                }
-            });
 
             /* Добавляем новые стили к body */
             $("body").append(`
