@@ -295,6 +295,14 @@
                 .pub-left-bottom-link a {
                     text-decoration: underline;
                 }
+                
+                /* Убираем отступ сверху у иконок */
+                #preview16icon,
+                #preview152icon,
+                #preview270icon {
+                    padding-top: 0 !important;
+                }
+                
             `;
 
             /* Делаем боковое меню плавающим */
