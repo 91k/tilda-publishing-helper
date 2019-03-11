@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      29.5
+// @version      30.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -227,6 +227,11 @@
                     transform: rotate(180deg);
                 }
 
+                /* Красная обводка для подскази о перепубликации страниц */
+                .t265-wrapper {
+                    border: 2px red dashed;
+                }
+
                 /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
                 span.js-ga-localinput,
                 span.js-metrika-localinput,
@@ -260,6 +265,7 @@
                     filter: opacity(.5); !important;
                 }
 
+                /* Меняем текст в попапе при публикации страницы */
                 .js-publish-noteunderbutton {
                     width: 92% !important;
                     color: #333 !important;
@@ -633,13 +639,39 @@
                 </div>
             `);
 
-            /* Добавляем ссылку на «Главную страницу» для иконки домика */
+            /* Определяем есть ли список страниц */
             projectid = $("#pagesortable").attr("data-projectid");
             if (typeof projectid != "undefined") {
+                /* Добавляем ссылку на «Главную страницу» для иконки домика */
                 $(".td-page__td-title").has(".td-page__ico-home").prepend(`
-                    <a href='https://tilda.cc/projects/settings/?projectid=${ projectid }#tab=ss_menu_index'></a>
+                    <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
                 `);
                 $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
+
+                /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
+                $.ajax({
+                    type: "GET",
+                    url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
+                    async: true,
+                    success: function (text) {
+                        if (text != null) {
+                            text = text.match(new RegExp("Disallow: /\n"));
+
+                            if (!isEmpty(text)) {
+                                $(".td-project-uppanel__url tbody").append(`<tr>
+                                    <td>
+                                    </td>
+                                    <td class="td-project-uppanel__url">
+                                        <span style="font-size: 12px;">
+                                            Сайт закрыт от индексации.
+                                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Открыть</a>.
+                                        </span>
+                                    </td>
+                                </tr>`);
+                            }
+                        }
+                    }
+                });
             }
 
             /* Добавляем ссылку «История платежей» после тарифа */
