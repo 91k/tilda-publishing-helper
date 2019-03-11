@@ -523,9 +523,9 @@
                     }
 
                     /* Удаляем https:// у проектов без доменов */
-                    $('.td-site__url-link a').each(function(){
+                    $('.td-site__url-link a').each(function () {
                         $(this).text($(this).text().replace("https://project", "project"));
-                    })
+                    });
 
                     /* Пункты заявка и настройки */
                     $(`
