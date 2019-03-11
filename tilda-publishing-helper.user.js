@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      31.0
+// @version      31.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -583,19 +583,21 @@
                             </tbody>
                         </table>
                     `).appendTo($(buttons).parent());
-
-                    /* Попытка разместить чёрный на больших экрана как можно ниже */
-                    $('body').css('background-color', '#f0f0f0').append("<footer></footer>");
-                    $("#rec271198, #rec266148, body > .t-row").appendTo('footer');
-                    $(window).scroll(function () {
-                        if ($(window).height() < $('body').height()) {
-                            $('footer').css('position', 'relative');
-                        } else {
-                            $('footer').css('position', 'fixed').css('bottom', 0).css('width', '100%');
-                        }
-                    });
                 }
             });
+
+            /* Попытка разместить чёрный на больших экрана как можно ниже */
+            if ($(".td-sites-grid__cell").val() != "undefined") {
+                $('body').css('background-color', '#f0f0f0').append("<footer></footer>");
+                $("#rec271198, #rec266148, body > .t-row").appendTo('footer');
+                $(window).scroll(function () {
+                    if ($(window).height() < $('body').height()) {
+                        $('footer').css('position', 'relative');
+                    } else {
+                        $('footer').css('position', 'fixed').css('bottom', 0).css('width', '100%');
+                    }
+                });
+            }
 
             /* Добавляем пункт «Домены» в верхнее меню */
             var domains = 0;
