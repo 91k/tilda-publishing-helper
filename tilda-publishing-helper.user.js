@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      31.4
+// @version      32.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -152,31 +152,141 @@
                 }
             });
 
-            /* Добавляем recid для каждого блока на странице */
-            $("div.record").each(function () {
-                var rid = $(this).attr("recordid");
-                var recid = `#rec${ rid }`;
-                var recordid = `#record${ rid }`;
-                var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('${ recordid }').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
-                var mainleft = $(this).children("div#mainleft").children("div");
+            if (window.location.pathname == "/page/") {
+                /* Добавляем recid для каждого блока на странице */
+                $("div.record").each(function () {
+                    var rid = $(this).attr("recordid");
+                    var recid = `#rec${ rid }`;
+                    var recordid = `#record${ rid }`;
+                    var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('${ recordid }').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
+                    var mainleft = $(this).children("div#mainleft").children("div");
 
-                $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
+                    $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
-                if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
-                    $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
-                }
+                    if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
+                        $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
+                    }
 
-                $(mainleft).append(`<div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
+                    $(mainleft).append(`<div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
                             <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
                                 <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
                             </div>
                         </div>`);
 
-                if ($(this).attr("off") === "y" && yellowRabbit) {
-                    $(this).children("div#mainleft").css("display", "block");
-                    $(mainleft).children("div:first, div:last").css("display", "none");
+                    if ($(this).attr("off") === "y" && yellowRabbit) {
+                        $(this).children("div#mainleft").css("display", "block");
+                        $(mainleft).children("div:first, div:last").css("display", "none");
+                    }
+                });
+
+                /* Используем переменную, чтобы уникализировать список элементов */
+                var seen = {};
+
+                /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
+                $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter(function (el, arr) {
+                    return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
+                }).map(function () {
+                    var value = this.getAttribute("name");
+
+                    if (seen.hasOwnProperty(value))
+                        return null;
+
+                    seen[value] = true;
+                    return value;
+                }).each(function () {
+                    $(this).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(this).attr("name")}".</span>`);
+                });
+
+                /* Другая подсказка после публикации страницы  */
+                if ($("#page_menu_publishlink").val() != "undefined") {
+                    $("#page_menu_publishlink").click(function () {
+                        setTimeout(function () {
+                            if (lang == "RU") {
+                                $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                            } else {
+                                $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
+                            }
+                        }, 2000);
+                    });
                 }
-            });
+
+                /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
+                if (typeof $(".tp-record-edit-icons-left__two").val() != "undefined") {
+                    $(".tp-record-edit-icons-left__two").click(function () {
+                        setTimeout(function () {
+                            $("input").each(function () {
+                                var placeholder = String($(this).attr("placeholder"));
+                                var value = $(this).val();
+                                if (placeholder.includes("px") && !value.includes("px") && value !== "") {
+                                    $(this).css("border", "1px solid red").before(`
+                                    <span style="color: red;">В этом поле нужно указать значение с "px"</span>
+                                `);
+                                }
+                            });
+                        }, 1000);
+                    });
+                }
+
+                /* Предупреждение в Контенте блока */
+                if (typeof $(".tp-record-edit-icons-left__three").val() != "undefined") {
+                    $(".tp-record-edit-icons-left__three").click(function () {
+                        setTimeout(function () {
+                            /* Предупреждение о ссылках с кавычкой */
+                            $("input[name*='link']").each(function () {
+                                if ($(this).val().includes('"')) {
+                                    $(this).css("border", "1px solid red").before(`
+                                    <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
+                                `);
+                                }
+                            });
+
+                            /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
+                            if (typeof $(".headerfooterpagearea").val() == "undefined") {
+                                $("input[name*='link'][value^='#popup']").each(function () {
+                                    if (!$("#allrecords").text().includes($(this).val())) {
+                                        $(this).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
+                                    `);
+                                    }
+                                });
+
+                                $("input[name*='link'][value^='#rec']").each(function () {
+                                    if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
+                                        $(this).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
+                                    `);
+                                    }
+                                });
+                            }
+
+                            $("input[name*='link']").each(function () {
+                                var option = "";
+                                var name = $(this).attr('name');
+                                $("#allrecords .record .r center b").each(function () {
+                                    var value = $(this).text();
+
+                                    /* Если блок T173 Якорная ссылка */
+                                    if ($(this).parents('[data-record-type="215"]').length) {
+                                        value = "#" + value;
+                                    }
+
+                                    option += `
+                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
+                                        ${value}
+                                    </span>
+                                `;
+                                });
+                                $(this).parent().parent().find(".pe-hint").after(`
+                                <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
+                                    <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
+                                    ${option}
+                                </div>
+                            `);
+                            });
+                        }, 3000);
+                    });
+                }
+            }
 
             /* Заносим все новые стили в переменную */
             styleBody += `
@@ -305,10 +415,11 @@
                 
             `;
 
-            /* Делаем боковое меню плавающим */
-            var isEmail;
-            if ($("[data-menu-item='#ss_menu_fonts']")) {
-                styleBody += `
+            if (window.location.pathname == "/projects/settings/") {
+                /* Делаем боковое меню плавающим */
+                var isEmail;
+                if ($("[data-menu-item='#ss_menu_fonts']")) {
+                    styleBody += `
                 .ss-menu {
                     position: -webkit-sticky;
                     position: sticky;
@@ -324,92 +435,136 @@
                 .ss-menu__wrapper {
                     margin-bottom: 0 !important;
                 }
-            `;
-                isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
-            }
-
-            var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
-
-            if (isEmail == "none") {
-                text = "630";
-            } else if (isFree) {
-                text = "715";
-            } else {
-                text = "820";
-            }
-
-            styleBody += `
-                .ss-content {
-                    margin-top: -${ text }px;
+                `;
+                    isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
                 }
-            `;
 
-            /* Убираем подсказу из Настроек сайта → Ещё */
-            if (typeof $("#ss_menu_more").val() != "undefined") {
-                $("#ss_menu_more > div:nth-child(2) .ss-upload-button").remove();
-                $("#ss_menu_more > div:nth-child(2) img").remove();
-                $("#ss_menu_more > div:nth-child(2) br").remove();
-                $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang == "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang == "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
-            }
+                var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
 
-            /* Другая подсказка после публикации страницы  */
-            if ($("#page_menu_publishlink").val() != "undefined") {
-                $("#page_menu_publishlink").click(function () {
-                    setTimeout(function () {
-                        if (lang == "RU") {
-                            $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
-                        } else {
-                            $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
-                        }
-                    }, 2000);
-                });
-            }
-
-            /* Делаем более заметней галочку «Выключить тестовый режим» */
-            if (typeof $("[name^='testmodeoff']").val() != "undefined") {
-                if (lang == "RU") {
-                    var text = $("[name^='testmodeoff']").parent().html();
-                    text = text.replace('Выключить', 'в<b>Ы</b>ключить');
-                    $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
+                if (isEmail == "none") {
+                    text = "630";
+                } else if (isFree) {
+                    text = "715";
+                } else {
+                    text = "820";
                 }
-            }
 
-            /* Скролл по пунктам в Настройках сайта плавным */
-            if (typeof $("li[data-menu-item]").val() != "undefined") {
-                $("li[data-menu-item]").click(function () {
-                    $("html,body").animate({
-                        scrollTop: $("body").offset().top + 105
-                    }, 300);
-                });
+                styleBody += `
+                    .ss-content {
+                        margin-top: -${ text }px;
+                    }
+                `;
 
-                var projectid = document.querySelector("input[name='projectid']").value;
-                $.ajax({
-                    type: "GET",
-                    url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css}`,
-                    async: true,
-                    success: function (text) {
-                        if (text.indexOf("@font-face{font-family:'") != -1) {
-                            $("input[name$='font']").each(function () {
-                                var option = "";
-                                var name = $(this).attr('name');
-                                var value = text.substring(text.indexOf("@font-face{font-family:'") + 24, text.indexOf("';src:url('https://static.tildacdn.com"));
+                /* Убираем подсказу из Настроек сайта → Ещё */
+                if (typeof $("#ss_menu_more").val() != "undefined") {
+                    $("#ss_menu_more > div:nth-child(2) .ss-upload-button").remove();
+                    $("#ss_menu_more > div:nth-child(2) img").remove();
+                    $("#ss_menu_more > div:nth-child(2) br").remove();
+                    $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang == "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang == "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
+                }
 
-                                option += `
+                /* Скролл по пунктам в Настройках сайта плавным */
+                if (typeof $("li[data-menu-item]").val() != "undefined") {
+                    $("li[data-menu-item]").click(function () {
+                        $("html,body").animate({
+                            scrollTop: $("body").offset().top + 105
+                        }, 300);
+                    });
+
+                    var projectid = document.querySelector("input[name='projectid']").value;
+                    $.ajax({
+                        type: "GET",
+                        url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css}`,
+                        async: true,
+                        success: function (text) {
+                            if (text.indexOf("@font-face{font-family:'") != -1) {
+                                $("input[name$='font']").each(function () {
+                                    var option = "";
+                                    var name = $(this).attr('name');
+                                    var value = text.substring(text.indexOf("@font-face{font-family:'") + 24, text.indexOf("';src:url('https://static.tildacdn.com"));
+
+                                    option += `
                                     <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить имя шрифта">
                                         ${value}
                                     </span>
                                 `;
 
-                                $(this).after(`
+                                    $(this).after(`
                                     <div class="pe-field-link-more" style="margin-top: 10px; font-size: 14px;">
                                         <span style="display: inline-block;">${lang == "RU" ? "Имя шрифта, которое вы загрузили" : "Name of the font you uploaded" }:</span>
                                         ${option}
                                     </div>
                                 `);
-                            });
+                                });
+                            }
                         }
+                    });
+                }
+
+                /* Предупреждение для поля Google Analytics */
+                var value = $("input.js-ga-localinput").val();
+                if (typeof value != "undefined") {
+                    if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
+                        $("input.js-ga-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
                     }
-                });
+                }
+
+                /* Предупреждение для поля Яндекс.Метрика */
+                value = $("input.js-metrika-localinput").val();
+                if (typeof value != "undefined") {
+                    if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
+                        $("input.js-metrika-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
+                    }
+                }
+
+                /* Предупреждение для поля субдомен */
+                value = $("input#ss-input-alias").val();
+                if (typeof value != "undefined") {
+                    if (value.includes("_") && value !== "") {
+                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before('<span style="color: red;">Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>');
+                    }
+                }
+
+                /* Предупреждение для css link */
+                value = $("[name='customcssfile']").val();
+                if (typeof value != "undefined") {
+                    if (value.includes("rel=stylesheet") && value !== "") {
+                        $("[name='customcssfile']").css("border", "1px solid red").parent().before('<span style="color: red;">Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>');
+                    }
+                }
+
+                /* Подсказка под полями счётчиков */
+                text = "Добавьте только номер счётчика";
+                if (typeof $(".js-ga-localinput").val() != "undefined") {
+                    $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${ text }<span>`);
+                }
+                if (typeof $(".js-metrika-localinput").val() != "undefined") {
+                    $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${ text }<span>`);
+                }
+
+                if (typeof $("[name='googletmid']").val() != "undefined") {
+                    $("[name='googletmid']").attr("placeholder", "GTM-N842GS").after(`<span class='js-gtm-localinput'>${ text }<span>`);
+                }
+
+                /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
+                $(".js-yandexmetrika-connect").removeClass("js-yandexmetrika-connect");
+                $(".js-ga-connect").removeClass("js-ga-connect");
+
+                /* Добавляем подсказку по валютам */
+                if (typeof $("[name=currency_txt] + div").val() != "undefined") {
+                    $("[name=currency_txt] + div").text(lang == "RU" ? "Знаки: ₽, $, €, ¥, руб." : "Signs: ₽, $, €, ¥.");
+                }
+            }
+
+            if (window.location.pathname == "/projects/payments/") {
+                /* Делаем более заметней галочку «Выключить тестовый режим» */
+                if (typeof $("[name^='testmodeoff']").val() != "undefined") {
+                    if (lang == "RU") {
+                        text = $("[name^='testmodeoff']").parent().html();
+                        text = text.replace('Выключить', 'в<b>Ы</b>ключить');
+                        $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
+                    }
+                }
             }
 
             /* Перемещаем «Указать ID шаблона» */
@@ -420,144 +575,36 @@
                 $("#welcome-middle").next().next().after($("#welcome-middle"));
             }
 
-            /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
-            if (typeof $(".tp-record-edit-icons-left__two").val() != "undefined") {
-                $(".tp-record-edit-icons-left__two").click(function () {
-                    setTimeout(function () {
-                        $("input").each(function () {
-                            var placeholder = String($(this).attr("placeholder"));
-                            var value = $(this).val();
-                            if (placeholder.includes("px") && !value.includes("px") && value !== "") {
-                                $(this).css("border", "1px solid red").before(`
-                                    <span style="color: red;">В этом поле нужно указать значение с "px"</span>
-                                `);
-                            }
-                        });
-                    }, 1000);
-                });
-            }
+            if (window.location.pathname == "/projects/") {
+                /* Создаём дополнительные ссылки в карточках проектов */
+                $(".td-sites-grid__cell").each(function () {
+                    var projectid = $(this).attr("id");
+                    if (typeof projectid != "undefined") {
+                        var id = projectid.replace("project", "");
+                        var buttons = $(this).find(".td-site__settings");
+                        var link = $(this).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
+                        var leads = "",
+                            settings = "";
 
-            /* Предупреждение в Контенте блока */
-            if (typeof $(".tp-record-edit-icons-left__three").val() != "undefined") {
-                $(".tp-record-edit-icons-left__three").click(function () {
-                    setTimeout(function () {
-                        /* Предупреждение о ссылках с кавычкой */
-                        $("input[name*='link']").each(function () {
-                            if ($(this).val().includes('"')) {
-                                $(this).css("border", "1px solid red").before(`
-                                    <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
-                                `);
-                            }
-                        });
-
-                        /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
-                        if (typeof $(".headerfooterpagearea").val() == "undefined") {
-                            $("input[name*='link'][value^='#popup']").each(function () {
-                                if (!$("#allrecords").text().includes($(this).val())) {
-                                    $(this).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
-                                    `);
-                                }
-                            });
-
-                            $("input[name*='link'][value^='#rec']").each(function () {
-                                if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
-                                    $(this).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
-                                    `);
-                                }
-                            });
+                        if (lang == "RU") {
+                            leads = "Заявки";
+                            settings = "Настройки";
+                            $(link).html("Редактировать");
+                        } else if (lang == "EN") {
+                            leads = "Leads";
+                            settings = "Settings";
+                            $(link).html("EDIT");
+                        } else {
+                            return;
                         }
 
-                        $("input[name*='link']").each(function () {
-                            var option = "";
-                            var name = $(this).attr('name');
-                            $("#allrecords .record .r center b").each(function () {
-                                var value = $(this).text();
-
-                                /* Если блок T173 Якорная ссылка */
-                                if ($(this).parents('[data-record-type="215"]').length) {
-                                    value = "#" + value;
-                                }
-
-                                option += `
-                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
-                                        ${value}
-                                    </span>
-                                `;
-                            });
-                            $(this).parent().parent().find(".pe-hint").after(`
-                                <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
-                                    <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
-                                    ${option}
-                                </div>
-                            `);
+                        /* Удаляем https:// у проектов без доменов */
+                        $('.td-site__url-link a').each(function () {
+                            $(this).text($(this).text().replace("https://project", "project"));
                         });
-                    }, 3000);
-                });
-            }
 
-            /* Предупреждение для поля Google Analytics */
-            var value = $("input.js-ga-localinput").val();
-            if (typeof value != "undefined") {
-                if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
-                    $("input.js-ga-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
-                }
-            }
-
-            /* Предупреждение для поля Яндекс.Метрика */
-            value = $("input.js-metrika-localinput").val();
-            if (typeof value != "undefined") {
-                if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
-                    $("input.js-metrika-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
-                }
-            }
-
-            /* Предупреждение для поля субдомен */
-            value = $("input#ss-input-alias").val();
-            if (typeof value != "undefined") {
-                if (value.includes("_") && value !== "") {
-                    $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before('<span style="color: red;">Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>');
-                }
-            }
-
-            /* Предупреждение для css link */
-            value = $("[name='customcssfile']").val();
-            if (typeof value != "undefined") {
-                if (value.includes("rel=stylesheet") && value !== "") {
-                    $("[name='customcssfile']").css("border", "1px solid red").parent().before('<span style="color: red;">Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>');
-                }
-            }
-
-            /* Создаём дополнительные ссылки в карточках проектов */
-            $(".td-sites-grid__cell").each(function () {
-                var projectid = $(this).attr("id");
-                if (typeof projectid != "undefined") {
-                    var id = projectid.replace("project", "");
-                    var buttons = $(this).find(".td-site__settings");
-                    var link = $(this).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
-                    var leads = "",
-                        settings = "";
-
-                    if (lang == "RU") {
-                        leads = "Заявки";
-                        settings = "Настройки";
-                        $(link).html("Редактировать");
-                    } else if (lang == "EN") {
-                        leads = "Leads";
-                        settings = "Settings";
-                        $(link).html("EDIT");
-                    } else {
-                        return;
-                    }
-
-                    /* Удаляем https:// у проектов без доменов */
-                    $('.td-site__url-link a').each(function () {
-                        $(this).text($(this).text().replace("https://project", "project"));
-                    });
-
-                    /* Пункты заявка и настройки */
-                    $(`
+                        /* Пункты заявка и настройки */
+                        $(`
                         <table class="td-site__settings">
                             <tbody>
                                 <tr>
@@ -583,18 +630,19 @@
                             </tbody>
                         </table>
                     `).appendTo($(buttons).parent());
-                }
-            });
+                    }
+                });
 
-            /* Попытка разместить чёрный на больших экрана как можно ниже */
-            if ($(".td-sites-grid__cell").val() != "undefined") {
-                if (window.location.pathname == "/projects/") {
-                    $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
-                    $("#rec271198, #rec266148, body > .t-row").appendTo("footer");
-                    if ($(window).height() > $("body").height()) {
-                        $("footer").css("position", "fixed").css("bottom", "0").css("width", "100%");
-                    } else {
-                        $("footer").css("position", "relative");
+                /* Попытка разместить чёрный на больших экрана как можно ниже */
+                if ($(".td-sites-grid__cell").val() != "undefined") {
+                    if (window.location.pathname == "/projects/") {
+                        $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
+                        $("#rec271198, #rec266148, body > .t-row").appendTo("footer");
+                        if ($(window).height() > $("body").height()) {
+                            $("footer").css("position", "fixed").css("bottom", "0").css("width", "100%");
+                        } else {
+                            $("footer").css("position", "relative");
+                        }
                     }
                 }
             }
@@ -613,39 +661,22 @@
                 $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item">${ lang == "RU" ? "Домены" : "Domains" }</a>`);
             }
 
-            /* Подсказка под полями счётчиков */
-            text = "Добавьте только номер счётчика";
-            if (typeof $(".js-ga-localinput").val() != "undefined") {
-                $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${ text }<span>`);
-            }
-            if (typeof $(".js-metrika-localinput").val() != "undefined") {
-                $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${ text }<span>`);
-            }
-
-            if (typeof $("[name='googletmid']").val() != "undefined") {
-                $("[name='googletmid']").attr("placeholder", "GTM-N842GS").after(`<span class='js-gtm-localinput'>${ text }<span>`);
-            }
-
-            /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
-            $(".js-yandexmetrika-connect").removeClass("js-yandexmetrika-connect");
-            $(".js-ga-connect").removeClass("js-ga-connect");
-
-            /* Добавляем подсказку по валютам */
-            if (typeof $("[name=currency_txt] + div").val() != "undefined") {
-                $("[name=currency_txt] + div").text(lang == "RU" ? "Знаки: ₽, $, €, ¥, руб." : "Signs: ₽, $, €, ¥.");
-            }
-
-            /* Добавляем ссылку на удаление аккаунта */
-            $("[href='/identity/changepassword/']").after(`
+            if (window.location.pathname == "/identity/") {
+                /* Добавляем ссылку на удаление аккаунта */
+                $("[href='/identity/changepassword/']").after(`
                 <a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang == "RU" ? "Удалить аккаунт" : "Delete Account" }</a>
             `);
 
-            /* Исправляем слишком длинную кнопку в Профиле */
-            $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
-            $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
 
-            /* Исправляем отступ слева у кнопки в Доменах */
-            $("#listdomainsbox > center > a > table > tbody > tr > td").css("padding-left", "0");
+                /* Исправляем слишком длинную кнопку в Профиле */
+                $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
+                $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
+            }
+
+            if (window.location.pathname == "/domains/") {
+                /* Исправляем отступ слева у кнопки в Доменах */
+                $("#listdomainsbox > center > a > table > tbody > tr > td").css("padding-left", "0");
+            }
 
             /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
             $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
@@ -675,26 +706,27 @@
                 </div>
             `);
 
-            /* Определяем есть ли список страниц */
-            projectid = $("#pagesortable").attr("data-projectid");
-            if (typeof projectid != "undefined") {
-                /* Добавляем ссылку на «Главную страницу» для иконки домика */
-                $(".td-page__td-title").has(".td-page__ico-home").prepend(`
+            if (window.location.pathname == "/projects/" && window.location.search.includes("?projectid=")) {
+                /* Определяем есть ли список страниц */
+                projectid = $("#pagesortable").attr("data-projectid");
+                if (typeof projectid != "undefined") {
+                    /* Добавляем ссылку на «Главную страницу» для иконки домика */
+                    $(".td-page__td-title").has(".td-page__ico-home").prepend(`
                     <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
                 `);
-                $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
+                    $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
-                /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
-                $.ajax({
-                    type: "GET",
-                    url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
-                    async: true,
-                    success: function (text) {
-                        if (text != null) {
-                            /* Стоит ли пароль на сайт */
-                            var auth = text.match(new RegExp("<b>Authorization Required\.</b>"));
-                            if (!isEmpty(auth)) {
-                                $(".td-project-uppanel__url tbody").append(`<tr>
+                    /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
+                    $.ajax({
+                        type: "GET",
+                        url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
+                        async: true,
+                        success: function (text) {
+                            if (text != null) {
+                                /* Стоит ли пароль на сайт */
+                                var auth = text.match(new RegExp("<b>Authorization Required\.</b>"));
+                                if (!isEmpty(auth)) {
+                                    $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
                                     </td>
                                     <td class="td-project-uppanel__url">
@@ -704,12 +736,12 @@
                                         </span>
                                     </td>
                                 </tr>`);
-                            }
+                                }
 
-                            /* Стоит ли запрет на идексацию сайта */
-                            var index = text.match(new RegExp("Disallow: /\n"));
-                            if (!isEmpty(index)) {
-                                $(".td-project-uppanel__url tbody").append(`<tr>
+                                /* Стоит ли запрет на идексацию сайта */
+                                var index = text.match(new RegExp("Disallow: /\n"));
+                                if (!isEmpty(index)) {
+                                    $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
                                     </td>
                                     <td class="td-project-uppanel__url">
@@ -719,17 +751,20 @@
                                         </span>
                                     </td>
                                 </tr>`);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
 
-            /* Есть ли на странице иконка */
-            if (typeof $("#preview16icon").val() != "undefined") {
-                var url = $('.ss-menu-pane__title').text().match(new RegExp("									(.*)\n"))[1];
+            if (window.location.pathname == "/projects/favicons/") {
 
-                $(".ss-tl__page-container tbody").prepend(`
+                /* Есть ли на странице иконка */
+                if (typeof $("#preview16icon").val() != "undefined") {
+                    var url = $('.ss-menu-pane__title').text().match(new RegExp("									(.*)\n"))[1];
+
+                    $(".ss-tl__page-container tbody").prepend(`
                 <tr valign="top">
                     <td>
                         <img src="https://favicon.yandex.net/favicon/${url}" style="width: 16px; height: 16px">
@@ -748,19 +783,24 @@
                     </td>
                 </tr>
                 `);
+                }
             }
 
-            /* Добавляем ссылку «История платежей» после тарифа */
-            if (typeof $("[name='paybox']").val() != "undefined") {
-                var subscription = $(".lr_col_12").text();
-                let payments = ["renewal subscription is off", "автопродление выключено", "Cancel subscription", "Отменить автоматические платежи", "Ваш тарифный план:		T", "Your Plan:		T"];
-                if (payments.some(text => subscription.includes(text))) {
-                    $("[name='paybox']").before(`
+            if (window.location.pathname == "/identity/plan/") {
+                /* Добавляем ссылку «История платежей» после тарифа */
+                if (typeof $("[name='paybox']").val() != "undefined") {
+                    var subscription = $(".lr_col_12").text();
+                    let payments = ["renewal subscription is off", "автопродление выключено", "Cancel subscription", "Отменить автоматические платежи", "Ваш тарифный план:		T", "Your Plan:		T"];
+                    if (payments.some(text => subscription.includes(text))) {
+                        $("[name='paybox']").before(`
                         <div style="font-size:16px; font-weight:normal; background-color:#eee; padding:30px; margin-top:-40px;">
                             <a href="https://tilda.cc/identity/payments/" style="color:#ff855D;">${ lang == "RU" ? "История платежей" : "Payments history" }</a>
                         </div>
                     `);
+                    }
                 }
+
+                showmore_prices();
             }
 
             /* Clippy */
