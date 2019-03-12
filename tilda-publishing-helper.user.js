@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      32.0
+// @version      32.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -41,7 +41,7 @@
         }
 
         return;
-    } else if (textBody == "Error 404: Page not found") {
+    } else if (textBody == "Error 404: Page not found" || textBody == "System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.") {
         return;
     } else if (window.location.pathname == "/identity/chat/" || window.location.pathname == "/identity/apikeys/") {
         return;
