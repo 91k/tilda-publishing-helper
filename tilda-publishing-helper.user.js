@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      32.2
+// @version      32.3
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -659,11 +659,11 @@
                 $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item">${ lang == "RU" ? "Домены" : "Domains" }</a>`);
             }
 
-            if (window.location.pathname == "/identity/") {
+            if (window.location.pathname == "/identity/" || window.location.pathname == "/identity/deleteaccount/") {
                 /* Добавляем ссылку на удаление аккаунта */
                 $("[href='/identity/changepassword/']").after(`
-                <a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang == "RU" ? "Удалить аккаунт" : "Delete Account" }</a>
-            `);
+                    <a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang == "RU" ? "Удалить аккаунт" : "Delete Account" }</a>
+                `);
 
 
                 /* Исправляем слишком длинную кнопку в Профиле */
