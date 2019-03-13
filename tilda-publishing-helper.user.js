@@ -13,19 +13,19 @@
 // @exclude      https://experts.tilda.cc/*
 // @license      MIT
 // ==/UserScript==
-(function () {
+(async function (window, undefined) {
     "use strict";
 
     /* Делаем редирект, если страница недоступна для редактирования */
     var textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
 
     if (textBody == "You can't edit this project.." || textBody == "You can not edit this project..." || textBody == "This page belongs to another account, so you can't see or edit it... Please re-login") {
-        if (window.location.href.indexOf("projectid=") !== -1) {
+        if (window.location.href.includes("projectid=")) {
             var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
             var pageid = "";
             var url = "";
 
-            if (window.location.href.indexOf("pageid=") !== -1) {
+            if (window.location.href.includes("pageid=")) {
                 pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
             }
 
@@ -477,7 +477,7 @@
                         url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css}`,
                         async: true,
                         success: function (text) {
-                            if (text.indexOf("@font-face{font-family:'") != -1) {
+                            if (text.includes("@font-face{font-family:'")) {
                                 $("input[name$='font']").each(function () {
                                     var option = "";
                                     var name = $(this).attr('name');
@@ -869,4 +869,4 @@
             `);
         });
     }
-})();
+})(window);
