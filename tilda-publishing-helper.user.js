@@ -357,7 +357,7 @@
                     border: 2px red dashed;
                 }
 
-                ss_menu_analytics .ss-btn, 
+                #ss_menu_analytics .ss-btn, 
                 #ss_menu_seo .ss-btn {
                     border: 1px solid #ccc !important;
                 }
