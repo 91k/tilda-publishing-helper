@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      32.5
+// @version      32.6
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -357,6 +357,7 @@
                     border: 2px red dashed;
                 }
 
+                ss_menu_analytics .ss-btn, 
                 #ss_menu_seo .ss-btn {
                     border: 1px solid #ccc !important;
                 }
@@ -467,7 +468,7 @@
                     $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang == "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang == "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
                 }
 
-                $("#ss_menu_seo .ss-btn").addClass("ss-btn-white");
+                $("#ss_menu_seo .ss-btn, #ss_menu_analytics .ss-btn").addClass("ss-btn-white");
 
                 /* Скролл по пунктам в Настройках сайта плавным */
                 if (typeof $("li[data-menu-item]").val() != "undefined") {
@@ -677,7 +678,7 @@
                 $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
             }
 
-            if (window.location.pathname == "/domains/" || window.location.pathname == "/identity/courses/" ) {
+            if (window.location.pathname == "/domains/" || window.location.pathname == "/identity/courses/") {
                 /* Исправляем отступ слева у кнопки в Доменах */
                 $("center > a > table > tbody > tr > td").css("padding-left", "0");
             }
