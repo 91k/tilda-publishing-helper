@@ -301,7 +301,7 @@
                 }
 
                 /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
-                .td-popup-btn {
+                .td-popup-window__bottom-right .td-popup-btn {
                     margin: 0 0 0 15px !important;
                 }
 
