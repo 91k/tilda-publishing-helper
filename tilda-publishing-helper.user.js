@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      32.8
+// @version      33.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -88,6 +88,35 @@
                 return true
             }
 
+            function addRecIDs() {
+                $("div.record").each(function () {
+                    if ($(this).children("div#mainleft").children("div").children().length < 6) {
+                        var rid = $(this).attr("recordid");
+                        var recid = `#rec${ rid }`;
+                        var recordid = `#record${ rid }`;
+                        var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('${ recordid }').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
+                        var mainleft = $(this).children("div#mainleft").children("div");
+
+                        $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
+
+                        if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
+                            $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
+                        }
+
+                        $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
+                        <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
+                            <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
+                        </div>
+                    </div>`);
+
+                        if ($(this).attr("off") === "y" && yellowRabbit) {
+                            $(this).children("div#mainleft").css("display", "block");
+                            $(mainleft).children("div:first, div:last").css("display", "none");
+                        }
+                    }
+                });
+            }
+
             /* Заносим все новые стили в переменную */
             var styleBody = "";
 
@@ -156,29 +185,15 @@
 
             if (window.location.pathname == "/page/") {
                 /* Добавляем recid для каждого блока на странице */
-                $("div.record").each(function () {
-                    var rid = $(this).attr("recordid");
-                    var recid = `#rec${ rid }`;
-                    var recordid = `#record${ rid }`;
-                    var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec' + $('${ recordid }').attr('recordid')).select(); document.execCommand('copy'); t.remove()`;
-                    var mainleft = $(this).children("div#mainleft").children("div");
+                addRecIDs();
 
-                    $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
-
-                    if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
-                        $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
-                    }
-
-                    $(mainleft).append(`<div class="tp-record-edit-icons-left__one" style="cursor: pointer;">
-                            <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
-                                <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
-                            </div>
-                        </div>`);
-
-                    if ($(this).attr("off") === "y" && yellowRabbit) {
-                        $(this).children("div#mainleft").css("display", "block");
-                        $(mainleft).children("div:first, div:last").css("display", "none");
-                    }
+                /* Если добавили новый блок, то ищем его на странице и добавляем recid */
+                $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
+                    $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
+                        setTimeout(function () {
+                            addRecIDs();
+                        }, 1000);
+                    });
                 });
 
                 /* Используем переменную, чтобы уникализировать список элементов */
