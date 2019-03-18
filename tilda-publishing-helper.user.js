@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      33.0
+// @version      33.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -189,11 +189,13 @@
 
                 /* Если добавили новый блок, то ищем его на странице и добавляем recid */
                 $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
-                    $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
-                        setTimeout(function () {
-                            addRecIDs();
-                        }, 1000);
-                    });
+                    setTimeout(function () {
+                        $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
+                            setTimeout(function () {
+                                addRecIDs();
+                            }, 1000);
+                        });
+                    }, 500);
                 });
 
                 /* Используем переменную, чтобы уникализировать список элементов */
@@ -239,6 +241,12 @@
                                     <span style="color: red;">В этом поле нужно указать значение с "px"</span>
                                 `);
                                 }
+                            });
+
+                            $(".pe-settings__savebtns-table").click(function () {
+                                setTimeout(function () {
+                                    addRecIDs();
+                                }, 1000);
                             });
                         }, 1000);
                     });
@@ -299,6 +307,12 @@
                                     ${option}
                                 </div>
                             `);
+                            });
+
+                            $(".pe-content__savebtns-table").click(function () {
+                                setTimeout(function () {
+                                    addRecIDs();
+                                }, 1000);
                             });
                         }, 2000);
                     });
