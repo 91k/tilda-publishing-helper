@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      33.3
+// @version      33.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -14,6 +14,7 @@
 // @exclude      https://members.tilda.cc/*
 // @exclude      https://crm.tilda.cc/*
 // @exclude      https://news.tildacdn.com/*
+// @exclude      https://upwidget.tildacdn.com/*
 // @license      MIT
 // ==/UserScript==
 (async function (window, undefined) {
