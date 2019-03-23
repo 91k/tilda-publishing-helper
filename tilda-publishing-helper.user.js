@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.0
+// @version      34.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -513,7 +513,7 @@
                     var projectid = document.querySelector("input[name='projectid']").value;
                     $.ajax({
                         type: "GET",
-                        url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css}`,
+                        url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css`,
                         async: true,
                         success: function (text) {
                             if (text.includes("@font-face{font-family:'")) {
