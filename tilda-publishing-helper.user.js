@@ -109,11 +109,6 @@
                                 <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
                             </div>
                         </div>`);
-
-                        if ($(this).attr("off") === "y" && yellowRabbit) {
-                            $(this).children("div#mainleft").css("display", "block");
-                            $(mainleft).children("div:first, div:last").css("display", "none");
-                        }
                     }
                 });
             }
