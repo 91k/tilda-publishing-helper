@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.1
+// @version      34.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -105,10 +105,10 @@
                         }
 
                         $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
-                        <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
-                            <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
-                        </div>
-                    </div>`);
+                            <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
+                                <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
+                            </div>
+                        </div>`);
 
                         if ($(this).attr("off") === "y" && yellowRabbit) {
                             $(this).children("div#mainleft").css("display", "block");
@@ -120,15 +120,6 @@
 
             /* Заносим все новые стили в переменную */
             var styleBody = "";
-
-            if (typeof $("#topactivityprojects").val() != "undefined") {
-                if (document.querySelector("body").innerHTML.includes("bool(false)")) {
-                    document.querySelector("body").innerHTML = document.querySelector("body").innerHTML.replace(/(OK|Ok: queued on ([a-z0-9]+).mail.yandex.net)/g, "<span style='background: lightgreen;'>$1</span>");
-                    document.querySelector("body").innerHTML = document.querySelector("body").innerHTML.replace(/(\(-53\): retry time not reached for any host for \'([a-z0-9\-\.]+)\'|SMTP error from remote mail server after end of data: 550 spam message rejected\.|SMTP error from remote mail server after end of data: 451 4\.7\.1 Service unavailable - try again later|Unrouteable address)/g, "<span style='background: red;'>$1</span>");
-
-                    return;
-                }
-            }
 
             /* Follow the yellow rabbit */
             var yellowRabbit = false;
