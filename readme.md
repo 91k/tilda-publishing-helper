@@ -29,4 +29,6 @@
 5: Боковое меню в Настройках сайта движется за скроллом<br>
 4: Вывод окна «Публикация прошла успешно!» поверх Zero блока<br>
 3: Пофикшен баг с «жёлтой плашкой»<br>
-1: Добавлено поле с recid для каждого блока
+1: Добавлено поле с recid для каждого блока<br>
+<br>
+<img src="https://static.tildacdn.com/tild3331-3833-4564-a435-323235643433/index.png"><img src="https://static.tildacdn.com/tild3535-6464-4432-b037-633962633533/yourownfont.png"><img src="https://static.tildacdn.com/tild3537-3633-4639-b937-666335623434/linkfill.png" /><img src="https://static.tildacdn.com/tild3138-3639-4564-a464-343237393933/metrika.jpg" /><img src="https://static.tildacdn.com/tild6433-3130-4134-b939-326433393665/romanws.jpg" /><img src="https://static.tildacdn.com/tild6332-3230-4239-a534-316362373964/popupincorrect.png" /><img src="https://static.tildacdn.com/tild3930-6130-4135-b730-613037336539/linkincorrect.png" /><img src="https://static.tildacdn.com/tild6236-3932-4136-a439-663030336666/payments-history.png" /><img src="https://static.tildacdn.com/tild3033-3330-4534-b738-376235666530/home.png" /><img src="https://static.tildacdn.com/tild6466-6261-4035-b761-613838303662/fixed-scroll.gif" />
