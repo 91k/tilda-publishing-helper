@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.3
+// @version      34.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -616,6 +616,34 @@
                     }
                 }
             }
+
+            var identityGo = [{
+                    href: "news",
+                    value: "News Feed"
+                },
+                {
+                    href: "crm",
+                    value: "CRM"
+                },
+                {
+                    href: "experts",
+                    value: "Experts"
+                },
+                {
+                    href: "education",
+                    value: "Education"
+                },
+                {
+                    href: "upwidget",
+                    value: "File Storage Services"
+                }
+            ];
+
+            var dom = identityGo.map(obj => {
+                return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>'
+            })
+
+            $('.td-sites-grid').after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
 
             /* Добавляем пункт «Домены» в верхнее меню */
             var domains = 0;
