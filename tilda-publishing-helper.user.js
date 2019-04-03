@@ -219,12 +219,12 @@
 
                             $("input[name*='link']").each(function () {
                                 var option = "";
-                                var name = $(this).attr('name');
+                                var name = $(this).attr("name");
                                 $("#allrecords .record:not([data-record-type='875']) .r center b").each(function () {
                                     var value = $(this).text();
 
                                     /* Если блок T173 Якорная ссылка */
-                                    if ($(this).parents('[data-record-type="215"]').length) {
+                                    if ($(this).parents("[data-record-type='215']").length) {
                                         value = "#" + value;
                                     }
 
@@ -451,7 +451,7 @@
                             if (text.includes("@font-face{font-family:'")) {
                                 $("input[name$='font']").each(function () {
                                     var option = "";
-                                    var name = $(this).attr('name');
+                                    var name = $(this).attr("name");
                                     var value = text.substring(text.indexOf("@font-face{font-family:'") + 24, text.indexOf("';src:url('https://static.tildacdn.com"));
 
                                     option += `
@@ -476,7 +476,7 @@
                 var value = $("input.js-ga-localinput").val();
                 if (typeof value != "undefined") {
                     if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
-                        $("input.js-ga-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
+                        $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
                     }
                 }
 
@@ -484,7 +484,7 @@
                 value = $("input.js-metrika-localinput").val();
                 if (typeof value != "undefined") {
                     if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
-                        $("input.js-metrika-localinput").css("border", "1px solid red").before('<span style="color: red;">В этом поле нужно только номер счётчика</span>');
+                        $("input.js-metrika-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
                     }
                 }
 
@@ -492,7 +492,7 @@
                 value = $("input#ss-input-alias").val();
                 if (typeof value != "undefined") {
                     if (value.includes("_") && value !== "") {
-                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before('<span style="color: red;">Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>');
+                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>");
                     }
                 }
 
@@ -500,7 +500,7 @@
                 value = $("[name='customcssfile']").val();
                 if (typeof value != "undefined") {
                     if (value.includes("rel=stylesheet") && value !== "") {
-                        $("[name='customcssfile']").css("border", "1px solid red").parent().before('<span style="color: red;">Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>');
+                        $("[name='customcssfile']").css("border", "1px solid red").parent().before("<span style='color: red;'>Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>");
                     }
                 }
 
@@ -532,9 +532,9 @@
                 if (typeof $("[name^='testmodeoff']").val() != "undefined") {
                     if (lang == "RU") {
                         text = $("[name^='testmodeoff']").parent().html();
-                        text = text.replace('Выключить', 'в<b>Ы</b>ключить');
+                        text = text.replace("Выключить", "в<b>Ы</b>ключить");
                         $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
-                        $("[name='testmodeoff-cb']").parents(".ss-form-group").css('outline', '1px red solid').css('outline-offset', '8px');
+                        $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
                     }
                 }
             }
@@ -571,7 +571,7 @@
                         }
 
                         /* Удаляем https:// у проектов без доменов */
-                        $('.td-site__url-link a').each(function () {
+                        $(".td-site__url-link a").each(function () {
                             $(this).text($(this).text().replace("https://project", "project"));
                         });
 
@@ -644,6 +644,8 @@
             })
 
             $('.td-sites-grid').after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
+
+            $("#referralpopup").css("z-index", 1);
 
             /* Добавляем пункт «Домены» в верхнее меню */
             var domains = 0;
@@ -760,7 +762,7 @@
 
                 /* Есть ли на странице иконка */
                 if (typeof $("#preview16icon").val() != "undefined") {
-                    var url = $('.ss-menu-pane__title').text().match(new RegExp("									(.*)\n"))[1];
+                    var url = $(".ss-menu-pane__title").text().match(new RegExp("									(.*)\n"))[1];
 
                     $(".ss-tl__page-container tbody").prepend(`
                 <tr valign="top">
