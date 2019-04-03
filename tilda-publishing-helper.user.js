@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.4
+// @version      34.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -643,7 +643,7 @@
                 return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>'
             })
 
-            $('.td-sites-grid').after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
+            $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
 
             $("#referralpopup").css("z-index", 1);
 
