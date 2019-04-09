@@ -717,7 +717,7 @@
                 `);
                     $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
-                    if($("a[href^='/identity/gostore/?projectid=']").length < 1) {
+                    if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
                         $(`
                             <a href="/identity/gostore/?projectid=${projectid}">
                                 <table class="td-project-uppanel__button">
