@@ -620,7 +620,7 @@
 
             var identityGo = [{
                     href: "news",
-                    value: "News Feed"
+                    value: "Каналы новостей"
                 },
                 {
                     href: "crm",
@@ -636,7 +636,7 @@
                 },
                 {
                     href: "upwidget",
-                    value: "File Storage Services"
+                    value: "Сервисы хранения файлов"
                 }
             ];
 
