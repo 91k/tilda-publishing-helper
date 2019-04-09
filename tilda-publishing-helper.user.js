@@ -271,7 +271,7 @@
                 }
 
                 /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
-                table.td-project-uppanel__button:nth-child(4) {
+                table.td-project-uppanel__button:nth-child(5) {
                     margin-right: 0 !important;
                 }
 
