@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.11
+// @version      35.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -120,6 +120,11 @@
             if (window.location.pathname == "/page/") {
                 /* Добавляем recid для каждого блока на странице */
                 addRecIDs();
+
+                /* Упрощаем вид блока T803 */
+                $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left;"></div><br>`);
+                $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
+                ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
                 /* Если добавили новый блок, то ищем его на странице и добавляем recid */
                 $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
@@ -246,13 +251,13 @@
                             /* Делаем проверку поля с ключом в блоке T803 */
                             $("input[name='cont']").each(function () {
                                 var value = $(this).val();
-                                if(value.includes("%")) {
+                                if (value.includes("%")) {
                                     $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
                                     `);
                                 }
 
-                                if(value.includes(" ")) {
+                                if (value.includes(" ")) {
                                     $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
                                     `);
@@ -277,7 +282,10 @@
                 }
 
                 /* Убираем лишние значения в блоке T803 */
-                t803__label:nth-of-type(1), .t803__multi-key, .t803__label:nth-of-type(2), .t803__multi-default {
+                .t803__multi-data-column .t803__label:nth-of-type(1),
+                .t803__multi-data-column .t803__multi-key,
+                .t803__multi-data-column .t803__label:nth-of-type(2),
+                .t803__multi-data-column .t803__multi-default {
                     display: none !important;
                 }
 
