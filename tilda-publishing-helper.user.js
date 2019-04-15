@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.10
+// @version      34.11
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -276,6 +276,10 @@
                     background-color: rgba(255, 255, 255, 0.99) !important;
                 }
 
+                /* Убираем лишние значения в блоке T803 */
+                t803__label:nth-of-type(1), .t803__multi-key, .t803__label:nth-of-type(2), .t803__multi-default {
+                    display: none !important;
+                }
 
                 /* Меняем размер подзаголовков в Настройках сайта */
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
