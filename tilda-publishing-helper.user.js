@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.9
+// @version      34.10
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -194,8 +194,8 @@
                             $("input[name*='link']").each(function () {
                                 if ($(this).val().includes('"')) {
                                     $(this).css("border", "1px solid red").before(`
-                                    <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
-                                `);
+                                        <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
+                                    `);
                                 }
                             });
 
@@ -236,11 +236,27 @@
                                 `;
                                 });
                                 $(this).parent().parent().find(".pe-hint").after(`
-                                <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
-                                    <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
-                                    ${option}
-                                </div>
-                            `);
+                                    <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
+                                        <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
+                                        ${option}
+                                    </div>
+                                `);
+                            });
+
+                            /* Делаем проверку поля с ключом в блоке T803 */
+                            $("input[name='cont']").each(function () {
+                                var value = $(this).val();
+                                if(value.includes("%")) {
+                                    $(this).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
+                                    `);
+                                }
+
+                                if(value.includes(" ")) {
+                                    $(this).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
+                                    `);
+                                }
                             });
 
                             $(".pe-content__savebtns-table").click(function () {
@@ -259,6 +275,7 @@
                 #editforms {
                     background-color: rgba(255, 255, 255, 0.99) !important;
                 }
+
 
                 /* Меняем размер подзаголовков в Настройках сайта */
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
