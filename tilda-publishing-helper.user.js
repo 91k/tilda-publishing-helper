@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      34.8
+// @version      34.7
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -255,6 +255,11 @@
 
             /* Заносим все новые стили в переменную */
             styleBody += `
+                /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME921 */
+                #editforms {
+                    background-color: rgba(255, 255, 255, 0.99) !important;
+                }
+
                 /* Меняем размер подзаголовков в Настройках сайта */
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
                     font-size: 18px !important;
