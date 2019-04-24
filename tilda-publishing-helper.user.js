@@ -527,7 +527,7 @@
                 value = $("input#ss-input-alias").val();
                 if (typeof value != "undefined") {
                     if (value.includes("_") && value !== "") {
-                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах</span>");
+                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах (например, Инстаграм)</span>");
                     }
                 }
 
