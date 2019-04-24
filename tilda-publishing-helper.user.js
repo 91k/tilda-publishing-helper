@@ -747,8 +747,8 @@
                 if (typeof projectid != "undefined") {
                     /* Добавляем ссылку на «Главную страницу» для иконки домика */
                     $(".td-page__td-title").has(".td-page__ico-home").prepend(`
-                    <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
-                `);
+                        <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
+                    `);
                     $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
                     if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
@@ -768,13 +768,39 @@
                         `).appendTo($(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']"));
                     }
 
-                    if($("img[src$='td-icon-catalog.png']").length > 0 && $("img[src$='td-icon-del-black.png']").length > 0 && $(".td-project-uppanel__url").width() > 250) {
+                    if ($("img[src$='td-icon-catalog.png']").length > 0 && $("img[src$='td-icon-del-black.png']").length > 0 && $(".td-project-uppanel__url").width() > 250) {
                         styleBody += `
                             .td-project-uppanel__button {
                                 margin-right: 34px !important;
                             }
                         `;
                     }
+
+                    $('.td-page').each(function name(params) {
+                        var pageid = $(this).attr("id").replace("page", "");
+                        $(this).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
+                        $(this).find(".td-page__buttons-spacer:last").css("width", "20px");
+                        var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+                            var csrf = getCSRF();
+                            $.ajax({
+                                type: 'POST',
+                                url: '/page/unpublish/',
+                                data: {
+                                    pageid: ${pageid},
+                                    csrf: csrf
+                                },
+                                dataType: 'text',
+                                success: function () {
+                                    window.location.reload();
+                                },
+                                timeout: 1000 * 90
+                            });
+                        }`;
+
+                        if ($(this).find('.td-page__note').text() == "") {
+                            $(this).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
+                        }
+                    });
 
                     /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
                     $.ajax({
