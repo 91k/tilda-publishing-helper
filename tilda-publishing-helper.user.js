@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      36.0
+// @version      36.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -226,7 +226,7 @@
                             $("input[name*='link']").each(function () {
                                 var option = "";
                                 var name = $(this).attr("name");
-                                $("#allrecords .record:not([data-record-type='875']) .r center b").each(function () {
+                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each(function () {
                                     var value = $(this).text();
 
                                     /* Если блок T173 Якорная ссылка */
@@ -235,7 +235,7 @@
                                     }
 
                                     option += `
-                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding-right: 15px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
+                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
                                         ${value}
                                     </span>
                                 `;
@@ -276,6 +276,10 @@
 
             /* Заносим все новые стили в переменную */
             styleBody += `
+                [data-record-type="360"] .tp-record-edit-icons-left__three {
+                    pointer-events: none;
+                }
+
                 /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
                 #editforms {
                     background-color: rgba(255, 255, 255, 0.99) !important;
