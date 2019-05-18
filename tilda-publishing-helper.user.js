@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      36.4
+// @version      37.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -81,6 +81,28 @@
                 }
             }
 
+            var name = "";
+            var email = "";
+            var profile = $("[href='/identity/']");
+
+            $.ajax({
+                type: "GET",
+                url: `https://tilda.cc/identity/`,
+                async: true,
+                success: function (data) {
+                    var dom = new DOMParser().parseFromString(data, "text/html");
+                    name = $(dom).find("[name=name]").val();
+                    email = $(dom).find("[name=email]").val();
+                    profile.html(`${profile.text()} <span title="${email}" style="opacity: .7">(${name})</span>`);
+                    if (window.location.pathname == "/identity/plan/") {
+                        $("[name='paybox']").prev().before(`
+                        <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px;">
+                            Email: ${email}
+                        </div>`);
+                    }
+                }
+            });
+
             function isEmpty(obj) {
                 if (obj == null) return true;
 
@@ -93,7 +115,7 @@
                     if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
                 }
 
-                return true
+                return true;
             }
 
             function addRecIDs() {
@@ -487,7 +509,7 @@
                         }, 300);
                     });
 
-                    var projectid = document.querySelector("input[name='projectid']").value;
+                    var projectid = $("input[name='projectid']").val();
                     $.ajax({
                         type: "GET",
                         url: `https://static.roman-kosov.ru/get-dom/?url=https://tilda.ws/project${projectid}/tilda-blocks-2.12.css`,
