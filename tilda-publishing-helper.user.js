@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.1
+// @version      37.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -155,15 +155,15 @@
                 ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
                 /* Если добавили новый блок, то ищем его на странице и добавляем recid */
-                $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
-                    setTimeout(function () {
-                        $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
-                            setTimeout(function () {
-                                addRecIDs();
-                            }, 1000);
-                        });
-                    }, 500);
-                });
+                // $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
+                //     setTimeout(function () {
+                //         $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
+                //             setTimeout(function () {
+                //                 addRecIDs();
+                //             }, 1000);
+                //         });
+                //     }, 500);
+                // });
 
                 /* Используем переменную, чтобы уникализировать список элементов */
                 var seen = {};
@@ -300,27 +300,78 @@
                         }, 2000);
                     });
                 }
+
+                styleBody += `
+                    [data-record-type="360"] .tp-record-edit-icons-left__three {
+                        pointer-events: none;
+                    }
+
+                    /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
+                    #editforms {
+                        background-color: rgba(255, 255, 255, 0.99) !important;
+                    }
+
+                    /* Меняем жёлтую плашку */
+                    div[style*='position:fixed;background-color:yellow;'] {
+                        right: 15px !important;
+                        bottom: 15px !important;
+                        width: auto !important;
+                    }
+
+                    /* Делаем полоску светлеее в Настройках и Контенте блоков */
+                    .editrecordcontent_container hr,
+                    .panel-body hr {
+                        border-top: 1px solid #dedede !important;
+                    }
+
+                    /* Всплывающая подсказка около ID блока */
+                    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
+                        background: #ffffff;
+                        border-radius: 5px;
+                        bottom: -30px;
+                        right: -100px;
+                        box-shadow: 0 0 10px #3d3d3d;
+                        box-shadow: 0 0 10px rgba(61, 61, 61, .5);
+                        box-sizing: border-box;
+                        color: #3d3d3d;
+                        content: attr(data-title);
+                        font-size: 12px;
+                        font-weight: 400;
+                        min-width: 125px;
+                        padding: 5px 10px;
+                        position: absolute;
+                        text-align: center;
+                        z-index: 3;
+                        width: auto;
+                        white-space: nowrap;
+                        overflow: visible;
+                    }
+
+                    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
+                        border: solid;
+                        border-color: #ffffff transparent;
+                        border-width: 6px 6px 0 6px;
+                        bottom: -5px;
+                        right: 36px;
+                        content: "";
+                        position: absolute;
+                        z-index: 4;
+                        overflow: visible;
+                        transform: rotate(180deg);
+                    }
+
+                    /* Убираем лишние значения в блоке T803 */
+                    .t803__multi-data-column .t803__label:nth-of-type(1),
+                    .t803__multi-data-column .t803__multi-key,
+                    .t803__multi-data-column .t803__label:nth-of-type(2),
+                    .t803__multi-data-column .t803__multi-default {
+                        display: none !important;
+                    }
+                `;
             }
 
             /* Заносим все новые стили в переменную */
             styleBody += `
-                [data-record-type="360"] .tp-record-edit-icons-left__three {
-                    pointer-events: none;
-                }
-
-                /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
-                #editforms {
-                    background-color: rgba(255, 255, 255, 0.99) !important;
-                }
-
-                /* Убираем лишние значения в блоке T803 */
-                .t803__multi-data-column .t803__label:nth-of-type(1),
-                .t803__multi-data-column .t803__multi-key,
-                .t803__multi-data-column .t803__label:nth-of-type(2),
-                .t803__multi-data-column .t803__multi-default {
-                    display: none !important;
-                }
-
                 /* Меняем размер подзаголовков в Настройках сайта */
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
                     font-size: 18px !important;
@@ -339,48 +390,6 @@
                 /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
                 table.td-project-uppanel__button:nth-child(5) {
                     margin-right: 0 !important;
-                }
-
-                /* Делаем полоску светлеее в Настройках и Контенте блоков */
-                .editrecordcontent_container hr,
-                .panel-body hr {
-                    border-top: 1px solid #dedede !important;
-                }
-
-                /* Всплывающая подсказка около ID блока */
-                .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
-                    background: #ffffff;
-                    border-radius: 5px;
-                    bottom: -30px;
-                    right: -100px;
-                    box-shadow: 0 0 10px #3d3d3d;
-                    box-shadow: 0 0 10px rgba(61, 61, 61, .5);
-                    box-sizing: border-box;
-                    color: #3d3d3d;
-                    content: attr(data-title);
-                    font-size: 12px;
-                    font-weight: 400;
-                    min-width: 125px;
-                    padding: 5px 10px;
-                    position: absolute;
-                    text-align: center;
-                    z-index: 3;
-                    width: auto;
-                    white-space: nowrap;
-                    overflow: visible;
-                }
-
-                .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
-                    border: solid;
-                    border-color: #ffffff transparent;
-                    border-width: 6px 6px 0 6px;
-                    bottom: -5px;
-                    right: 36px;
-                    content: "";
-                    position: absolute;
-                    z-index: 4;
-                    overflow: visible;
-                    transform: rotate(180deg);
                 }
 
                 /* Красная обводка для подскази о перепубликации страниц */
