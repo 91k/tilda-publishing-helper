@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.2
+// @version      37.3
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -376,6 +376,11 @@
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
                     font-size: 18px !important;
                     line-height: unset !important;
+                }
+
+                /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
+                .ss-container {
+                    min-height: 1280px;
                 }
 
                 .ui-sortable-handle > td:nth-child(1) {
