@@ -380,7 +380,7 @@
 
                 /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
                 .ss-container {
-                    min-height: 1280px;
+                    min-height: ${$(window).height()}px;
                 }
 
                 .ui-sortable-handle > td:nth-child(1) {
