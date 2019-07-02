@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.4
+// @version      37.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -83,7 +83,7 @@
 
             var name = "";
             var email = "";
-            var profile = $("[href='/identity/']");
+            var profile = $("[href='/identity/']:not([style])");
 
             $.ajax({
                 type: "GET",
