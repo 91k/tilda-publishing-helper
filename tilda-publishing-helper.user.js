@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.7
+// @version      37.8
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -28,7 +28,8 @@
         textBody == "You can not edit this project..." ||
         textBody == "This page belongs to another account, so you can't see or edit it... Please re-login" ||
         textBody == "This page belongs to another account, so you can't see or edit it. Please re-login" ||
-        textBody == "This project belongs to another account, so you can't see or edit it. Please re-login"
+        textBody == "This project belongs to another account, so you can't see or edit it. Please re-login" ||
+        textBody == "This project belongs to another account, so you can't see or edit it... Please re-login"
     ) {
         if (window.location.href.includes("projectid=")) {
             var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
