@@ -84,7 +84,6 @@
 
             var name = "";
             var email = "";
-            var profile = $("[href='/identity/']:not([style])");
 
             $.ajax({
                 type: "GET",
@@ -94,13 +93,10 @@
                     var dom = new DOMParser().parseFromString(data, "text/html");
                     name = $(dom).find("[name=name]").val();
                     email = $(dom).find("[name=email]").val();
-                    profile.each(function (i, el) {
-                        var text = $(el).text();
-                        $(el).html(`${text} <span title="${email}" style="opacity: .7">(${name})</span>`);
-                    });
+
                     if (window.location.pathname == "/identity/plan/") {
                         $("[name='paybox']").prev().before(`
-                        <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px;">
+                        <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">
                             Email: ${email}
                         </div>`);
                     }
