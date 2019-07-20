@@ -82,7 +82,6 @@
                 }
             }
 
-            var name = "";
             var email = "";
 
             $.ajax({
@@ -91,7 +90,6 @@
                 async: true,
                 success: function (data) {
                     var dom = new DOMParser().parseFromString(data, "text/html");
-                    name = $(dom).find("[name=name]").val();
                     email = $(dom).find("[name=email]").val();
 
                     if (window.location.pathname == "/identity/plan/") {
