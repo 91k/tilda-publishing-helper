@@ -866,7 +866,7 @@
                     $(".ss-tl__page-container tbody").prepend(`
                         <tr valign="top">
                             <td>
-                                <img src="https://favicon.yandex.net/favicon/${url}" style="width: 16px; height: 16px">
+                                <img src="https://favicon.yandex.net/favicon/${url}?size=32" style="width: 32px; height: 32px">
                             </td>
                             <td style="padding-left: 20px;">
                                 <div class="ss-form-group">
@@ -874,7 +874,7 @@
                                     <div class="ss-form-group__hint">
                                         Фавиконка — это небольшая картинка, которая отображается в сниппете в результатах поиска Яндекса, рядом с адресом сайта в адресной строке браузера, около названия сайта в Избранном или в Закладках браузера. 
                                         <br>
-                                        Если иконка не соответствует той, что загружена в формате .ico, то <b>проверьте, пожалуйста, что загруженная вами иконка дейсвительно размером 16×16</b> и прошло больше 1 недели.
+                                        Если иконка не соответствует той, что загружена в формате .ico, то <b>проверьте, пожалуйста, что загруженная вами иконка дейсвительно размером 32×32</b> и прошло больше 1 недели.
                                         <br>
                                         Подробная инструкция <a href="https://yandex.ru/support/webmaster/search-results/favicon.html" target="_blank" noopener nofollow>здесь</a>.
                                     </div>
