@@ -152,17 +152,6 @@
                 $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
                 ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
-                /* Если добавили новый блок, то ищем его на странице и добавляем recid */
-                // $(".insertafterrecorbutton, .tp-shortcuttools__one:first").click(function () {
-                //     setTimeout(function () {
-                //         $("[data-tpl-id], .tp-shortcuttools__two-item-title").click(function () {
-                //             setTimeout(function () {
-                //                 addRecIDs();
-                //             }, 1000);
-                //         });
-                //     }, 500);
-                // });
-
                 /* Используем переменную, чтобы уникализировать список элементов */
                 var seen = {};
 
@@ -206,12 +195,6 @@
                                     <span style="color: red;">В этом поле нужно указать значение с "px"</span>
                                 `);
                                 }
-                            });
-
-                            $(".pe-settings__savebtns-table").click(function () {
-                                setTimeout(function () {
-                                    addRecIDs();
-                                }, 1000);
                             });
                         }, 1000);
                     });
@@ -288,12 +271,6 @@
                                         <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
                                     `);
                                 }
-                            });
-
-                            $(".pe-content__savebtns-table").click(function () {
-                                setTimeout(function () {
-                                    addRecIDs();
-                                }, 1000);
                             });
                         }, 2000);
                     });
