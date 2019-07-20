@@ -886,19 +886,6 @@
             }
 
             if (window.location.pathname == "/identity/plan/") {
-                /* Добавляем ссылку «История платежей» после тарифа */
-                if (typeof $("[name='paybox']").val() != "undefined") {
-                    var subscription = $(".lr_col_12").text();
-                    let payments = ["renewal subscription is off", "автопродление выключено", "Cancel subscription", "Отменить автоматические платежи", "Ваш тарифный план:		T", "Your Plan:		T"];
-                    if (payments.some(text => subscription.includes(text))) {
-                        $("[name='paybox']").before(`
-                        <div style="font-size: 16px; font-weight: normal; background-color: #eee; padding: 30px; margin-top: -40px;">
-                            <a href="https://tilda.cc/identity/payments/" style="color: #ff855D;">${ lang == "RU" ? "История платежей" : "Payments history" }</a>
-                        </div>
-                    `);
-                    }
-                }
-
                 showmore_prices();
             }
 
