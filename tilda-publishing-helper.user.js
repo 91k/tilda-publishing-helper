@@ -17,7 +17,7 @@
 // @exclude      https://upwidget.tildacdn.com/*
 // @license      MIT
 // ==/UserScript==
-(async function (window, undefined) {
+(async function (window) {
     "use strict";
 
     /* Делаем редирект, если страница недоступна для редактирования */
