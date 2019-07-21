@@ -24,12 +24,12 @@
     var textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
 
     if (
-        textBody == "You can't edit this project.." ||
-        textBody == "You can not edit this project..." ||
-        textBody == "This page belongs to another account, so you can't see or edit it... Please re-login" ||
-        textBody == "This page belongs to another account, so you can't see or edit it. Please re-login" ||
-        textBody == "This project belongs to another account, so you can't see or edit it. Please re-login" ||
-        textBody == "This project belongs to another account, so you can't see or edit it... Please re-login"
+        textBody === "You can't edit this project.." ||
+        textBody === "You can not edit this project..." ||
+        textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
+        textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
+        textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
+        textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
     ) {
         if (window.location.href.includes("projectid=")) {
             var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
