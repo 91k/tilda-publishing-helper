@@ -58,15 +58,15 @@
         return;
     } else {
         (function (factory) {
-            if (typeof define === "function" && define.amd) {
+            if (typeof define === "function" && define.amd) { // eslint-disable-line
                 /* AMD. Register as an anonymous module. */
-                define(["jquery"], factory);
+                define(["jquery"], factory); // eslint-disable-line
             } else if (typeof exports === "object") {
                 /* Node/CommonJS */
-                module.exports = factory(require("jquery"));
+                module.exports = factory(require("jquery")); // eslint-disable-line
             } else {
                 /* Browser globals */
-                factory(jQuery);
+                factory(jQuery); // eslint-disable-line
             }
         })(function ($) {
             /* Переменная для вывода текста */
@@ -857,7 +857,7 @@
             }
 
             if (window.location.pathname == "/identity/plan/") {
-                showmore_prices();
+                showmore_prices(); // eslint-disable-line
             }
 
             /* Clippy */
