@@ -1,0 +1,24 @@
+{
+  "name": "tilda-publishing-helper",
+  "version": "1.0.0",
+  "description": "Простой скрипт, который добавляет небольшое поле с recid для каждого блока в Тильде",
+  "main": "tilda-publishing-helper.user.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roman-kosov/tilda-publishing-helper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roman-kosov/tilda-publishing-helper/issues"
+  },
+  "homepage": "https://github.com/roman-kosov/tilda-publishing-helper#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
