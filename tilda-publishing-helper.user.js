@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.12
+// @version      37.13
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -251,12 +251,14 @@
                                 `;
                                 });
 
-                                $(el).parent().parent().find(".pe-hint").after(`
+                                if (!isEmpty(option)) {
+                                    $(el).parent().parent().find(".pe-hint").after(`
                                     <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
                                         <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
                                         ${option}
                                     </div>
                                 `);
+                                }
                             });
 
                             /* Делаем проверку поля с ключом в блоке T803 */
