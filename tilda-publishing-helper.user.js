@@ -832,7 +832,7 @@
 
                 /* Есть ли на странице иконка */
                 if (typeof $("#preview16icon").val() != "undefined") {
-                    var url = $(".ss-menu-pane__title").text().match(new RegExp("									(.*)\n"))[1];
+                    var url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
 
                     $(".ss-tl__page-container tbody").prepend(`
                         <tr valign="top">
