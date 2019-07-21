@@ -166,8 +166,8 @@
 
                     seen[value] = true;
                     return value;
-                }).each(() => {
-                    $(this).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(this).attr("name")}".</span>`);
+                }).each((i, el) => {
+                    $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
                 });
 
                 /* Другая подсказка после публикации страницы  */
@@ -187,11 +187,11 @@
                 if (typeof $(".tp-record-edit-icons-left__two").val() != "undefined") {
                     $(".tp-record-edit-icons-left__two").click(() => {
                         setTimeout(() => {
-                            $("input").each(() => {
-                                var placeholder = String($(this).attr("placeholder"));
-                                var value = $(this).val();
+                            $("input").each((i, el) => {
+                                var placeholder = String($(el).attr("placeholder"));
+                                var value = $(el).val();
                                 if (placeholder.includes("px") && !value.includes("px") && value !== "") {
-                                    $(this).css("border", "1px solid red").before(`
+                                    $(el).css("border", "1px solid red").before(`
                                     <span style="color: red;">В этом поле нужно указать значение с "px"</span>
                                 `);
                                 }
@@ -205,9 +205,9 @@
                     $(".tp-record-edit-icons-left__three").click(() => {
                         setTimeout(() => {
                             /* Предупреждение о ссылках с кавычкой */
-                            $("input[name*='link']").each(() => {
-                                if ($(this).val().includes('"')) {
-                                    $(this).css("border", "1px solid red").before(`
+                            $("input[name*='link']").each((i, el) => {
+                                if ($(el).val().includes('"')) {
+                                    $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
                                     `);
                                 }
@@ -215,31 +215,32 @@
 
                             /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
                             if (typeof $(".headerfooterpagearea").val() == "undefined") {
-                                $("input[name*='link'][value^='#popup']").each(() => {
-                                    if (!$("#allrecords").text().includes($(this).val())) {
-                                        $(this).css("border", "1px solid red").before(`
+                                $("input[name*='link'][value^='#popup']").each((i, el) => {
+                                    if (!$("#allrecords").text().includes($(el).val())) {
+                                        $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
                                     `);
                                     }
                                 });
 
-                                $("input[name*='link'][value^='#rec']").each(() => {
+                                $("input[name*='link'][value^='#rec']").each((i, el) => {
                                     if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
-                                        $(this).css("border", "1px solid red").before(`
+                                        $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
                                     `);
                                     }
                                 });
                             }
 
-                            $("input[name*='link']").each(() => {
+                            $("input[name*='link']").each((i, el) => {
                                 var option = "";
-                                var name = $(this).attr("name");
-                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each(() => {
-                                    var value = $(this).text();
+                                var name = $(el).attr("name");
+
+                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each((i, el) => {
+                                    var value = $(el).text();
 
                                     /* Если блок T173 Якорная ссылка */
-                                    if ($(this).parents("[data-record-type='215']").length) {
+                                    if ($(el).parents("[data-record-type='215']").length) {
                                         value = "#" + value;
                                     }
 
@@ -249,7 +250,8 @@
                                     </span>
                                 `;
                                 });
-                                $(this).parent().parent().find(".pe-hint").after(`
+
+                                $(el).parent().parent().find(".pe-hint").after(`
                                     <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
                                         <span style="display: inline-block;">${lang == "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
                                         ${option}
@@ -258,16 +260,16 @@
                             });
 
                             /* Делаем проверку поля с ключом в блоке T803 */
-                            $("input[name='cont']").each(() => {
-                                var value = $(this).val();
+                            $("input[name='cont']").each((i, el) => {
+                                var value = $(el).val();
                                 if (value.includes("%")) {
-                                    $(this).css("border", "1px solid red").before(`
+                                    $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
                                     `);
                                 }
 
                                 if (value.includes(" ")) {
-                                    $(this).css("border", "1px solid red").before(`
+                                    $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
                                     `);
                                 }
@@ -574,12 +576,12 @@
 
             if (window.location.pathname == "/projects/" || window.location.pathname.includes("store/parts")) {
                 /* Создаём дополнительные ссылки в карточках проектов */
-                $(".td-sites-grid__cell").each(() => {
-                    var projectid = $(this).attr("id");
+                $(".td-sites-grid__cell").each((i, el) => {
+                    var projectid = $(el).attr("id");
                     if (typeof projectid != "undefined") {
                         var id = projectid.replace("project", "");
-                        var buttons = $(this).find(".td-site__settings");
-                        var link = $(this).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
+                        var buttons = $(el).find(".td-site__settings");
+                        var link = $(el).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
                         var leads = "",
                             settings = "";
 
@@ -596,8 +598,8 @@
                         }
 
                         /* Удаляем https:// у проектов без доменов */
-                        $(".td-site__url-link a").each(() => {
-                            $(this).text($(this).text().replace("https://project", "project"));
+                        $(".td-site__url-link a").each((i, el) => {
+                            $(el).text($(el).text().replace("https://project", "project"));
                         });
 
                         /* Пункты заявка и настройки */
@@ -675,8 +677,8 @@
             /* Добавляем пункт «Домены» в верхнее меню */
             var domains = 0;
 
-            $(".t-menu__item").each(() => {
-                var href = $(this).attr("href");
+            $(".t-menu__item").each((i, el) => {
+                var href = $(el).attr("href");
                 if (href == "/domains/") {
                     domains += 1;
                 }
@@ -758,10 +760,10 @@
                         `).appendTo($(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']"));
                     }
 
-                    $('.td-page').each(() => {
-                        var pageid = $(this).attr("id").replace("page", "");
-                        $(this).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
-                        $(this).find(".td-page__buttons-spacer:last").css("width", "20px");
+                    $('.td-page').each((i, el) => {
+                        var pageid = $(el).attr("id").replace("page", "");
+                        $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
+                        $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
                         var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
                             var csrf = getCSRF();
                             $.ajax({
@@ -779,8 +781,8 @@
                             });
                         }`;
 
-                        if ($(this).find('.td-page__note').text() == "") {
-                            $(this).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
+                        if ($(el).find('.td-page__note').text() == "") {
+                            $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
                         }
                     });
 
