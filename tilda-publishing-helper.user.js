@@ -117,7 +117,7 @@
             }
 
             function addRecIDs() {
-                $("div.record").each(function () {
+                $("div.record").each(() => {
                     if ($(this).children("div#mainleft").children("div").children().length < 6) {
                         var rid = $(this).attr("recordid");
                         var recid = `#rec${ rid }`;
@@ -156,9 +156,9 @@
                 var seen = {};
 
                 /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
-                $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter(function (el, arr) {
+                $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
                     return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
-                }).map(function () {
+                }).map(() => {
                     var value = this.getAttribute("name");
 
                     if (seen.hasOwnProperty(value))
@@ -166,14 +166,14 @@
 
                     seen[value] = true;
                     return value;
-                }).each(function () {
+                }).each(() => {
                     $(this).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(this).attr("name")}".</span>`);
                 });
 
                 /* Другая подсказка после публикации страницы  */
                 if ($("#page_menu_publishlink").val() != "undefined") {
-                    $("#page_menu_publishlink").click(function () {
-                        setTimeout(function () {
+                    $("#page_menu_publishlink").click(() => {
+                        setTimeout(() => {
                             if (lang == "RU") {
                                 $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
                             } else {
@@ -185,9 +185,9 @@
 
                 /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
                 if (typeof $(".tp-record-edit-icons-left__two").val() != "undefined") {
-                    $(".tp-record-edit-icons-left__two").click(function () {
-                        setTimeout(function () {
-                            $("input").each(function () {
+                    $(".tp-record-edit-icons-left__two").click(() => {
+                        setTimeout(() => {
+                            $("input").each(() => {
                                 var placeholder = String($(this).attr("placeholder"));
                                 var value = $(this).val();
                                 if (placeholder.includes("px") && !value.includes("px") && value !== "") {
@@ -202,10 +202,10 @@
 
                 /* Предупреждение в Контенте блока */
                 if (typeof $(".tp-record-edit-icons-left__three").val() != "undefined") {
-                    $(".tp-record-edit-icons-left__three").click(function () {
-                        setTimeout(function () {
+                    $(".tp-record-edit-icons-left__three").click(() => {
+                        setTimeout(() => {
                             /* Предупреждение о ссылках с кавычкой */
-                            $("input[name*='link']").each(function () {
+                            $("input[name*='link']").each(() => {
                                 if ($(this).val().includes('"')) {
                                     $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
@@ -215,7 +215,7 @@
 
                             /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
                             if (typeof $(".headerfooterpagearea").val() == "undefined") {
-                                $("input[name*='link'][value^='#popup']").each(function () {
+                                $("input[name*='link'][value^='#popup']").each(() => {
                                     if (!$("#allrecords").text().includes($(this).val())) {
                                         $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
@@ -223,7 +223,7 @@
                                     }
                                 });
 
-                                $("input[name*='link'][value^='#rec']").each(function () {
+                                $("input[name*='link'][value^='#rec']").each(() => {
                                     if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() == "undefined") {
                                         $(this).css("border", "1px solid red").before(`
                                         <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
@@ -232,10 +232,10 @@
                                 });
                             }
 
-                            $("input[name*='link']").each(function () {
+                            $("input[name*='link']").each(() => {
                                 var option = "";
                                 var name = $(this).attr("name");
-                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each(function () {
+                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each(() => {
                                     var value = $(this).text();
 
                                     /* Если блок T173 Якорная ссылка */
@@ -258,7 +258,7 @@
                             });
 
                             /* Делаем проверку поля с ключом в блоке T803 */
-                            $("input[name='cont']").each(function () {
+                            $("input[name='cont']").each(() => {
                                 var value = $(this).val();
                                 if (value.includes("%")) {
                                     $(this).css("border", "1px solid red").before(`
@@ -482,9 +482,7 @@
 
                 /* Убираем подсказу из Настроек сайта → Ещё */
                 if (typeof $("#ss_menu_more").val() != "undefined") {
-                    $("#ss_menu_more > div:nth-child(2) .ss-upload-button").remove();
-                    $("#ss_menu_more > div:nth-child(2) img").remove();
-                    $("#ss_menu_more > div:nth-child(2) br").remove();
+                    $("#ss_menu_more > div:nth-child(2) .ss-upload-button, #ss_menu_more > div:nth-child(2) img, #ss_menu_more > div:nth-child(2) br").remove();
                     $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang == "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang == "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
                 }
 
@@ -492,7 +490,7 @@
 
                 /* Скролл по пунктам в Настройках сайта плавным */
                 if (typeof $("li[data-menu-item]").val() != "undefined") {
-                    $("li[data-menu-item]").click(function () {
+                    $("li[data-menu-item]").click(() => {
                         $("html,body").animate({
                             scrollTop: $("body").offset().top + 105
                         }, 300);
@@ -576,7 +574,7 @@
 
             if (window.location.pathname == "/projects/" || window.location.pathname.includes("store/parts")) {
                 /* Создаём дополнительные ссылки в карточках проектов */
-                $(".td-sites-grid__cell").each(function () {
+                $(".td-sites-grid__cell").each(() => {
                     var projectid = $(this).attr("id");
                     if (typeof projectid != "undefined") {
                         var id = projectid.replace("project", "");
@@ -598,7 +596,7 @@
                         }
 
                         /* Удаляем https:// у проектов без доменов */
-                        $(".td-site__url-link a").each(function () {
+                        $(".td-site__url-link a").each(() => {
                             $(this).text($(this).text().replace("https://project", "project"));
                         });
 
@@ -677,7 +675,7 @@
             /* Добавляем пункт «Домены» в верхнее меню */
             var domains = 0;
 
-            $(".t-menu__item").each(function () {
+            $(".t-menu__item").each(() => {
                 var href = $(this).attr("href");
                 if (href == "/domains/") {
                     domains += 1;
@@ -760,7 +758,7 @@
                         `).appendTo($(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']"));
                     }
 
-                    $('.td-page').each(function name(params) {
+                    $('.td-page').each(() => {
                         var pageid = $(this).attr("id").replace("page", "");
                         $(this).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
                         $(this).find(".td-page__buttons-spacer:last").css("width", "20px");
@@ -774,7 +772,7 @@
                                     csrf: csrf
                                 },
                                 dataType: 'text',
-                                success: function () {
+                                success: () => {
                                     window.location.reload();
                                 },
                                 timeout: 1000 * 90
@@ -794,7 +792,7 @@
                         success: function (text) {
                             if (text != null) {
                                 /* Стоит ли пароль на сайт */
-                                var auth = text.match(new RegExp("<b>Authorization Required\.</b>"));
+                                var auth = text.match(new RegExp("<b>Authorization Required.</b>"));
                                 if (!isEmpty(auth)) {
                                     $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
@@ -809,7 +807,7 @@
                                 }
 
                                 /* Стоит ли запрет на идексацию сайта */
-                                var index = text.match(new RegExp("Disallow: /\n"));
+                                var index = text.match(new RegExp("Disallow: /"));
                                 if (!isEmpty(index)) {
                                     $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
