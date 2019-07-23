@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.13
+// @version      37.14
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -93,7 +93,7 @@
                     email = $(dom).find("[name=email]").val();
 
                     if (window.location.pathname == "/identity/plan/") {
-                        $("[name='paybox']").prev().before(`
+                        $("[name='paybox']").before(`
                         <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">
                             Email: ${email}
                         </div>`);
