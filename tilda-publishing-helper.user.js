@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.15
+// @version      37.16
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -216,7 +216,7 @@
                             $("input[name='zoom']").each((i, el) => {
                                 if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
                                     $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Значение в поле Zoom должно быть, для Яндекс.Карты от 0 до 17, для Google Maps от 1 до 20.</span>
+                                        <span style="color: red;">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>
                                     `);
                                 }
                             });
