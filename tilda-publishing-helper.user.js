@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.17
+// @version      38.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -183,19 +183,32 @@
                     });
                 }
 
-                /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
+                /* Предупреждение в Контенте блока */
                 if (typeof $(".tp-record-edit-icons-left__two").val() != "undefined") {
                     $(".tp-record-edit-icons-left__two").click(() => {
                         setTimeout(() => {
-                            $("input").each((i, el) => {
-                                var placeholder = String($(el).attr("placeholder"));
+                            /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
+                            $("input[placeholder*='px']").each((i, el) => {
                                 var value = $(el).val();
-                                if (placeholder.includes("px") && !value.includes("px") && value !== "") {
+                                if (!value.includes("px") && value !== "") {
                                     $(el).css("border", "1px solid red").before(`
-                                    <span style="color: red;">В этом поле нужно указать значение с "px"</span>
-                                `);
+                                        <span style="color: red;">В этом поле нужно указать значение с "px"</span>
+                                    `);
                                 }
                             });
+
+                            /* Предупреждение для поля «SEO для Заголовка» */
+                            var title_tag = $('[name="title_tag"]');
+                            if (!isEmpty(title_tag.val())) {
+                                var id = $("[data-rec-id").attr("data-rec-id");
+                                var title = $("#rec" + id).find(".t-title").val();
+                                if (typeof title == "undefined") {
+                                    $(title_tag).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>
+                                    `);
+                                }
+                            }
+
                         }, 1000);
                     });
                 }
