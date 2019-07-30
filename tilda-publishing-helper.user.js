@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      37.16
+// @version      37.17
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -819,7 +819,7 @@
                                 }
 
                                 /* Стоит ли запрет на идексацию сайта */
-                                var index = text.match(new RegExp("Disallow: /"));
+                                var index = text.match(new RegExp("Disallow: /^"));
                                 if (!isEmpty(index)) {
                                     $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
