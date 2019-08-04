@@ -161,7 +161,7 @@
                 }).map(() => {
                     var value = this.getAttribute("name");
 
-                    if (seen.hasOwnProperty(value))
+                    if (Object.prototype.hasOwnProperty.call(seen, value))
                         return null;
 
                     seen[value] = true;
