@@ -690,8 +690,8 @@
             ];
 
             var dom = identityGo.map(obj => {
-                return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>'
-            })
+                return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>';
+            });
 
             $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
 
