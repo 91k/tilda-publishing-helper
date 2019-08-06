@@ -832,7 +832,7 @@
                                 }
 
                                 /* Стоит ли запрет на идексацию сайта */
-                                var index = text.match(new RegExp("Disallow: /^"));
+                                var index = text.match(new RegExp("Disallow: /\\n"));
                                 if (!isEmpty(index)) {
                                     $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
