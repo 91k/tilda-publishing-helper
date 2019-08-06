@@ -84,22 +84,22 @@
 
             var email = "";
 
-            $.ajax({
-                type: "GET",
-                url: `https://tilda.cc/identity/`,
-                async: true,
-                success: function (data) {
-                    var dom = new DOMParser().parseFromString(data, "text/html");
-                    email = $(dom).find("[name=email]").val();
+            if (window.location.pathname == "/identity/plan/") {
+                $.ajax({
+                    type: "GET",
+                    url: `https://tilda.cc/identity/`,
+                    async: true,
+                    success: function (data) {
+                        var dom = new DOMParser().parseFromString(data, "text/html");
+                        email = $(dom).find("[name=email]").val();
 
-                    if (window.location.pathname == "/identity/plan/") {
                         $("[name='paybox']").before(`
                         <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">
                             Email: ${email}
                         </div>`);
                     }
-                }
-            });
+                });
+            }
 
             function isEmpty(obj) {
                 if (obj == null) return true;
