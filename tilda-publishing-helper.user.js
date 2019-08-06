@@ -651,11 +651,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                    `).appendTo($(buttons).parent());
+                        `).appendTo($(buttons).parent());
                     }
                 });
 
-                /* Попытка разместить чёрный на больших экрана как можно ниже */
+                /* Попытка разместить чёрный плашку внизу на больших экрана как можно ниже */
                 if ($(".td-sites-grid__cell").val() != "undefined") {
                     $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
                     $("#rec271198, #rec266148, #rec103634, body > .t-row").appendTo("footer");
