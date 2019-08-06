@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      38.2
+// @version      39.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -813,28 +813,31 @@
                     }
 
                     $('.td-page').each((i, el) => {
-                        var pageid = $(el).attr("id").replace("page", "");
-                        $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
-                        $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
-                        var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
-                            var csrf = getCSRF();
-                            $.ajax({
-                                type: 'POST',
-                                url: '/page/unpublish/',
-                                data: {
-                                    pageid: ${pageid},
-                                    csrf: csrf
-                                },
-                                dataType: 'text',
-                                success: () => {
-                                    window.location.reload();
-                                },
-                                timeout: 1000 * 90
-                            });
-                        }`;
+                        var pageid = $(el).attr("id");
+                        if (pageid.includes("page")) {
+                            pageid = pageid.replace("page", "");
+                            if ($(el).find('.td-page__note').text() == "") {
+                                $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
+                                $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
+                                var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+                                var csrf = getCSRF();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/page/unpublish/',
+                                    data: {
+                                        pageid: ${pageid},
+                                        csrf: csrf
+                                    },
+                                    dataType: 'text',
+                                    success: () => {
+                                        window.location.reload();
+                                    },
+                                    timeout: 1000 * 90
+                                });
+                                }`;
 
-                        if ($(el).find('.td-page__note').text() == "") {
-                            $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
+                                $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
+                            }
                         }
                     });
 
