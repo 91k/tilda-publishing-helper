@@ -800,20 +800,20 @@
                     $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
                     if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
-                        $(`
-                            <a href="/identity/gostore/?projectid=${projectid}">
-                                <table class="td-project-uppanel__button">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <img src="/tpl/img/td-icon-catalog.png" height="16px" style="padding:5px;">
-                                            </td>
-                                            <td class="td-project-uppanel__title">${lang === "RU" ? "Товары" : "Products"}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </a>
-                        `).appendTo($(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']"));
+                        $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").after(`
+                        <a href="/identity/gostore/?projectid=${projectid}">
+                            <table class="td-project-uppanel__button">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <img src="/tpl/img/td-icon-catalog.png" height="16px" style="padding:5px;">
+                                        </td>
+                                        <td class="td-project-uppanel__title">${lang === "RU" ? "Товары" : "Products"}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </a>
+                        `);
                     }
 
                     $('.td-page').each((i, el) => {
