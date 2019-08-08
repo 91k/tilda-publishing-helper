@@ -373,6 +373,11 @@
                     line-height: unset !important;
                 }
 
+                #rec271198 > div > div > div {
+                    float: unset !important;
+                    text-align: center;
+                }
+
                 /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
                 .ss-container {
                     min-height: ${$(window).height()+15}px;
@@ -457,7 +462,6 @@
                 #preview270icon {
                     padding-top: 0 !important;
                 }
-                
             `;
 
             if (window.location.pathname === "/projects/settings/") {
@@ -465,21 +469,21 @@
                 var isEmail;
                 if ($("[data-menu-item='#ss_menu_fonts']")) {
                     styleBody += `
-                .ss-menu {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    border: 1px solid #ddd;
-                    margin: 2px;
-                }
+                    .ss-menu {
+                        position: -webkit-sticky;
+                        position: sticky;
+                        border: 1px solid #ddd;
+                        margin: 2px;
+                    }
 
-                .ss-menu__item a {
-                    padding: 16px 30px;
-                    font-size: 16px;
-                }
+                    .ss-menu__item a {
+                        padding: 16px 30px;
+                        font-size: 16px;
+                    }
 
-                .ss-menu__wrapper {
-                    margin-bottom: 0 !important;
-                }
+                    .ss-menu__wrapper {
+                        margin-bottom: 0 !important;
+                    }
                 `;
                     isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
                 }
@@ -875,6 +879,7 @@
                                         </span>
                                     </td>
                                 </tr>`);
+                                    </tr>`);
                                 }
                             }
                         }
