@@ -673,23 +673,27 @@
                     success: function (data) {
                         var dom = new DOMParser().parseFromString(data, "text/html");
                         var plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-                        var datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
-                        let dateNow = new Date();
-                        let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
-                        var autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
-                        var text = "";
-                        if (dateLag < 14) {
-                            if (autorenew.length < 50 && autorenew.length > 10) {
-                                text = `До окончания тарифа осталось ${dateLag} д. <a href="/identity/plan/" style="font-style: underline">Не забудьте оплатить</a>`;
-                            } else if (autorenew.length == 0) {
-                                text = `Пробный тариф закончится через ${dateLag} д.`;
-                            }
+                        if (!isEmpty(plan)) {
+                            var datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
+                            let dateNow = new Date();
+                            let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
+                            var autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
+                            var text = "";
+                            if (dateLag < 10 && dateLag > 0) {
+                                if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
+                                    text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
+                                } else if (autorenew.length == 0) {
+                                    text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
+                                }
 
-                            $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color:lightyellow; text-align:center; font-size:18px;">
-                                <div style="max-width: 1180px; margin: 0 auto;">
-                                    <spn style="font-weight: 400;">${text}</span>
-                                </div>
-                            </div>`);
+                                if (!isEmpty(text)) {
+                                    $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
+                                    <div style="max-width: 1180px; margin: 0 auto">
+                                        <spn style="font-weight: 500; color: #fff">${text}</span>
+                                    </div>
+                                </div>`);
+                                }
+                            }
                         }
 
                     }
