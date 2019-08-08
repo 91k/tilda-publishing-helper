@@ -815,6 +815,29 @@
                         `);
                     }
 
+                    $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
+                        var dom = new DOMParser().parseFromString(data, "text/html");
+                        var count = 0;
+
+                        $(dom).find(".td-leads__table").children("div").find("div:nth-child(2)").each((i, el) => {
+                            var date = $(el).text().replace(/Date:\s/, "");
+                            var dateError = new Date(date);
+
+                            var dateNow = new Date();
+                            let dateLag = Math.ceil(Math.abs(dateNow.getTime() - dateError.getTime()) / (1000 * 3600 * 24));
+
+                            if (dateLag < 2) {
+                                count++;
+                            }
+                        });
+
+                        if (count > 0) {
+                            $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}">
+                                <td colspan=2 style="text-align: center;">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px;">${count}</span></td>                                
+                            </a></tr>`);
+                        }
+                    });
+
                     $('.td-page').each((i, el) => {
                         var pageid = $(el).attr("id");
                         if (pageid.includes("page")) {
@@ -878,7 +901,6 @@
                                             <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Открыть</a>.
                                         </span>
                                     </td>
-                                </tr>`);
                                     </tr>`);
                                 }
                             }
