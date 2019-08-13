@@ -21,7 +21,11 @@
   "use strict";
 
   /* Делаем редирект, если страница недоступна для редактирования */
-  var textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
+  let textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
+
+  let projectid = "";
+  let pageid = "";
+  let url = "";
 
   if (
     textBody === "You can't edit this project.." ||
@@ -32,9 +36,9 @@
     textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
   ) {
     if (window.location.href.includes("projectid=")) {
-      var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
-      var pageid = "";
-      var url = "";
+      let projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
+      let pageid = "";
+      let url = "";
 
       if (window.location.href.includes("pageid=")) {
         pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
@@ -70,10 +74,10 @@
       }
     })(function($) {
       /* Переменная для вывода текста */
-      var text = "";
+      let text = "";
 
       /* Опреляем язык по чёрному меню сверху */
-      var lang = "RU";
+      let lang = "RU";
       if (typeof $("a[href$='/identity/'].t-menu__item:first").val() !== "undefined") {
         if ($("a[href$='/identity/'].t-menu__item:first").text() === "Профиль") {
           lang = "RU";
@@ -82,11 +86,11 @@
         }
       }
 
-      var email = "";
+      let email = "";
 
       if (window.location.pathname === "/identity/plan/") {
         $.ajax("https://tilda.cc/identity/").done((data) => {
-          var dom = new DOMParser().parseFromString(data, "text/html");
+          let dom = new DOMParser().parseFromString(data, "text/html");
           email = $(dom).find("[name=email]").val();
 
           $("[name='paybox']").before(`
@@ -114,11 +118,11 @@
       function addRecIDs() {
         $("div.record").each((i, el) => {
           if ($(el).children("div#mainleft").children("div").children().length < 6) {
-            var rid = $(el).attr("recordid");
-            var recid = `#rec${ rid }`;
-            var recordid = `#record${ rid }`;
-            var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
-            var mainleft = $(el).children("div#mainleft").children("div");
+            let rid = $(el).attr("recordid");
+            let recid = `#rec${ rid }`;
+            let recordid = `#record${ rid }`;
+            let copy = `let t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
+            let mainleft = $(el).children("div#mainleft").children("div");
 
             $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
@@ -136,7 +140,7 @@
       }
 
       /* Заносим все новые стили в переменную */
-      var styleBody = "";
+      let styleBody = "";
 
       if (window.location.pathname === "/page/") {
         /* Добавляем recid для каждого блока на странице */
@@ -148,13 +152,13 @@
         ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
         /* Используем переменную, чтобы уникализировать список элементов */
-        var seen = {};
+        let seen = {};
 
         /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
         $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
           return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
         }).map(() => {
-          var value = this.getAttribute("name");
+          let value = this.getAttribute("name");
 
           if (Object.prototype.hasOwnProperty.call(seen, value))
             return null;
@@ -184,7 +188,7 @@
             setTimeout(() => {
               /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
               $("input[placeholder*='px']").each((i, el) => {
-                var value = $(el).val();
+                let value = $(el).val();
                 if (!value.includes("px") && value !== "") {
                   $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">В этом поле нужно указать значение с "px"</span>
@@ -193,10 +197,10 @@
               });
 
               /* Предупреждение для поля «SEO для Заголовка» */
-              var title_tag = $('[name="title_tag"]');
+              let title_tag = $('[name="title_tag"]');
               if (!isEmpty(title_tag.val())) {
-                var id = $("[data-rec-id").attr("data-rec-id");
-                var title = $("#rec" + id).find(".t-title").val();
+                let id = $("[data-rec-id").attr("data-rec-id");
+                let title = $("#rec" + id).find(".t-title").val();
                 if (typeof title === "undefined") {
                   $(title_tag).css("border", "1px solid red").before(`
                                         <span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>
@@ -249,11 +253,11 @@
               }
 
               $("input[name*='link']").each((i, el) => {
-                var option = "";
-                var name = $(el).attr("name");
+                let option = "";
+                let name = $(el).attr("name");
 
                 $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each((i, el) => {
-                  var value = $(el).text();
+                  let value = $(el).text();
 
                   /* Если блок T173 Якорная ссылка */
                   if ($(el).parents("[data-record-type='215']").length) {
@@ -279,7 +283,7 @@
 
               /* Делаем проверку поля с ключом в блоке T803 */
               $("input[name='cont']").each((i, el) => {
-                var value = $(el).val();
+                let value = $(el).val();
                 if (value.includes("%")) {
                   $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
@@ -466,7 +470,7 @@
 
       if (window.location.pathname === "/projects/settings/") {
         /* Делаем боковое меню плавающим */
-        var isEmail;
+        let isEmail;
         if ($("[data-menu-item='#ss_menu_fonts']")) {
           styleBody += `
                     .ss-menu {
@@ -488,7 +492,7 @@
           isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
         }
 
-        var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
+        let isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
 
         if (isEmail === "none") {
           text = "630";
@@ -522,7 +526,7 @@
         }
 
         /* Предупреждение для поля Google Analytics */
-        var value = $("input.js-ga-localinput").val();
+        let value = $("input.js-ga-localinput").val();
         if (typeof value !== "undefined") {
           if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
             $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
@@ -599,12 +603,12 @@
       if (window.location.pathname === "/projects/" || window.location.pathname.includes("store/parts")) {
         /* Создаём дополнительные ссылки в карточках проектов */
         $(".td-sites-grid__cell").each((i, el) => {
-          var projectid = $(el).attr("id");
+          let projectid = $(el).attr("id");
           if (typeof projectid !== "undefined") {
-            var id = projectid.replace("project", "");
-            var buttons = $(el).find(".td-site__settings");
-            var link = $(el).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
-            var leads = "",
+            let id = projectid.replace("project", "");
+            let buttons = $(el).find(".td-site__settings");
+            let link = $(el).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
+            let leads = "",
               settings = "";
 
             if (lang === "RU") {
@@ -670,14 +674,14 @@
           url: `https://tilda.cc/identity/plan/`,
           async: true,
           success: function(data) {
-            var dom = new DOMParser().parseFromString(data, "text/html");
-            var plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+            let dom = new DOMParser().parseFromString(data, "text/html");
+            let plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
             if (!isEmpty(plan)) {
-              var datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
+              let datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
               let dateNow = new Date();
               let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
-              var autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
-              var text = "";
+              let autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
+              let text = "";
               if (dateLag < 10 && dateLag > 0) {
                 if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
                   text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
@@ -699,7 +703,7 @@
         });
       }
 
-      var identityGo = [{
+      let identityGo = [{
           href: "news",
           value: "Каналы новостей"
         },
@@ -721,7 +725,7 @@
         }
       ];
 
-      var dom = identityGo.map(obj => {
+      let dom = identityGo.map(obj => {
         return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>';
       });
 
@@ -730,10 +734,10 @@
       $("#referralpopup").css("z-index", 1);
 
       /* Добавляем пункт «Домены» в верхнее меню */
-      var domains = 0;
+      let domains = 0;
 
       $(".t-menu__item").each((i, el) => {
-        var href = $(el).attr("href");
+        let href = $(el).attr("href");
         if (href === "/domains/") {
           domains += 1;
         }
@@ -816,14 +820,14 @@
           }
 
           $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
-            var dom = new DOMParser().parseFromString(data, "text/html");
-            var count = 0;
+            let dom = new DOMParser().parseFromString(data, "text/html");
+            let count = 0;
 
             $(dom).find(".td-leads__table").children("div").find("div:nth-child(2)").each((i, el) => {
-              var date = $(el).text().replace(/Date:\s/, "");
-              var dateError = new Date(date);
+              let date = $(el).text().replace(/Date:\s/, "");
+              let dateError = new Date(date);
 
-              var dateNow = new Date();
+              let dateNow = new Date();
               let dateLag = Math.ceil(Math.abs(dateNow.getTime() - dateError.getTime()) / (1000 * 3600 * 24));
 
               if (dateLag < 2) {
@@ -839,14 +843,14 @@
           });
 
           $('.td-page').each((i, el) => {
-            var pageid = $(el).attr("id");
+            let pageid = $(el).attr("id");
             if (pageid.includes("page")) {
               pageid = pageid.replace("page", "");
               if ($(el).find('.td-page__note').text() === "") {
                 $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
                 $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
-                var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
-                                var csrf = getCSRF();
+                let unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+                                let csrf = getCSRF();
                                 $.ajax({
                                     type: 'POST',
                                     url: '/page/unpublish/',
@@ -875,7 +879,7 @@
             success: function(text) {
               if (text !== null) {
                 /* Стоит ли пароль на сайт */
-                var auth = text.match(new RegExp("<b>Authorization Required.</b>"));
+                let auth = text.match(new RegExp("<b>Authorization Required.</b>"));
                 if (!isEmpty(auth)) {
                   $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
@@ -890,7 +894,7 @@
                 }
 
                 /* Стоит ли запрет на идексацию сайта */
-                var index = text.match(new RegExp("Disallow: /\\n"));
+                let index = text.match(new RegExp("Disallow: /\\n"));
                 if (!isEmpty(index)) {
                   $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
@@ -913,7 +917,7 @@
 
         /* Есть ли на странице иконка */
         if (typeof $("#preview16icon").val() !== "undefined") {
-          var url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
+          let url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
 
           $(".ss-tl__page-container tbody").prepend(`
                         <tr valign="top">
@@ -942,7 +946,7 @@
       }
 
       /* Clippy */
-      var d = new Date();
+      let d = new Date();
       if (d.getDate() === 1 && d.getMonth() + 1 === 4) {
         $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png");
 
