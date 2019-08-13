@@ -17,286 +17,286 @@
 // @exclude      https://upwidget.tildacdn.com/*
 // @license      MIT
 // ==/UserScript==
-(async function (window) {
-    "use strict";
+(async function(window) {
+  "use strict";
 
-    /* Делаем редирект, если страница недоступна для редактирования */
-    var textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
+  /* Делаем редирект, если страница недоступна для редактирования */
+  var textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
 
-    if (
-        textBody === "You can't edit this project.." ||
-        textBody === "You can not edit this project..." ||
-        textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
-        textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
-        textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
-        textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
-    ) {
-        if (window.location.href.includes("projectid=")) {
-            var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
-            var pageid = "";
-            var url = "";
+  if (
+    textBody === "You can't edit this project.." ||
+    textBody === "You can not edit this project..." ||
+    textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
+    textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
+    textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
+    textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
+  ) {
+    if (window.location.href.includes("projectid=")) {
+      var projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
+      var pageid = "";
+      var url = "";
 
-            if (window.location.href.includes("pageid=")) {
-                pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
-            }
+      if (window.location.href.includes("pageid=")) {
+        pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
+      }
 
-            if (projectid) {
-                url = "https://project" + parseInt(projectid, 10) + ".tilda.ws/";
-            }
+      if (projectid) {
+        url = "https://project" + parseInt(projectid, 10) + ".tilda.ws/";
+      }
 
-            if (pageid) {
-                url += "page" + parseInt(pageid, 10) + ".html";
-            }
+      if (pageid) {
+        url += "page" + parseInt(pageid, 10) + ".html";
+      }
 
-            window.location.href = url;
+      window.location.href = url;
+    }
+
+    return;
+  } else if (textBody === "Error 404: Page not found" || textBody === "System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.") {
+    return;
+  } else if (window.location.pathname === "/identity/chat/" || window.location.pathname === "/identity/apikeys/") {
+    return;
+  } else {
+    (function(factory) {
+      if (typeof define === "function" && define.amd) { // eslint-disable-line
+        /* AMD. Register as an anonymous module. */
+        define(["jquery"], factory); // eslint-disable-line
+      } else if (typeof exports === "object") {
+        /* Node/CommonJS */
+        module.exports = factory(require("jquery")); // eslint-disable-line
+      } else {
+        /* Browser globals */
+        factory(jQuery); // eslint-disable-line
+      }
+    })(function($) {
+      /* Переменная для вывода текста */
+      var text = "";
+
+      /* Опреляем язык по чёрному меню сверху */
+      var lang = "RU";
+      if (typeof $("a[href$='/identity/'].t-menu__item:first").val() !== "undefined") {
+        if ($("a[href$='/identity/'].t-menu__item:first").text() === "Профиль") {
+          lang = "RU";
+        } else {
+          lang = "EN";
         }
+      }
 
-        return;
-    } else if (textBody === "Error 404: Page not found" || textBody === "System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.") {
-        return;
-    } else if (window.location.pathname === "/identity/chat/" || window.location.pathname === "/identity/apikeys/") {
-        return;
-    } else {
-        (function (factory) {
-            if (typeof define === "function" && define.amd) { // eslint-disable-line
-                /* AMD. Register as an anonymous module. */
-                define(["jquery"], factory); // eslint-disable-line
-            } else if (typeof exports === "object") {
-                /* Node/CommonJS */
-                module.exports = factory(require("jquery")); // eslint-disable-line
-            } else {
-                /* Browser globals */
-                factory(jQuery); // eslint-disable-line
-            }
-        })(function ($) {
-            /* Переменная для вывода текста */
-            var text = "";
+      var email = "";
 
-            /* Опреляем язык по чёрному меню сверху */
-            var lang = "RU";
-            if (typeof $("a[href$='/identity/'].t-menu__item:first").val() !== "undefined") {
-                if ($("a[href$='/identity/'].t-menu__item:first").text() === "Профиль") {
-                    lang = "RU";
-                } else {
-                    lang = "EN";
-                }
-            }
+      if (window.location.pathname === "/identity/plan/") {
+        $.ajax("https://tilda.cc/identity/").done((data) => {
+          var dom = new DOMParser().parseFromString(data, "text/html");
+          email = $(dom).find("[name=email]").val();
 
-            var email = "";
-
-            if (window.location.pathname === "/identity/plan/") {
-                $.ajax("https://tilda.cc/identity/").done((data) => {
-                    var dom = new DOMParser().parseFromString(data, "text/html");
-                    email = $(dom).find("[name=email]").val();
-
-                    $("[name='paybox']").before(`
+          $("[name='paybox']").before(`
                         <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">
                             Email: ${email}
                         </div>`);
-                });
+        });
+      }
+
+      function isEmpty(obj) {
+        if (obj == null) return true;
+
+        if (obj.length > 0) return false;
+        if (obj.length === 0) return true;
+
+        if (typeof obj !== "object") return true;
+
+        for (let key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
+        }
+
+        return true;
+      }
+
+      function addRecIDs() {
+        $("div.record").each((i, el) => {
+          if ($(el).children("div#mainleft").children("div").children().length < 6) {
+            var rid = $(el).attr("recordid");
+            var recid = `#rec${ rid }`;
+            var recordid = `#record${ rid }`;
+            var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
+            var mainleft = $(el).children("div#mainleft").children("div");
+
+            $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
+
+            if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
+              $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
             }
 
-            function isEmpty(obj) {
-                if (obj == null) return true;
-
-                if (obj.length > 0) return false;
-                if (obj.length === 0) return true;
-
-                if (typeof obj !== "object") return true;
-
-                for (let key in obj) {
-                    if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
-                }
-
-                return true;
-            }
-
-            function addRecIDs() {
-                $("div.record").each((i, el) => {
-                    if ($(el).children("div#mainleft").children("div").children().length < 6) {
-                        var rid = $(el).attr("recordid");
-                        var recid = `#rec${ rid }`;
-                        var recordid = `#record${ rid }`;
-                        var copy = `var t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
-                        var mainleft = $(el).children("div#mainleft").children("div");
-
-                        $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
-
-                        if (!$(`${ recordid } > div:nth-child(1)`).hasClass("mainright")) {
-                            $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
-                        }
-
-                        $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
+            $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
                             <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
                                 <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
                             </div>
                         </div>`);
-                    }
-                });
-            }
+          }
+        });
+      }
 
-            /* Заносим все новые стили в переменную */
-            var styleBody = "";
+      /* Заносим все новые стили в переменную */
+      var styleBody = "";
 
-            if (window.location.pathname === "/page/") {
-                /* Добавляем recid для каждого блока на странице */
-                addRecIDs();
+      if (window.location.pathname === "/page/") {
+        /* Добавляем recid для каждого блока на странице */
+        addRecIDs();
 
-                /* Упрощаем вид блока T803 */
-                $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left;"></div><br>`);
-                $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
-                ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
+        /* Упрощаем вид блока T803 */
+        $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left;"></div><br>`);
+        $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
+        ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
-                /* Используем переменную, чтобы уникализировать список элементов */
-                var seen = {};
+        /* Используем переменную, чтобы уникализировать список элементов */
+        var seen = {};
 
-                /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
-                $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
-                    return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
-                }).map(() => {
-                    var value = this.getAttribute("name");
+        /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
+        $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
+          return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
+        }).map(() => {
+          var value = this.getAttribute("name");
 
-                    if (Object.prototype.hasOwnProperty.call(seen, value))
-                        return null;
+          if (Object.prototype.hasOwnProperty.call(seen, value))
+            return null;
 
-                    seen[value] = true;
-                    return value;
-                }).each((i, el) => {
-                    $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
-                });
+          seen[value] = true;
+          return value;
+        }).each((i, el) => {
+          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
+        });
 
-                /* Другая подсказка после публикации страницы  */
-                if ($("#page_menu_publishlink").val() !== "undefined") {
-                    $("#page_menu_publishlink").click(() => {
-                        setTimeout(() => {
-                            if (lang === "RU") {
-                                $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
-                            } else {
-                                $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
-                            }
-                        }, 2000);
-                    });
-                }
+        /* Другая подсказка после публикации страницы  */
+        if ($("#page_menu_publishlink").val() !== "undefined") {
+          $("#page_menu_publishlink").click(() => {
+            setTimeout(() => {
+              if (lang === "RU") {
+                $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+              } else {
+                $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
+              }
+            }, 2000);
+          });
+        }
 
-                /* Предупреждение в Контенте блока */
-                if (typeof $(".tp-record-edit-icons-left__two").val() !== "undefined") {
-                    $(".tp-record-edit-icons-left__two").click(() => {
-                        setTimeout(() => {
-                            /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
-                            $("input[placeholder*='px']").each((i, el) => {
-                                var value = $(el).val();
-                                if (!value.includes("px") && value !== "") {
-                                    $(el).css("border", "1px solid red").before(`
+        /* Предупреждение в Контенте блока */
+        if (typeof $(".tp-record-edit-icons-left__two").val() !== "undefined") {
+          $(".tp-record-edit-icons-left__two").click(() => {
+            setTimeout(() => {
+              /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
+              $("input[placeholder*='px']").each((i, el) => {
+                var value = $(el).val();
+                if (!value.includes("px") && value !== "") {
+                  $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">В этом поле нужно указать значение с "px"</span>
                                     `);
-                                }
-                            });
+                }
+              });
 
-                            /* Предупреждение для поля «SEO для Заголовка» */
-                            var title_tag = $('[name="title_tag"]');
-                            if (!isEmpty(title_tag.val())) {
-                                var id = $("[data-rec-id").attr("data-rec-id");
-                                var title = $("#rec" + id).find(".t-title").val();
-                                if (typeof title === "undefined") {
-                                    $(title_tag).css("border", "1px solid red").before(`
+              /* Предупреждение для поля «SEO для Заголовка» */
+              var title_tag = $('[name="title_tag"]');
+              if (!isEmpty(title_tag.val())) {
+                var id = $("[data-rec-id").attr("data-rec-id");
+                var title = $("#rec" + id).find(".t-title").val();
+                if (typeof title === "undefined") {
+                  $(title_tag).css("border", "1px solid red").before(`
                                         <span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>
                                     `);
-                                }
-                            }
-
-                        }, 1000);
-                    });
                 }
+              }
 
-                /* Предупреждение в Контенте блока */
-                if (typeof $(".tp-record-edit-icons-left__three").val() !== "undefined") {
-                    $(".tp-record-edit-icons-left__three").click(() => {
-                        setTimeout(() => {
-                            /* Предупреждение о ссылках с кавычкой */
-                            $("input[name*='link']").each((i, el) => {
-                                if ($(el).val().includes('"')) {
-                                    $(el).css("border", "1px solid red").before(`
+            }, 1000);
+          });
+        }
+
+        /* Предупреждение в Контенте блока */
+        if (typeof $(".tp-record-edit-icons-left__three").val() !== "undefined") {
+          $(".tp-record-edit-icons-left__three").click(() => {
+            setTimeout(() => {
+              /* Предупреждение о ссылках с кавычкой */
+              $("input[name*='link']").each((i, el) => {
+                if ($(el).val().includes('"')) {
+                  $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
                                     `);
-                                }
-                            });
+                }
+              });
 
-                            $("input[name='zoom']").each((i, el) => {
-                                if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
-                                    $(el).css("border", "1px solid red").before(`
+              $("input[name='zoom']").each((i, el) => {
+                if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
+                  $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>
                                     `);
-                                }
-                            });
+                }
+              });
 
-                            /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
-                            if (typeof $(".headerfooterpagearea").val() === "undefined") {
-                                $("input[name*='link'][value^='#popup']").each((i, el) => {
-                                    if (!$("#allrecords").text().includes($(el).val())) {
-                                        $(el).css("border", "1px solid red").before(`
+              /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
+              if (typeof $(".headerfooterpagearea").val() === "undefined") {
+                $("input[name*='link'][value^='#popup']").each((i, el) => {
+                  if (!$("#allrecords").text().includes($(el).val())) {
+                    $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
                                     `);
-                                    }
-                                });
+                  }
+                });
 
-                                $("input[name*='link'][value^='#rec']").each((i, el) => {
-                                    if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
-                                        $(el).css("border", "1px solid red").before(`
+                $("input[name*='link'][value^='#rec']").each((i, el) => {
+                  if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
+                    $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
                                     `);
-                                    }
-                                });
-                            }
+                  }
+                });
+              }
 
-                            $("input[name*='link']").each((i, el) => {
-                                var option = "";
-                                var name = $(el).attr("name");
+              $("input[name*='link']").each((i, el) => {
+                var option = "";
+                var name = $(el).attr("name");
 
-                                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each((i, el) => {
-                                    var value = $(el).text();
+                $("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each((i, el) => {
+                  var value = $(el).text();
 
-                                    /* Если блок T173 Якорная ссылка */
-                                    if ($(el).parents("[data-record-type='215']").length) {
-                                        value = "#" + value;
-                                    }
+                  /* Если блок T173 Якорная ссылка */
+                  if ($(el).parents("[data-record-type='215']").length) {
+                    value = "#" + value;
+                  }
 
-                                    option += `
+                  option += `
                                     <span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
                                         ${value}
                                     </span>
                                 `;
-                                });
+                });
 
-                                if (!isEmpty(option)) {
-                                    $(el).parent().parent().find(".pe-hint").after(`
+                if (!isEmpty(option)) {
+                  $(el).parent().parent().find(".pe-hint").after(`
                                     <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
                                         <span style="display: inline-block;">${lang === "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
                                         ${option}
                                     </div>
                                 `);
-                                }
-                            });
+                }
+              });
 
-                            /* Делаем проверку поля с ключом в блоке T803 */
-                            $("input[name='cont']").each((i, el) => {
-                                var value = $(el).val();
-                                if (value.includes("%")) {
-                                    $(el).css("border", "1px solid red").before(`
+              /* Делаем проверку поля с ключом в блоке T803 */
+              $("input[name='cont']").each((i, el) => {
+                var value = $(el).val();
+                if (value.includes("%")) {
+                  $(el).css("border", "1px solid red").before(`
                                         <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
                                     `);
-                                }
-
-                                if (value.includes(" ")) {
-                                    $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
-                                    `);
-                                }
-                            });
-                        }, 2000);
-                    });
                 }
 
-                styleBody += `
+                if (value.includes(" ")) {
+                  $(el).css("border", "1px solid red").before(`
+                                        <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
+                                    `);
+                }
+              });
+            }, 2000);
+          });
+        }
+
+        styleBody += `
                     [data-record-type="360"] .tp-record-edit-icons-left__three {
                         pointer-events: none;
                     }
@@ -363,10 +363,10 @@
                         display: none !important;
                     }
                 `;
-            }
+      }
 
-            /* Заносим все новые стили в переменную */
-            styleBody += `
+      /* Заносим все новые стили в переменную */
+      styleBody += `
                 /* Меняем размер подзаголовков в Настройках сайта */
                 .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
                     font-size: 18px !important;
@@ -464,11 +464,11 @@
                 }
             `;
 
-            if (window.location.pathname === "/projects/settings/") {
-                /* Делаем боковое меню плавающим */
-                var isEmail;
-                if ($("[data-menu-item='#ss_menu_fonts']")) {
-                    styleBody += `
+      if (window.location.pathname === "/projects/settings/") {
+        /* Делаем боковое меню плавающим */
+        var isEmail;
+        if ($("[data-menu-item='#ss_menu_fonts']")) {
+          styleBody += `
                     .ss-menu {
                         position: -webkit-sticky;
                         position: sticky;
@@ -485,147 +485,147 @@
                         margin-bottom: 0 !important;
                     }
                 `;
-                    isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
-                }
+          isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
+        }
 
-                var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
+        var isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
 
-                if (isEmail === "none") {
-                    text = "630";
-                } else if (isFree) {
-                    text = "715";
-                } else {
-                    text = "820";
-                }
+        if (isEmail === "none") {
+          text = "630";
+        } else if (isFree) {
+          text = "715";
+        } else {
+          text = "820";
+        }
 
-                styleBody += `
+        styleBody += `
                     .ss-content {
                         margin-top: -${ text }px;
                     }
                 `;
 
-                /* Убираем подсказу из Настроек сайта → Ещё */
-                if (typeof $("#ss_menu_more").val() !== "undefined") {
-                    $("#ss_menu_more > div:nth-child(2) .ss-upload-button, #ss_menu_more > div:nth-child(2) img, #ss_menu_more > div:nth-child(2) br").remove();
-                    $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang === "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang === "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
-                }
+        /* Убираем подсказу из Настроек сайта → Ещё */
+        if (typeof $("#ss_menu_more").val() !== "undefined") {
+          $("#ss_menu_more > div:nth-child(2) .ss-upload-button, #ss_menu_more > div:nth-child(2) img, #ss_menu_more > div:nth-child(2) br").remove();
+          $("#ss_menu_more > div:nth-child(2) .ss-form-group__hint").html(`${ lang === "RU" ? "Загрузить иконку можно в разделе" : "Upload favicon you can in" } SEO → <a href="${ $('a[href^="/projects/favicons/?projectid="]').attr("href") }">${ lang === "RU" ? "Настройка иконок для сайта" : "Settings icons for sites" }</a>`);
+        }
 
-                $("#ss_menu_seo .ss-btn, #ss_menu_analytics .ss-btn").addClass("ss-btn-white");
+        $("#ss_menu_seo .ss-btn, #ss_menu_analytics .ss-btn").addClass("ss-btn-white");
 
-                /* Скролл по пунктам в Настройках сайта плавным */
-                if (typeof $("li[data-menu-item]").val() !== "undefined") {
-                    $("li[data-menu-item]").click(() => {
-                        $("html,body").animate({
-                            scrollTop: $("body").offset().top + 105
-                        }, 300);
-                    });
-                }
+        /* Скролл по пунктам в Настройках сайта плавным */
+        if (typeof $("li[data-menu-item]").val() !== "undefined") {
+          $("li[data-menu-item]").click(() => {
+            $("html,body").animate({
+              scrollTop: $("body").offset().top + 105
+            }, 300);
+          });
+        }
 
-                /* Предупреждение для поля Google Analytics */
-                var value = $("input.js-ga-localinput").val();
-                if (typeof value !== "undefined") {
-                    if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
-                        $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
-                    }
-                }
+        /* Предупреждение для поля Google Analytics */
+        var value = $("input.js-ga-localinput").val();
+        if (typeof value !== "undefined") {
+          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
+            $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
+          }
+        }
 
-                /* Предупреждение для поля Яндекс.Метрика */
-                value = $("input.js-metrika-localinput").val();
-                if (typeof value !== "undefined") {
-                    if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
-                        $("input.js-metrika-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
-                    }
-                }
+        /* Предупреждение для поля Яндекс.Метрика */
+        value = $("input.js-metrika-localinput").val();
+        if (typeof value !== "undefined") {
+          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
+            $("input.js-metrika-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
+          }
+        }
 
-                /* Предупреждение для поля субдомен */
-                value = $("input#ss-input-alias").val();
-                if (typeof value !== "undefined") {
-                    if (value.includes("_") && value !== "") {
-                        $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах (например, Инстаграм)</span>");
-                    }
-                }
+        /* Предупреждение для поля субдомен */
+        value = $("input#ss-input-alias").val();
+        if (typeof value !== "undefined") {
+          if (value.includes("_") && value !== "") {
+            $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах (например, Инстаграм)</span>");
+          }
+        }
 
-                /* Предупреждение для css link */
-                value = $("[name='customcssfile']").val();
-                if (typeof value !== "undefined") {
-                    if (value.includes("rel=stylesheet") && value !== "") {
-                        $("[name='customcssfile']").css("border", "1px solid red").parent().before("<span style='color: red;'>Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>");
-                    }
-                }
+        /* Предупреждение для css link */
+        value = $("[name='customcssfile']").val();
+        if (typeof value !== "undefined") {
+          if (value.includes("rel=stylesheet") && value !== "") {
+            $("[name='customcssfile']").css("border", "1px solid red").parent().before("<span style='color: red;'>Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>");
+          }
+        }
 
-                /* Подсказка под полями счётчиков */
-                text = "Добавьте только номер счётчика";
-                if (typeof $(".js-ga-localinput").val() !== "undefined") {
-                    $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${ text }<span>`);
-                }
-                if (typeof $(".js-metrika-localinput").val() !== "undefined") {
-                    $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${ text }<span>`);
-                }
+        /* Подсказка под полями счётчиков */
+        text = "Добавьте только номер счётчика";
+        if (typeof $(".js-ga-localinput").val() !== "undefined") {
+          $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${ text }<span>`);
+        }
+        if (typeof $(".js-metrika-localinput").val() !== "undefined") {
+          $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${ text }<span>`);
+        }
 
-                if (typeof $("[name='googletmid']").val() !== "undefined") {
-                    $("[name='googletmid']").attr("placeholder", "GTM-N842GS").after(`<span class='js-gtm-localinput'>${ text }<span>`);
-                }
+        if (typeof $("[name='googletmid']").val() !== "undefined") {
+          $("[name='googletmid']").attr("placeholder", "GTM-N842GS").after(`<span class='js-gtm-localinput'>${ text }<span>`);
+        }
 
-                /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
-                $(".js-yandexmetrika-connect").removeClass("js-yandexmetrika-connect");
-                $(".js-ga-connect").removeClass("js-ga-connect");
+        /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
+        $(".js-yandexmetrika-connect").removeClass("js-yandexmetrika-connect");
+        $(".js-ga-connect").removeClass("js-ga-connect");
 
-                /* Добавляем подсказку по валютам */
-                if (typeof $("[name=currency_txt] + div").val() !== "undefined") {
-                    $("[name=currency_txt] + div").text(lang === "RU" ? "Знаки: ₽, $, €, ¥, руб." : "Signs: ₽, $, €, ¥.");
-                }
-            }
+        /* Добавляем подсказку по валютам */
+        if (typeof $("[name=currency_txt] + div").val() !== "undefined") {
+          $("[name=currency_txt] + div").text(lang === "RU" ? "Знаки: ₽, $, €, ¥, руб." : "Signs: ₽, $, €, ¥.");
+        }
+      }
 
-            if (window.location.pathname === "/projects/payments/") {
-                /* Делаем более заметней галочку «Выключить тестовый режим» */
-                if (typeof $("[name^='testmodeoff']").val() !== "undefined") {
-                    if (lang === "RU") {
-                        text = $("[name^='testmodeoff']").parent().html();
-                        text = text.replace("Выключить", "в<b>Ы</b>ключить");
-                        $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
-                        $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
-                    }
-                }
-            }
+      if (window.location.pathname === "/projects/payments/") {
+        /* Делаем более заметней галочку «Выключить тестовый режим» */
+        if (typeof $("[name^='testmodeoff']").val() !== "undefined") {
+          if (lang === "RU") {
+            text = $("[name^='testmodeoff']").parent().html();
+            text = text.replace("Выключить", "в<b>Ы</b>ключить");
+            $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
+            $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
+          }
+        }
+      }
 
-            /* Перемещаем «Указать ID шаблона» */
-            if (typeof $("#welcome-middle").val() !== "undefined") {
-                $("#previewprojex").append(`
+      /* Перемещаем «Указать ID шаблона» */
+      if (typeof $("#welcome-middle").val() !== "undefined") {
+        $("#previewprojex").append(`
                     <span>Или укажите номер шаблона</span>
                 `);
-                $("#welcome-middle").next().next().after($("#welcome-middle"));
+        $("#welcome-middle").next().next().after($("#welcome-middle"));
+      }
+
+      if (window.location.pathname === "/projects/" || window.location.pathname.includes("store/parts")) {
+        /* Создаём дополнительные ссылки в карточках проектов */
+        $(".td-sites-grid__cell").each((i, el) => {
+          var projectid = $(el).attr("id");
+          if (typeof projectid !== "undefined") {
+            var id = projectid.replace("project", "");
+            var buttons = $(el).find(".td-site__settings");
+            var link = $(el).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
+            var leads = "",
+              settings = "";
+
+            if (lang === "RU") {
+              leads = "Заявки";
+              settings = "Настройки";
+              $(link).html("Редактировать");
+            } else if (lang === "EN") {
+              leads = "Leads";
+              settings = "Settings";
+              $(link).html("EDIT");
+            } else {
+              return;
             }
 
-            if (window.location.pathname === "/projects/" || window.location.pathname.includes("store/parts")) {
-                /* Создаём дополнительные ссылки в карточках проектов */
-                $(".td-sites-grid__cell").each((i, el) => {
-                    var projectid = $(el).attr("id");
-                    if (typeof projectid !== "undefined") {
-                        var id = projectid.replace("project", "");
-                        var buttons = $(el).find(".td-site__settings");
-                        var link = $(el).find("a[href^='/projects/?projectid=']:not(.td-site__section-one)");
-                        var leads = "",
-                            settings = "";
+            /* Удаляем https:// у проектов без доменов */
+            $(".td-site__url-link a").each((i, el) => {
+              $(el).text($(el).text().replace("https://project", "project"));
+            });
 
-                        if (lang === "RU") {
-                            leads = "Заявки";
-                            settings = "Настройки";
-                            $(link).html("Редактировать");
-                        } else if (lang === "EN") {
-                            leads = "Leads";
-                            settings = "Settings";
-                            $(link).html("EDIT");
-                        } else {
-                            return;
-                        }
-
-                        /* Удаляем https:// у проектов без доменов */
-                        $(".td-site__url-link a").each((i, el) => {
-                            $(el).text($(el).text().replace("https://project", "project"));
-                        });
-
-                        /* Пункты заявка и настройки */
-                        $(`
+            /* Пункты заявка и настройки */
+            $(`
                         <table class="td-site__settings">
                             <tbody>
                                 <tr>
@@ -651,126 +651,126 @@
                             </tbody>
                         </table>
                         `).appendTo($(buttons).parent());
-                    }
-                });
+          }
+        });
 
-                /* Попытка разместить чёрный плашку внизу на больших экрана как можно ниже */
-                if ($(".td-sites-grid__cell").val() !== "undefined") {
-                    $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
-                    $("#rec271198, #rec266148, #rec103634, body > .t-row").appendTo("footer");
-                    if ($(window).height() > $("body").height()) {
-                        $("footer").css("position", "fixed").css("bottom", "0").css("width", "100%");
-                    } else {
-                        $("footer").css("position", "relative");
-                    }
+        /* Попытка разместить чёрный плашку внизу на больших экрана как можно ниже */
+        if ($(".td-sites-grid__cell").val() !== "undefined") {
+          $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
+          $("#rec271198, #rec266148, #rec103634, body > .t-row").appendTo("footer");
+          if ($(window).height() > $("body").height()) {
+            $("footer").css("position", "fixed").css("bottom", "0").css("width", "100%");
+          } else {
+            $("footer").css("position", "relative");
+          }
+        }
+
+        $.ajax({
+          type: "GET",
+          url: `https://tilda.cc/identity/plan/`,
+          async: true,
+          success: function(data) {
+            var dom = new DOMParser().parseFromString(data, "text/html");
+            var plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+            if (!isEmpty(plan)) {
+              var datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
+              let dateNow = new Date();
+              let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
+              var autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
+              var text = "";
+              if (dateLag < 10 && dateLag > 0) {
+                if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
+                  text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
+                } else if (autorenew.length == 0) {
+                  text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
                 }
 
-                $.ajax({
-                    type: "GET",
-                    url: `https://tilda.cc/identity/plan/`,
-                    async: true,
-                    success: function (data) {
-                        var dom = new DOMParser().parseFromString(data, "text/html");
-                        var plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-                        if (!isEmpty(plan)) {
-                            var datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
-                            let dateNow = new Date();
-                            let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
-                            var autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
-                            var text = "";
-                            if (dateLag < 10 && dateLag > 0) {
-                                if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
-                                    text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
-                                } else if (autorenew.length == 0) {
-                                    text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
-                                }
-
-                                if (!isEmpty(text)) {
-                                    $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
+                if (!isEmpty(text)) {
+                  $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
                                     <div style="max-width: 1180px; margin: 0 auto">
                                         <spn style="font-weight: 500; color: #fff">${text}</span>
                                     </div>
                                 </div>`);
-                                }
-                            }
-                        }
-
-                    }
-                });
+                }
+              }
             }
 
-            var identityGo = [{
-                    href: "news",
-                    value: "Каналы новостей"
-                },
-                {
-                    href: "crm",
-                    value: "CRM"
-                },
-                {
-                    href: "experts",
-                    value: "Experts"
-                },
-                {
-                    href: "education",
-                    value: "Education"
-                },
-                {
-                    href: "upwidget",
-                    value: "Сервисы хранения файлов"
-                }
-            ];
+          }
+        });
+      }
 
-            var dom = identityGo.map(obj => {
-                return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>';
-            });
+      var identityGo = [{
+          href: "news",
+          value: "Каналы новостей"
+        },
+        {
+          href: "crm",
+          value: "CRM"
+        },
+        {
+          href: "experts",
+          value: "Experts"
+        },
+        {
+          href: "education",
+          value: "Education"
+        },
+        {
+          href: "upwidget",
+          value: "Сервисы хранения файлов"
+        }
+      ];
 
-            $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
+      var dom = identityGo.map(obj => {
+        return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>';
+      });
 
-            $("#referralpopup").css("z-index", 1);
+      $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
 
-            /* Добавляем пункт «Домены» в верхнее меню */
-            var domains = 0;
+      $("#referralpopup").css("z-index", 1);
 
-            $(".t-menu__item").each((i, el) => {
-                var href = $(el).attr("href");
-                if (href === "/domains/") {
-                    domains += 1;
-                }
-            });
+      /* Добавляем пункт «Домены» в верхнее меню */
+      var domains = 0;
 
-            if (domains < 1) {
-                $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item ${window.location.pathname === "/domains/" ? "t-menu__item_active" : ""}">${ lang === "RU" ? "Домены" : "Domains" }</a>`);
-            }
+      $(".t-menu__item").each((i, el) => {
+        var href = $(el).attr("href");
+        if (href === "/domains/") {
+          domains += 1;
+        }
+      });
 
-            if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
-                /* Добавляем ссылку на удаление аккаунта */
-                $("[href='/identity/changepassword/']").after(`
+      if (domains < 1) {
+        $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item ${window.location.pathname === "/domains/" ? "t-menu__item_active" : ""}">${ lang === "RU" ? "Домены" : "Domains" }</a>`);
+      }
+
+      if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
+        /* Добавляем ссылку на удаление аккаунта */
+        $("[href='/identity/changepassword/']").after(`
                     <a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>
                 `);
 
 
-                /* Исправляем слишком длинную кнопку в Профиле */
-                $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
-                $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
-            }
+        /* Исправляем слишком длинную кнопку в Профиле */
+        $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
+        $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
+      }
 
-            if (window.location.pathname === "/domains/" || window.location.pathname === "/identity/courses/") {
-                /* Исправляем отступ слева у кнопки в Доменах */
-                $("center > a > table > tbody > tr > td").css("padding-left", "0");
-            }
+      if (window.location.pathname === "/domains/" || window.location.pathname === "/identity/courses/") {
+        /* Исправляем отступ слева у кнопки в Доменах */
+        $("center > a > table > tbody > tr > td").css("padding-left", "0");
+      }
 
-            /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
-            $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
-            $(".form-horizontal").after(`
+      /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
+      $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
+      $(".form-horizontal").after(`
                 <div class="ss-form-group__hint" style="text-align: center;">
                     <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer;">Отмена</a>
                     </div>
                 <br><br>
             `);
 
-            /* Добавляем ссылки на социальные сети */
-            $("#rec271198 > div > div > div > div").append(`
+      /* Добавляем ссылки на социальные сети */
+      $("#rec271198 > div > div > div > div").append(`
                 <div class="sociallinkimg">
                     <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
                         <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff;" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
@@ -788,18 +788,18 @@
                 </div>
             `);
 
-            if (window.location.pathname === "/projects/" && window.location.search.includes("?projectid=")) {
-                /* Определяем есть ли список страниц */
-                projectid = $("#pagesortable").attr("data-projectid");
-                if (typeof projectid !== "undefined") {
-                    /* Добавляем ссылку на «Главную страницу» для иконки домика */
-                    $(".td-page__td-title").has(".td-page__ico-home").prepend(`
+      if (window.location.pathname === "/projects/" && window.location.search.includes("?projectid=")) {
+        /* Определяем есть ли список страниц */
+        projectid = $("#pagesortable").attr("data-projectid");
+        if (typeof projectid !== "undefined") {
+          /* Добавляем ссылку на «Главную страницу» для иконки домика */
+          $(".td-page__td-title").has(".td-page__ico-home").prepend(`
                         <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
                     `);
-                    $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
+          $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
-                    if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
-                        $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").after(`
+          if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
+            $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").after(`
                         <a href="/identity/gostore/?projectid=${projectid}">
                             <table class="td-project-uppanel__button">
                                 <tbody>
@@ -813,39 +813,39 @@
                             </table>
                         </a>
                         `);
-                    }
+          }
 
-                    $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
-                        var dom = new DOMParser().parseFromString(data, "text/html");
-                        var count = 0;
+          $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
+            var dom = new DOMParser().parseFromString(data, "text/html");
+            var count = 0;
 
-                        $(dom).find(".td-leads__table").children("div").find("div:nth-child(2)").each((i, el) => {
-                            var date = $(el).text().replace(/Date:\s/, "");
-                            var dateError = new Date(date);
+            $(dom).find(".td-leads__table").children("div").find("div:nth-child(2)").each((i, el) => {
+              var date = $(el).text().replace(/Date:\s/, "");
+              var dateError = new Date(date);
 
-                            var dateNow = new Date();
-                            let dateLag = Math.ceil(Math.abs(dateNow.getTime() - dateError.getTime()) / (1000 * 3600 * 24));
+              var dateNow = new Date();
+              let dateLag = Math.ceil(Math.abs(dateNow.getTime() - dateError.getTime()) / (1000 * 3600 * 24));
 
-                            if (dateLag < 2) {
-                                count++;
-                            }
-                        });
+              if (dateLag < 2) {
+                count++;
+              }
+            });
 
-                        if (count > 0) {
-                            $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}">
+            if (count > 0) {
+              $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}">
                                 <td colspan=2 style="text-align: center;">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px;">${count}</span></td>                                
                             </a></tr>`);
-                        }
-                    });
+            }
+          });
 
-                    $('.td-page').each((i, el) => {
-                        var pageid = $(el).attr("id");
-                        if (pageid.includes("page")) {
-                            pageid = pageid.replace("page", "");
-                            if ($(el).find('.td-page__note').text() === "") {
-                                $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
-                                $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
-                                var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+          $('.td-page').each((i, el) => {
+            var pageid = $(el).attr("id");
+            if (pageid.includes("page")) {
+              pageid = pageid.replace("page", "");
+              if ($(el).find('.td-page__note').text() === "") {
+                $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
+                $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
+                var unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
                                 var csrf = getCSRF();
                                 $.ajax({
                                     type: 'POST',
@@ -862,22 +862,22 @@
                                 });
                                 }`;
 
-                                $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
-                            }
-                        }
-                    });
+                $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
+              }
+            }
+          });
 
-                    /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
-                    $.ajax({
-                        type: "GET",
-                        url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
-                        async: true,
-                        success: function (text) {
-                            if (text !== null) {
-                                /* Стоит ли пароль на сайт */
-                                var auth = text.match(new RegExp("<b>Authorization Required.</b>"));
-                                if (!isEmpty(auth)) {
-                                    $(".td-project-uppanel__url tbody").append(`<tr>
+          /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
+          $.ajax({
+            type: "GET",
+            url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
+            async: true,
+            success: function(text) {
+              if (text !== null) {
+                /* Стоит ли пароль на сайт */
+                var auth = text.match(new RegExp("<b>Authorization Required.</b>"));
+                if (!isEmpty(auth)) {
+                  $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
                                     </td>
                                     <td class="td-project-uppanel__url">
@@ -887,12 +887,12 @@
                                         </span>
                                     </td>
                                 </tr>`);
-                                }
+                }
 
-                                /* Стоит ли запрет на идексацию сайта */
-                                var index = text.match(new RegExp("Disallow: /\\n"));
-                                if (!isEmpty(index)) {
-                                    $(".td-project-uppanel__url tbody").append(`<tr>
+                /* Стоит ли запрет на идексацию сайта */
+                var index = text.match(new RegExp("Disallow: /\\n"));
+                if (!isEmpty(index)) {
+                  $(".td-project-uppanel__url tbody").append(`<tr>
                                     <td>
                                     </td>
                                     <td class="td-project-uppanel__url">
@@ -902,20 +902,20 @@
                                         </span>
                                     </td>
                                     </tr>`);
-                                }
-                            }
-                        }
-                    });
                 }
+              }
             }
+          });
+        }
+      }
 
-            if (window.location.pathname === "/projects/favicons/") {
+      if (window.location.pathname === "/projects/favicons/") {
 
-                /* Есть ли на странице иконка */
-                if (typeof $("#preview16icon").val() !== "undefined") {
-                    var url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
+        /* Есть ли на странице иконка */
+        if (typeof $("#preview16icon").val() !== "undefined") {
+          var url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
 
-                    $(".ss-tl__page-container tbody").prepend(`
+          $(".ss-tl__page-container tbody").prepend(`
                         <tr valign="top">
                             <td>
                                 <img src="https://favicon.yandex.net/favicon/${url}?size=32" style="width: 32px; height: 32px">
@@ -934,26 +934,26 @@
                             </td>
                         </tr>
                     `);
-                }
-            }
+        }
+      }
 
-            if (window.location.pathname === "/identity/plan/") {
-                showmore_prices(); // eslint-disable-line
-            }
+      if (window.location.pathname === "/identity/plan/") {
+        showmore_prices(); // eslint-disable-line
+      }
 
-            /* Clippy */
-            var d = new Date();
-            if (d.getDate() === 1 && d.getMonth() + 1 === 4) {
-                $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png");
+      /* Clippy */
+      var d = new Date();
+      if (d.getDate() === 1 && d.getMonth() + 1 === 4) {
+        $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png");
 
-                $(".t-help-bubble").append(`
+        $(".t-help-bubble").append(`
                     <div class="clippy-balloon clippy-top-left">
                         <div class="clippy-tip"></div>
                         <div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div>
                     </div>
                 `);
 
-                styleBody += `
+        styleBody += `
                     .t-help-bubble {
                         background-color: unset !important;
                         box-shadow: unset !important;
@@ -999,14 +999,14 @@
                         width: 200px;
                     }
                 `;
-            }
+      }
 
-            /* Добавляем новые стили к body */
-            $("body").append(`
+      /* Добавляем новые стили к body */
+      $("body").append(`
                 <style>
                     ${ styleBody }
                 </style>
             `);
-        });
-    }
+    });
+  }
 })(window);
