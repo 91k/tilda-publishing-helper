@@ -671,34 +671,31 @@
 
         $.ajax({
           type: "GET",
-          url: `https://tilda.cc/identity/plan/`,
-          async: true,
-          success: function(data) {
-            let dom = new DOMParser().parseFromString(data, "text/html");
-            let plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-            if (!isEmpty(plan)) {
-              let datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
-              let dateNow = new Date();
-              let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
-              let autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
-              let text = "";
-              if (dateLag < 10 && dateLag > 0) {
-                if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
-                  text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
-                } else if (autorenew.length == 0) {
-                  text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
-                }
+          url: `https://tilda.cc/identity/plan/`
+        }).done((data) => {
+          let dom = new DOMParser().parseFromString(data, "text/html");
+          let plan = $(dom).find(".tip__plantitle + br + div").text().trim().match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+          if (!isEmpty(plan)) {
+            let datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
+            let dateNow = new Date();
+            let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
+            let autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
+            let text = "";
+            if (dateLag < 10 && dateLag > 0) {
+              if (autorenew.length < 50 && autorenew.length > 10 && dateLag > 2) {
+                text = `Текущий тариф закончится через ${dateLag} д. Пожалуйста, <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">продлите подписку</a>`;
+              } else if (autorenew.length == 0) {
+                text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
+              }
 
-                if (!isEmpty(text)) {
-                  $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
-                                    <div style="max-width: 1180px; margin: 0 auto">
-                                        <spn style="font-weight: 500; color: #fff">${text}</span>
-                                    </div>
-                                </div>`);
-                }
+              if (!isEmpty(text)) {
+                $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
+                      <div style="max-width: 1180px; margin: 0 auto">
+                          <spn style="font-weight: 500; color: #fff">${text}</span>
+                      </div>
+                  </div>`);
               }
             }
-
           }
         });
       }
