@@ -853,39 +853,37 @@
           /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
           $.ajax({
             type: "GET",
-            url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`,
-            async: true,
-            success: function(text) {
-              if (text !== null) {
-                /* Стоит ли пароль на сайт */
-                let auth = text.match(new RegExp("<b>Authorization Required.</b>"));
-                if (!isEmpty(auth)) {
-                  $(".td-project-uppanel__url tbody").append(`<tr>
-                                    <td>
-                                    </td>
-                                    <td class="td-project-uppanel__url">
-                                        <span style="font-size: 12px;">
-                                            На весь сайт стоит пароль.
-                                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_privacy" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Снять</a>.
-                                        </span>
-                                    </td>
-                                </tr>`);
-                }
+            url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`
+          }).done((text) => {
+            if (text !== null) {
+              /* Стоит ли пароль на сайт */
+              let auth = text.match(new RegExp("<b>Authorization Required.</b>"));
+              if (!isEmpty(auth)) {
+                $(".td-project-uppanel__url tbody").append(`<tr>
+                    <td>
+                    </td>
+                    <td class="td-project-uppanel__url">
+                        <span style="font-size: 12px;">
+                            На весь сайт стоит пароль.
+                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_privacy" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Снять</a>.
+                        </span>
+                    </td>
+                </tr>`);
+              }
 
-                /* Стоит ли запрет на идексацию сайта */
-                let index = text.match(new RegExp("Disallow: /\\n"));
-                if (!isEmpty(index)) {
-                  $(".td-project-uppanel__url tbody").append(`<tr>
-                                    <td>
-                                    </td>
-                                    <td class="td-project-uppanel__url">
-                                        <span style="font-size: 12px;">
-                                            Сайт закрыт от индексации.
-                                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Открыть</a>.
-                                        </span>
-                                    </td>
-                                    </tr>`);
-                }
+              /* Стоит ли запрет на идексацию сайта */
+              let index = text.match(new RegExp("Disallow: /\\n"));
+              if (!isEmpty(index)) {
+                $(".td-project-uppanel__url tbody").append(`<tr>
+                    <td>
+                    </td>
+                    <td class="td-project-uppanel__url">
+                        <span style="font-size: 12px;">
+                            Сайт закрыт от индексации.
+                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Открыть</a>.
+                        </span>
+                    </td>
+                </tr>`);
               }
             }
           });
