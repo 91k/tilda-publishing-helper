@@ -12,5 +12,17 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
+        "no-multi-spaces": "error",
+        "no-whitespace-before-property": "error",
+        "camelcase": "error",
+        "new-cap": "error",
+        "no-console": "error",
+        "comma-dangle": "error",
+        "no-var": "error",
+        "indent": ["error", 2, {"SwitchCase": 1}],
+        "semi": [
+            "error",
+            "always"
+        ]
     }
 };
