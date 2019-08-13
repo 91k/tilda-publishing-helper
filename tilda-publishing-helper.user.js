@@ -832,21 +832,18 @@
                 $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
                 $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
                 let unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
-                                let csrf = getCSRF();
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/page/unpublish/',
-                                    data: {
-                                        pageid: ${pageid},
-                                        csrf: csrf
-                                    },
-                                    dataType: 'text',
-                                    success: () => {
-                                        window.location.reload();
-                                    },
-                                    timeout: 1000 * 90
-                                });
-                                }`;
+                    let csrf = getCSRF();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/page/unpublish/',
+                        data: {
+                            pageid: ${pageid},
+                            csrf: csrf
+                        }
+                    }).done(() => {
+                        window.location.reload()
+                    });
+                }`;
 
                 $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
               }
