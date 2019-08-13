@@ -197,12 +197,12 @@
               });
 
               /* Предупреждение для поля «SEO для Заголовка» */
-              let title_tag = $('[name="title_tag"]');
-              if (!isEmpty(title_tag.val())) {
+              let titleTag = $('[name="title_tag"]');
+              if (!isEmpty(titleTag.val())) {
                 let id = $("[data-rec-id").attr("data-rec-id");
                 let title = $("#rec" + id).find(".t-title").val();
                 if (typeof title === "undefined") {
-                  $(title_tag).css("border", "1px solid red").before(`
+                  $(titleTag).css("border", "1px solid red").before(`
                                         <span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>
                                     `);
                 }
