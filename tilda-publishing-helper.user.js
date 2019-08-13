@@ -93,10 +93,7 @@
           let dom = new DOMParser().parseFromString(data, "text/html");
           email = $(dom).find("[name=email]").val();
 
-          $("[name='paybox']").before(`
-                        <div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">
-                            Email: ${email}
-                        </div>`);
+          $("[name='paybox']").before(`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">Email: ${email}</div>`);
         });
       }
 
@@ -131,10 +128,10 @@
             }
 
             $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
-                            <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
-                                <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
-                            </div>
-                        </div>`);
+                <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
+                    <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
+                </div>
+            </div>`);
           }
         });
       }
@@ -174,7 +171,7 @@
           $("#page_menu_publishlink").click(() => {
             setTimeout(() => {
               if (lang === "RU") {
-                $(".js-publish-noteunderbutton").html("Перейдя по ссылке, пожалуйста, обновите страницу несколько раз подряд, чтобы увидеть изменения. Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                $(".js-publish-noteunderbutton").html("Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
               } else {
                 $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
               }
@@ -190,9 +187,7 @@
               $("input[placeholder*='px']").each((i, el) => {
                 let value = $(el).val();
                 if (!value.includes("px") && value !== "") {
-                  $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">В этом поле нужно указать значение с "px"</span>
-                                    `);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red;">В этом поле нужно указать значение с "px"</span>`);
                 }
               });
 
@@ -202,9 +197,7 @@
                 let id = $("[data-rec-id").attr("data-rec-id");
                 let title = $("#rec" + id).find(".t-title").val();
                 if (typeof title === "undefined") {
-                  $(titleTag).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>
-                                    `);
+                  $(titleTag).css("border", "1px solid red").before(`<span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
                 }
               }
 
@@ -219,17 +212,13 @@
               /* Предупреждение о ссылках с кавычкой */
               $("input[name*='link']").each((i, el) => {
                 if ($(el).val().includes('"')) {
-                  $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>
-                                    `);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>`);
                 }
               });
 
               $("input[name='zoom']").each((i, el) => {
                 if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
-                  $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>
-                                    `);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
                 }
               });
 
@@ -237,17 +226,13 @@
               if (typeof $(".headerfooterpagearea").val() === "undefined") {
                 $("input[name*='link'][value^='#popup']").each((i, el) => {
                   if (!$("#allrecords").text().includes($(el).val())) {
-                    $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>
-                                    `);
+                    $(el).css("border", "1px solid red").before(`<span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>`);
                   }
                 });
 
                 $("input[name*='link'][value^='#rec']").each((i, el) => {
                   if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
-                    $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>
-                                    `);
+                    $(el).css("border", "1px solid red").before(`<span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>`);
                   }
                 });
               }
@@ -264,20 +249,11 @@
                     value = "#" + value;
                   }
 
-                  option += `
-                                    <span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">
-                                        ${value}
-                                    </span>
-                                `;
+                  option += `<span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">${value}</span>`;
                 });
 
                 if (!isEmpty(option)) {
-                  $(el).parent().parent().find(".pe-hint").after(`
-                                    <div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;">
-                                        <span style="display: inline-block;">${lang === "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>
-                                        ${option}
-                                    </div>
-                                `);
+                  $(el).parent().parent().find(".pe-hint").after(`<div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;"><span style="display: inline-block;">${lang === "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>${option}</div>`);
                 }
               });
 
@@ -285,15 +261,11 @@
               $("input[name='cont']").each((i, el) => {
                 let value = $(el).val();
                 if (value.includes("%")) {
-                  $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>
-                                    `);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>`);
                 }
 
                 if (value.includes(" ")) {
-                  $(el).css("border", "1px solid red").before(`
-                                        <span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>
-                                    `);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>`);
                 }
               });
             }, 2000);
@@ -301,194 +273,191 @@
         }
 
         styleBody += `
-                    [data-record-type="360"] .tp-record-edit-icons-left__three {
-                        pointer-events: none;
-                    }
+            [data-record-type="360"] .tp-record-edit-icons-left__three {
+                pointer-events: none;
+            }
 
-                    /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
-                    #editforms {
-                        background-color: rgba(255, 255, 255, 0.99) !important;
-                    }
+            /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
+            #editforms {
+                background-color: rgba(255, 255, 255, 0.99) !important;
+            }
 
-                    /* Меняем жёлтую плашку */
-                    div[style*='position:fixed;background-color:yellow;'] {
-                        right: 15px !important;
-                        bottom: 15px !important;
-                        width: auto !important;
-                    }
+            /* Меняем жёлтую плашку */
+            div[style*='position:fixed;background-color:yellow;'] {
+                right: 15px !important;
+                bottom: 15px !important;
+                width: auto !important;
+            }
 
-                    /* Делаем полоску светлеее в Настройках и Контенте блоков */
-                    .editrecordcontent_container hr,
-                    .panel-body hr {
-                        border-top: 1px solid #dedede !important;
-                    }
+            /* Делаем полоску светлеее в Настройках и Контенте блоков */
+            .editrecordcontent_container hr,
+            .panel-body hr {
+                border-top: 1px solid #dedede !important;
+            }
 
-                    /* Всплывающая подсказка около ID блока */
-                    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
-                        background: #ffffff;
-                        border-radius: 5px;
-                        bottom: -30px;
-                        right: -100px;
-                        box-shadow: 0 0 10px #3d3d3d;
-                        box-shadow: 0 0 10px rgba(61, 61, 61, .5);
-                        box-sizing: border-box;
-                        color: #3d3d3d;
-                        content: attr(data-title);
-                        font-size: 12px;
-                        font-weight: 400;
-                        min-width: 125px;
-                        padding: 5px 10px;
-                        position: absolute;
-                        text-align: center;
-                        z-index: 3;
-                        width: auto;
-                        white-space: nowrap;
-                        overflow: visible;
-                    }
+            /* Всплывающая подсказка около ID блока */
+            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
+                background: #ffffff;
+                border-radius: 5px;
+                bottom: -30px;
+                right: -100px;
+                box-shadow: 0 0 10px #3d3d3d;
+                box-shadow: 0 0 10px rgba(61, 61, 61, .5);
+                box-sizing: border-box;
+                color: #3d3d3d;
+                content: attr(data-title);
+                font-size: 12px;
+                font-weight: 400;
+                min-width: 125px;
+                padding: 5px 10px;
+                position: absolute;
+                text-align: center;
+                z-index: 3;
+                width: auto;
+                white-space: nowrap;
+                overflow: visible;
+            }
 
-                    .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
-                        border: solid;
-                        border-color: #ffffff transparent;
-                        border-width: 6px 6px 0 6px;
-                        bottom: -5px;
-                        right: 36px;
-                        content: "";
-                        position: absolute;
-                        z-index: 4;
-                        overflow: visible;
-                        transform: rotate(180deg);
-                    }
+            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
+                border: solid;
+                border-color: #ffffff transparent;
+                border-width: 6px 6px 0 6px;
+                bottom: -5px;
+                right: 36px;
+                content: "";
+                position: absolute;
+                z-index: 4;
+                overflow: visible;
+                transform: rotate(180deg);
+            }
 
-                    /* Убираем лишние значения в блоке T803 */
-                    .t803__multi-data-column .t803__label:nth-of-type(1),
-                    .t803__multi-data-column .t803__multi-key,
-                    .t803__multi-data-column .t803__label:nth-of-type(2),
-                    .t803__multi-data-column .t803__multi-default {
-                        display: none !important;
-                    }
-                `;
+            /* Убираем лишние значения в блоке T803 */
+            .t803__multi-data-column .t803__label:nth-of-type(1),
+            .t803__multi-data-column .t803__multi-key,
+            .t803__multi-data-column .t803__label:nth-of-type(2),
+            .t803__multi-data-column .t803__multi-default {
+                display: none !important;
+            }`;
       }
 
       /* Заносим все новые стили в переменную */
       styleBody += `
-                /* Меняем размер подзаголовков в Настройках сайта */
-                .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
-                    font-size: 18px !important;
-                    line-height: unset !important;
-                }
+        /* Меняем размер подзаголовков в Настройках сайта */
+        .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
+            font-size: 18px !important;
+            line-height: unset !important;
+        }
 
-                #rec271198 > div > div > div {
-                    float: unset !important;
-                    text-align: center;
-                }
+        #rec271198 > div > div > div {
+            float: unset !important;
+            text-align: center;
+        }
 
-                /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
-                .ss-container {
-                    min-height: ${$(window).height()+15}px;
-                }
+        /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
+        .ss-container {
+            min-height: ${$(window).height()+15}px;
+        }
 
-                .ui-sortable-handle > td:nth-child(1) {
-                    padding-right: 20px;
-                }
+        .ui-sortable-handle > td:nth-child(1) {
+            padding-right: 20px;
+        }
 
-                /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
-                .td-popup-window__bottom-right .td-popup-btn {
-                    margin: 0 0 0 15px !important;
-                }
+        /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
+        .td-popup-window__bottom-right .td-popup-btn {
+            margin: 0 0 0 15px !important;
+        }
 
-                /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
-                table.td-project-uppanel__button:nth-child(5) {
-                    margin-right: 0 !important;
-                }
+        /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
+        table.td-project-uppanel__button:nth-child(5) {
+            margin-right: 0 !important;
+        }
 
-                /* Красная обводка для подскази о перепубликации страниц */
-                #ss_menu_analytics .t265-wrapper {
-                    border: 2px red dashed;
-                }
+        /* Красная обводка для подскази о перепубликации страниц */
+        #ss_menu_analytics .t265-wrapper {
+            border: 2px red dashed;
+        }
 
-                #ss_menu_analytics .ss-btn, 
-                #ss_menu_seo .ss-btn {
-                    border: 1px solid #ccc !important;
-                }
+        #ss_menu_analytics .ss-btn, 
+        #ss_menu_seo .ss-btn {
+            border: 1px solid #ccc !important;
+        }
 
-                /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
-                span.js-ga-localinput,
-                span.js-metrika-localinput,
-                span.js-gtm-localinput {
-                    opacity: 0.75;
-                    padding-top: 15px;
-                    margin-top: 15px;
-                    font-weight: 300;
-                    font-size: 14px;
-                }
+        /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
+        span.js-ga-localinput,
+        span.js-metrika-localinput,
+        span.js-gtm-localinput {
+            opacity: 0.75;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-weight: 300;
+            font-size: 14px;
+        }
 
-                /* Добавляем кнопку заявок к карточкам проектов */
-                .td-site__settings {
-                    margin-right: 15px;
-                }
-            
-                .td-site__settings-title {
-                    font-size: 12px;
-                }
-            
-                .td-site__url-link {
-                    font-size: 14px;
-                }
-            
-                .td-site__section-two {
-                    padding: 0 30px;
-                }
+        /* Добавляем кнопку заявок к карточкам проектов */
+        .td-site__settings {
+            margin-right: 15px;
+        }
+    
+        .td-site__settings-title {
+            font-size: 12px;
+        }
+    
+        .td-site__url-link {
+            font-size: 14px;
+        }
+    
+        .td-site__section-two {
+            padding: 0 30px;
+        }
 
-                /* Делаем кнопку «Домой» интерактивной */
-                .td-page__ico-home:hover {
-                    filter: opacity(.5); !important;
-                }
+        /* Делаем кнопку «Домой» интерактивной */
+        .td-page__ico-home:hover {
+            filter: opacity(.5); !important;
+        }
 
-                /* Меняем текст в попапе при публикации страницы */
-                .js-publish-noteunderbutton {
-                    width: 92% !important;
-                    color: #333 !important;
-                    font-family: unset !important;
-                }
+        /* Меняем текст в попапе при публикации страницы */
+        .js-publish-noteunderbutton {
+            width: 92% !important;
+            color: #333 !important;
+            font-family: unset !important;
+        }
 
-                .modal-body {
-                    font-weight: 300;
-                }
+        .modal-body {
+            font-weight: 300;
+        }
 
-                .js-publish-noteunderbutton a,
-                .pub-left-bottom-link a {
-                    text-decoration: underline;
-                }
-                
-                /* Убираем отступ сверху у иконок */
-                #preview16icon,
-                #preview152icon,
-                #preview270icon {
-                    padding-top: 0 !important;
-                }
-            `;
+        .js-publish-noteunderbutton a,
+        .pub-left-bottom-link a {
+            text-decoration: underline;
+        }
+        
+        /* Убираем отступ сверху у иконок */
+        #preview16icon,
+        #preview152icon,
+        #preview270icon {
+            padding-top: 0 !important;
+        }`;
 
       if (window.location.pathname === "/projects/settings/") {
         /* Делаем боковое меню плавающим */
         let isEmail;
         if ($("[data-menu-item='#ss_menu_fonts']")) {
           styleBody += `
-                    .ss-menu {
-                        position: -webkit-sticky;
-                        position: sticky;
-                        border: 1px solid #ddd;
-                        margin: 2px;
-                    }
+            .ss-menu {
+                position: -webkit-sticky;
+                position: sticky;
+                border: 1px solid #ddd;
+                margin: 2px;
+            }
 
-                    .ss-menu__item a {
-                        padding: 16px 30px;
-                        font-size: 16px;
-                    }
+            .ss-menu__item a {
+                padding: 16px 30px;
+                font-size: 16px;
+            }
 
-                    .ss-menu__wrapper {
-                        margin-bottom: 0 !important;
-                    }
-                `;
+            .ss-menu__wrapper {
+                margin-bottom: 0 !important;
+            }`;
           isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
         }
 
@@ -502,11 +471,7 @@
           text = "820";
         }
 
-        styleBody += `
-                    .ss-content {
-                        margin-top: -${ text }px;
-                    }
-                `;
+        styleBody += `.ss-content { margin-top: -${ text }px; }`;
 
         /* Убираем подсказу из Настроек сайта → Ещё */
         if (typeof $("#ss_menu_more").val() !== "undefined") {
@@ -629,32 +594,31 @@
             });
 
             /* Пункты заявка и настройки */
-            $(`
-                        <table class="td-site__settings">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="/tpl/img/td-icon-leads.png" width="20px" height="14px" style="padding:5px;">
-                                    </td>
-                                    <td class="td-site__settings-title">
-                                        <a href="./leads/?projectid=${ id }">${ leads }</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="td-site__settings" style="margin-right: 0;">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="/tpl/img/td-site__settings.png" width="14px" height="14px" style="padding:5px;">
-                                    </td>
-                                    <td class="td-site__settings-title">
-                                        <a href="./settings/?projectid=${ id }">${ settings }</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        `).appendTo($(buttons).parent());
+            $(`<table class="td-site__settings">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/tpl/img/td-icon-leads.png" width="20px" height="14px" style="padding:5px;">
+                            </td>
+                            <td class="td-site__settings-title">
+                                <a href="./leads/?projectid=${ id }">${ leads }</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="td-site__settings" style="margin-right: 0;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/tpl/img/td-site__settings.png" width="14px" height="14px" style="padding:5px;">
+                            </td>
+                            <td class="td-site__settings-title">
+                                <a href="./settings/?projectid=${ id }">${ settings }</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            `).appendTo($(buttons).parent());
           }
         });
 
@@ -731,10 +695,7 @@
 
       if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
         /* Добавляем ссылку на удаление аккаунта */
-        $("[href='/identity/changepassword/']").after(`
-                    <a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>
-                `);
-
+        $("[href='/identity/changepassword/']").after(`<a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>`);
 
         /* Исправляем слишком длинную кнопку в Профиле */
         $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
@@ -749,56 +710,53 @@
       /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
       $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
       $(".form-horizontal").after(`
-                <div class="ss-form-group__hint" style="text-align: center;">
-                    <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer;">Отмена</a>
-                    </div>
-                <br><br>
-            `);
+            <div class="ss-form-group__hint" style="text-align: center;">
+                <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer;">Отмена</a>
+                </div>
+            <br><br>
+        `);
 
       /* Добавляем ссылки на социальные сети */
       $("#rec271198 > div > div > div > div").append(`
-                <div class="sociallinkimg">
-                    <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
-                        <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff;" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
-                    </a>
-                </div>
-                <div class="sociallinkimg">
-                    <a href="https://www.instagram.com/${ lang === "RU" ? "tildapublishing" : "tilda.cc" }/" target="_blank" rel="nofollow">
-                        <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff;" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff;" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff;" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
-                    </a>
-                </div>
-                <div class="sociallinkimg">
-                    <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
-                        <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff;" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff;" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
-                    </a>
-                </div>
-            `);
+            <div class="sociallinkimg">
+                <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff;" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
+                </a>
+            </div>
+            <div class="sociallinkimg">
+                <a href="https://www.instagram.com/${ lang === "RU" ? "tildapublishing" : "tilda.cc" }/" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff;" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff;" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff;" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
+                </a>
+            </div>
+            <div class="sociallinkimg">
+                <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff;" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff;" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
+                </a>
+            </div>
+        `);
 
       if (window.location.pathname === "/projects/" && window.location.search.includes("?projectid=")) {
         /* Определяем есть ли список страниц */
         projectid = $("#pagesortable").attr("data-projectid");
         if (typeof projectid !== "undefined") {
           /* Добавляем ссылку на «Главную страницу» для иконки домика */
-          $(".td-page__td-title").has(".td-page__ico-home").prepend(`
-                        <a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>
-                    `);
+          $(".td-page__td-title").has(".td-page__ico-home").prepend(`<a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>`);
           $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
           if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
             $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").after(`
-                        <a href="/identity/gostore/?projectid=${projectid}">
-                            <table class="td-project-uppanel__button">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img src="/tpl/img/td-icon-catalog.png" height="16px" style="padding:5px;">
-                                        </td>
-                                        <td class="td-project-uppanel__title">${lang === "RU" ? "Товары" : "Products"}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </a>
-                        `);
+            <a href="/identity/gostore/?projectid=${projectid}">
+                <table class="td-project-uppanel__button">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/tpl/img/td-icon-catalog.png" height="16px" style="padding:5px;">
+                            </td>
+                            <td class="td-project-uppanel__title">${lang === "RU" ? "Товары" : "Products"}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </a>`);
           }
 
           $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
@@ -818,9 +776,7 @@
             });
 
             if (count > 0) {
-              $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}">
-                                <td colspan=2 style="text-align: center;">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px;">${count}</span></td>                                
-                            </a></tr>`);
+              $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}"><td colspan=2 style="text-align: center;">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px;">${count}</span></td></a></tr>`);
             }
           });
 
@@ -897,24 +853,23 @@
           let url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
 
           $(".ss-tl__page-container tbody").prepend(`
-                        <tr valign="top">
-                            <td>
-                                <img src="https://favicon.yandex.net/favicon/${url}?size=32" style="width: 32px; height: 32px">
-                            </td>
-                            <td style="padding-left: 20px;">
-                                <div class="ss-form-group">
-                                    <label class="ss-label">Иконка в Яндекс.Поиске</label>
-                                    <div class="ss-form-group__hint">
-                                        Фавиконка — это небольшая картинка, которая отображается в сниппете в результатах поиска Яндекса, рядом с адресом сайта в адресной строке браузера, около названия сайта в Избранном или в Закладках браузера.
-                                        <br>
-                                        Если иконка не соответствует той, что загружена в формате .ico, то <b>проверьте, пожалуйста, что загруженная вами иконка дейсвительно размером 32×32</b> и прошло больше 1 недели.
-                                        <br>
-                                        Подробная инструкция <a href="https://yandex.ru/support/webmaster/search-results/favicon.html" target="_blank" noopener nofollow>здесь</a>.
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    `);
+            <tr valign="top">
+                <td>
+                    <img src="https://favicon.yandex.net/favicon/${url}?size=32" style="width: 32px; height: 32px">
+                </td>
+                <td style="padding-left: 20px;">
+                    <div class="ss-form-group">
+                        <label class="ss-label">Иконка в Яндекс.Поиске</label>
+                        <div class="ss-form-group__hint">
+                            Фавиконка — это небольшая картинка, которая отображается в сниппете в результатах поиска Яндекса, рядом с адресом сайта в адресной строке браузера, около названия сайта в Избранном или в Закладках браузера.
+                            <br>
+                            Если иконка не соответствует той, что загружена в формате .ico, то <b>проверьте, пожалуйста, что загруженная вами иконка дейсвительно размером 32×32</b> и прошло больше 1 недели.
+                            <br>
+                            Подробная инструкция <a href="https://yandex.ru/support/webmaster/search-results/favicon.html" target="_blank" noopener nofollow>здесь</a>.
+                        </div>
+                    </div>
+                </td>
+            </tr>`);
         }
       }
 
@@ -927,67 +882,57 @@
       if (d.getDate() === 1 && d.getMonth() + 1 === 4) {
         $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png");
 
-        $(".t-help-bubble").append(`
-                    <div class="clippy-balloon clippy-top-left">
-                        <div class="clippy-tip"></div>
-                        <div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div>
-                    </div>
-                `);
+        $(".t-help-bubble").append(`<div class="clippy-balloon clippy-top-left"><div class="clippy-tip"></div><div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div></div>`);
 
         styleBody += `
-                    .t-help-bubble {
-                        background-color: unset !important;
-                        box-shadow: unset !important;
-                        width: unset !important;
-                        height: unset !important;
-                        right: 15px !important;
-                        bottom: 15px !important;
-                    }
+            .t-help-bubble {
+                background-color: unset !important;
+                box-shadow: unset !important;
+                width: unset !important;
+                height: unset !important;
+                right: 15px !important;
+                bottom: 15px !important;
+            }
 
-                    .t-help-bubble img {
-                        width: 100px !important;
-                        height: 100px !important;
-                    }
+            .t-help-bubble img {
+                width: 100px !important;
+                height: 100px !important;
+            }
 
-                    .clippy-balloon {
-                        background: #FFC;
-                        color: black;
-                        padding: 8px;
-                        border: 1px solid black;
-                        border-radius: 5px;
-                        bottom: 130px;
-                        right: 55px;
-                        display: block;
-                        position: absolute;
-                    }
+            .clippy-balloon {
+                background: #FFC;
+                color: black;
+                padding: 8px;
+                border: 1px solid black;
+                border-radius: 5px;
+                bottom: 130px;
+                right: 55px;
+                display: block;
+                position: absolute;
+            }
 
-                    .clippy-top-left .clippy-tip {
-                        top: 100%;
-                        margin-top: 0;
-                        left: 100%;
-                        margin-left: -50px;
-                    }
+            .clippy-top-left .clippy-tip {
+                top: 100%;
+                margin-top: 0;
+                left: 100%;
+                margin-left: -50px;
+            }
 
-                    .clippy-tip {
-                        width: 10px;
-                        height: 16px;
-                        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
-                        position: absolute;
-                    }
+            .clippy-tip {
+                width: 10px;
+                height: 16px;
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
+                position: absolute;
+            }
 
-                    .clippy-content {
-                        height: 63px;
-                        width: 200px;
-                    }
-                `;
+            .clippy-content {
+                height: 63px;
+                width: 200px;
+            }`;
       }
 
       /* Добавляем новые стили к body */
-      $("body").append(`
-                <style>
-                    ${ styleBody }
-                </style>
-            `);
+      $("body").append(`<style>${styleBody}</style>`);
     });
   }
 })(window);
