@@ -36,9 +36,9 @@
     textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
   ) {
     if (window.location.href.includes("projectid=")) {
-      let projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
-      let pageid = "";
-      let url = "";
+      projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
+      pageid = "";
+      url = "";
 
       if (window.location.href.includes("pageid=")) {
         pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
