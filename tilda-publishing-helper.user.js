@@ -703,26 +703,11 @@
         });
       }
 
-      let identityGo = [{
-          href: "news",
-          value: "Каналы новостей"
-        },
-        {
-          href: "crm",
-          value: "CRM"
-        },
-        {
-          href: "experts",
-          value: "Experts"
-        },
-        {
-          href: "education",
-          value: "Education"
-        },
-        {
-          href: "upwidget",
-          value: "Сервисы хранения файлов"
-        }
+      let identityGo = [{ href: "news", value: "Каналы новостей" },
+        { href: "crm", value: "CRM" },
+        { href: "experts", value: "Experts" },
+        { href: "education", value: "Education" },
+        { href: "upwidget", value: "Сервисы хранения файлов" }
       ];
 
       let dom = identityGo.map(obj => {
