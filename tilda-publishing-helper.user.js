@@ -164,7 +164,7 @@
           seen[value] = true;
           return el;
         }).each((i, el) => {
-          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
+          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}". Используйте латинские буквы.</span>`);
         });
 
         /* Другая подсказка после публикации страницы  */
