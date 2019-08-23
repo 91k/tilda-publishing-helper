@@ -161,7 +161,7 @@
             return null;
 
           seen[value] = true;
-          return value;
+          return el;
         }).each((i, el) => {
           $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
         });
