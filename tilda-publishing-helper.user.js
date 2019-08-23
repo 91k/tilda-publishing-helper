@@ -154,8 +154,8 @@
         /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
         $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
           return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
-        }).map(() => {
-          let value = this.getAttribute("name");
+        }).map((i, el) => {
+          let value = $(el).attr("name");
 
           if (Object.prototype.hasOwnProperty.call(seen, value))
             return null;
