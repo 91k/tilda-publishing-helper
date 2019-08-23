@@ -157,8 +157,9 @@
         }).map((i, el) => {
           let value = $(el).attr("name");
 
-          if (Object.prototype.hasOwnProperty.call(seen, value))
+          if (Object.prototype.hasOwnProperty.call(seen, value)) {
             return null;
+          }
 
           seen[value] = true;
           return el;
