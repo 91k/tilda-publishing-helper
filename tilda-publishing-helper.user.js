@@ -179,7 +179,7 @@
           });
         }
 
-        /* Предупреждение в Контенте блока */
+        /* Предупреждение в Настройках блока */
         if (typeof $(".tp-record-edit-icons-left__two").val() !== "undefined") {
           $(".tp-record-edit-icons-left__two").click(() => {
             setTimeout(() => {
