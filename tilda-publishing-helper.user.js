@@ -272,6 +272,23 @@
           });
         }
 
+        /* Предупреждение в Контенте блока CL46 */
+        if (typeof $("[data-record-type='431'] .tp-record-edit-icons-left__three").val() !== "undefined") {
+          $("[data-record-type='431'] .tp-record-edit-icons-left__three").click(() => {
+            setTimeout(() => {
+              let table = $("[name='textsimple']");
+              let text = table.text();
+              if (!isEmpty(text)) {
+                text.match(/^<(.*)/gm).forEach((el) => {
+                  if (!/<\s*[a-z]+[^>]*>(.*?)<\s*\/\s*[a-z]+>/gm.test(el)) {
+                    $(table).css("border", "1px solid red").before(`<span style="color: red; font-size: 14px">Некорректный тег, необходимо удалить символ '<': ${el}</span><br>`);
+                  }
+                });
+              }
+            }, 1000);
+          });
+        }
+
         styleBody += `
             [data-record-type="360"] .tp-record-edit-icons-left__three {
                 pointer-events: none;
