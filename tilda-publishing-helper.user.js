@@ -154,16 +154,17 @@
         /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
         $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
           return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
-        }).map(() => {
-          let value = this.getAttribute("name");
+        }).map((i, el) => {
+          let value = $(el).attr("name");
 
-          if (Object.prototype.hasOwnProperty.call(seen, value))
+          if (Object.prototype.hasOwnProperty.call(seen, value)) {
             return null;
+          }
 
           seen[value] = true;
-          return value;
+          return el;
         }).each((i, el) => {
-          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}".</span>`);
+          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}". Используйте латинские буквы.</span>`);
         });
 
         /* Другая подсказка после публикации страницы  */
@@ -179,7 +180,7 @@
           });
         }
 
-        /* Предупреждение в Контенте блока */
+        /* Предупреждение в Настройках блока */
         if (typeof $(".tp-record-edit-icons-left__two").val() !== "undefined") {
           $(".tp-record-edit-icons-left__two").click(() => {
             setTimeout(() => {
@@ -269,6 +270,23 @@
                 }
               });
             }, 2000);
+          });
+        }
+
+        /* Предупреждение в Контенте блока CL46 */
+        if (typeof $("[data-record-type='431'] .tp-record-edit-icons-left__three").val() !== "undefined") {
+          $("[data-record-type='431'] .tp-record-edit-icons-left__three").click(() => {
+            setTimeout(() => {
+              let table = $("[name='textsimple']");
+              let text = table.text();
+              if (!isEmpty(text)) {
+                text.match(/^<(.*)/gm).forEach((el) => {
+                  if (!/<\s*[a-z]+[^>]*>(.*?)<\s*\/\s*[a-z]+>/gm.test(el)) {
+                    $(table).css("border", "1px solid red").before(`<span style="color: red; font-size: 14px">Некорректный тег, необходимо удалить символ '<': ${el}</span><br>`);
+                  }
+                });
+              }
+            }, 1000);
           });
         }
 
