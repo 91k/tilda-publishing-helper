@@ -809,6 +809,46 @@
             }
           });
 
+          /* Функция распубликации страницы */
+          scriptBody = `function unpublish(projectid, pageid) {
+            if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+              let csrf = getCSRF();
+              $.ajax({
+                  type: 'POST',
+                  url: '/page/unpublish/',
+                  data: {
+                      pageid: pageid,
+                      csrf: csrf
+                  }
+              }).done(() => {
+                  window.location.reload()
+              });
+            }
+          };`;
+
+          /* Функция назначения страницы как Главную, Хедер или Футер */
+          scriptBody += `function setPage(projectid, pageid, page) {
+            if (confirm('Хотите назначить страницу как ' + (page === 'Index' ? 'Главную' : page) + '?')) {
+              $.ajax('/projects/settings/?projectid=' + projectid).done((data) => {
+                let dom = new DOMParser().parseFromString(data, 'text/html');
+    
+                page = page.toLowerCase();
+                let replace = page + 'pageid=(\\\\d+)?';
+                let csrf = getCSRF();
+                let form = $(dom).find('form').serialize();
+                let postData = form.replace(new RegExp(replace, "g"), page + 'pageid=' + pageid).concat('&csrf=' + csrf);
+      
+                $.ajax({
+                  type: 'POST',
+                  url: '/projects/submit/',
+                  data: postData
+                }).done(() => {
+                  window.location.reload();
+                });
+              });
+            }
+          };`;
+
           /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
           $.ajax({
             type: "GET",
