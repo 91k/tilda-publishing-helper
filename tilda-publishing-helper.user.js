@@ -759,22 +759,6 @@
           $(".td-page__td-title").has(".td-page__ico-home").prepend(`<a href='https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_index'></a>`);
           $(".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']").append($("[src='/tpl/img/td-icon-home.png']"));
 
-          if ($("a[href^='/identity/gostore/?projectid=']").length < 1 && $(".td-trial").length < 1) {
-            $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").after(`
-            <a href="/identity/gostore/?projectid=${projectid}">
-                <table class="td-project-uppanel__button">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/tpl/img/td-icon-catalog.png" height="16px" style="padding:5px;">
-                            </td>
-                            <td class="td-project-uppanel__title">${lang === "RU" ? "Товары" : "Products"}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </a>`);
-          }
-
           $.ajax(`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`).done((data) => {
             let dom = new DOMParser().parseFromString(data, "text/html");
             let count = 0;
