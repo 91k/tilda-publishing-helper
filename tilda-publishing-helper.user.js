@@ -139,6 +139,9 @@
       /* Заносим все новые стили в переменную */
       let styleBody = "";
 
+      /* Заносим все внешние функции в переменную */
+      let scriptBody = "";
+
       if (window.location.pathname === "/page/") {
         /* Добавляем recid для каждого блока на странице */
         addRecIDs();
@@ -930,6 +933,8 @@
                 width: 200px;
             }`;
       }
+
+      $("body").append(`<script>${scriptBody}</script>`);
 
       /* Добавляем новые стили к body */
       $("body").append(`<style>${styleBody}</style>`);
