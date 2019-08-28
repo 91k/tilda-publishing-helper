@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      41.2
+// @version      42.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -787,25 +787,21 @@
             let pageid = $(el).attr("id");
             if (pageid.includes("page") && $(el).find('.td-page__note').text() === "") {
               pageid = pageid.replace("page", "");
-              if ($(el).find('.td-page__note').text() === "") {
-                $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
-                $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
-                let unpublish = `if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
-                    let csrf = getCSRF();
-                    $.ajax({
-                        type: 'POST',
-                        url: '/page/unpublish/',
-                        data: {
-                            pageid: ${pageid},
-                            csrf: csrf
-                        }
-                    }).done(() => {
-                        window.location.reload()
-                    });
-                }`;
+              $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
+              $(el).find(".td-page__buttons-spacer:last").css("width", "20px");
 
-                $(el).find(".td-page__buttons-table tr").append($(`<td class="td-page__buttons-spacer" style="width: 20px;"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px;"></a></td>`));
-              }
+              // дополнительные кнопки: снять с публикации, назначить Главной, Хедером или Футером
+              let unpublish = `unpublish(${projectid}, ${pageid})`;
+              let setIndex = `setPage(${projectid}, ${pageid}, 'Index')`;
+              let setHeader = `setPage(${projectid}, ${pageid}, 'Header')`;
+              let setFooter = `setPage(${projectid}, ${pageid}, 'Footer')`;
+
+              $(el).find(".td-page__buttons-table tr").append(
+                $(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px"></a></td>`),
+                $(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Главную" class="td-page__buttons-td"><a onclick="${setIndex}"><img src="/tpl/img/td-icon-home.png" class="td-page__button-ico" style="padding: 0; margin-top: -2px; width: 12px"></a></td>`),
+                $(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Header (Шапку)" class="td-page__buttons-td"><a onclick="${setHeader}"><img src="/tpl/img/td-icon-header.png" class="td-page__button-ico" style="padding: 0; margin-top: -6px; width: 20px"></a></td>`),
+                $(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Footer (Подвал)" class="td-page__buttons-td"><a onclick="${setFooter}"><img src="/tpl/img/td-icon-footer.png" class="td-page__button-ico" style="padding: 0; margin-top: 8px; width: 20px"></a></td>`)
+              );
             }
           });
 
