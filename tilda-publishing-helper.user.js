@@ -93,7 +93,7 @@
           let dom = new DOMParser().parseFromString(data, "text/html");
           email = $(dom).find("[name=email]").val();
 
-          $("[name='paybox']").before(`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px;">Email: ${email}</div>`);
+          $("[name='paybox']").before(`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px">Email: ${email}</div>`);
         });
       }
 
@@ -127,7 +127,7 @@
               $(mainleft).append($(`${ recordid } > div:nth-child(1):not(.mainright)`).removeClass().css("padding", "7px 15px")).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
             }
 
-            $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer;">
+            $(mainleft).append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer">
                 <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
                     <span onclick="${ copy }" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${ recid }</span>
                 </div>
@@ -144,7 +144,7 @@
         addRecIDs();
 
         /* Упрощаем вид блока T803 */
-        $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left;"></div><br>`);
+        $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left"></div><br>`);
         $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
         ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
 
@@ -164,7 +164,7 @@
           seen[value] = true;
           return el;
         }).each((i, el) => {
-          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red;">Имя переменной: "${$(el).attr("name")}". Используйте латинские буквы.</span>`);
+          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red">Имя переменной: "${$(el).attr("name")}". Используйте латинские буквы.</span>`);
         });
 
         /* Другая подсказка после публикации страницы  */
@@ -188,7 +188,7 @@
               $("input[placeholder*='px']").each((i, el) => {
                 let value = $(el).val();
                 if (!value.includes("px") && value !== "") {
-                  $(el).css("border", "1px solid red").before(`<span style="color: red;">В этом поле нужно указать значение с "px"</span>`);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red">В этом поле нужно указать значение с "px"</span>`);
                 }
               });
 
@@ -198,7 +198,7 @@
                 let id = $("[data-rec-id").attr("data-rec-id");
                 let title = $("#rec" + id).find(".t-title").val();
                 if (typeof title === "undefined") {
-                  $(titleTag).css("border", "1px solid red").before(`<span style="color: red;">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
+                  $(titleTag).css("border", "1px solid red").before(`<span style="color: red">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
                 }
               }
 
@@ -213,13 +213,13 @@
               /* Предупреждение о ссылках с кавычкой */
               $("input[name*='link']").each((i, el) => {
                 if ($(el).val().includes('"')) {
-                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>`);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>`);
                 }
               });
 
               $("input[name='zoom']").each((i, el) => {
                 if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
-                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
                 }
               });
 
@@ -227,13 +227,13 @@
               if (typeof $(".headerfooterpagearea").val() === "undefined") {
                 $("input[name*='link'][value^='#popup']").each((i, el) => {
                   if (!$("#allrecords").text().includes($(el).val())) {
-                    $(el).css("border", "1px solid red").before(`<span style="color: red;">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>`);
+                    $(el).css("border", "1px solid red").before(`<span style="color: red">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>`);
                   }
                 });
 
                 $("input[name*='link'][value^='#rec']").each((i, el) => {
                   if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
-                    $(el).css("border", "1px solid red").before(`<span style="color: red;">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>`);
+                    $(el).css("border", "1px solid red").before(`<span style="color: red">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>`);
                   }
                 });
               }
@@ -250,11 +250,11 @@
                     value = "#" + value;
                   }
 
-                  option += `<span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block;" title="Нажмите, чтобы вставить ссылку">${value}</span>`;
+                  option += `<span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block" title="Нажмите, чтобы вставить ссылку">${value}</span>`;
                 });
 
                 if (!isEmpty(option)) {
-                  $(el).parent().parent().find(".pe-hint").after(`<div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px;"><span style="display: inline-block;">${lang === "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>${option}</div>`);
+                  $(el).parent().parent().find(".pe-hint").after(`<div class="pe-field-link-more" style="margin-top: 10px; font-size: 11px"><span style="display: inline-block">${lang === "RU" ? "Быстрое заполнение поля" : "Quick field filling" }:</span>${option}</div>`);
                 }
               });
 
@@ -262,11 +262,11 @@
               $("input[name='cont']").each((i, el) => {
                 let value = $(el).val();
                 if (value.includes("%")) {
-                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>`);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red">Уберите % из этого поля. В этом поле нужно указать лишь имя ключа, двойные проценты (%%ключ%%) подставятся автоматически.</span>`);
                 }
 
                 if (value.includes(" ")) {
-                  $(el).css("border", "1px solid red").before(`<span style="color: red;">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>`);
+                  $(el).css("border", "1px solid red").before(`<span style="color: red">Уберите лишние пробелы из этого поля. В этом поле нужно указать лишь имя ключа без пробелов.</span>`);
                 }
               });
             }, 2000);
@@ -616,7 +616,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img src="/tpl/img/td-icon-leads.png" width="20px" height="14px" style="padding:5px;">
+                                <img src="/tpl/img/td-icon-leads.png" width="20px" height="14px" style="padding:5px">
                             </td>
                             <td class="td-site__settings-title">
                                 <a href="./leads/?projectid=${ id }">${ leads }</a>
@@ -624,11 +624,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="td-site__settings" style="margin-right: 0;">
+                <table class="td-site__settings" style="margin-right: 0">
                     <tbody>
                         <tr>
                             <td>
-                                <img src="/tpl/img/td-site__settings.png" width="14px" height="14px" style="padding:5px;">
+                                <img src="/tpl/img/td-site__settings.png" width="14px" height="14px" style="padding:5px">
                             </td>
                             <td class="td-site__settings-title">
                                 <a href="./settings/?projectid=${ id }">${ settings }</a>
@@ -665,11 +665,11 @@
             let text = "";
             if (dateLag < 10 && dateLag > 0) {
               if (autorenew.length == 0) {
-                text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600;">оплатить</a>`;
+                text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600">оплатить</a>`;
               }
 
               if (!isEmpty(text)) {
-                $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px;">
+                $(".td-maincontainer").prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px">
                       <div style="max-width: 1180px; margin: 0 auto">
                           <spn style="font-weight: 500; color: #fff">${text}</span>
                       </div>
@@ -711,7 +711,7 @@
 
       if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
         /* Добавляем ссылку на удаление аккаунта */
-        $("[href='/identity/changepassword/']").after(`<a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3;">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>`);
+        $("[href='/identity/changepassword/']").after(`<a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>`);
 
         /* Исправляем слишком длинную кнопку в Профиле */
         $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
@@ -726,8 +726,8 @@
       /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
       $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
       $(".form-horizontal").after(`
-            <div class="ss-form-group__hint" style="text-align: center;">
-                <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer;">Отмена</a>
+            <div class="ss-form-group__hint" style="text-align: center">
+                <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">Отмена</a>
                 </div>
             <br><br>
         `);
@@ -736,17 +736,17 @@
       $("#rec271198 > div > div > div > div").append(`
             <div class="sociallinkimg">
                 <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff;" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
                 </a>
             </div>
             <div class="sociallinkimg">
                 <a href="https://www.instagram.com/${ lang === "RU" ? "tildapublishing" : "tilda.cc" }/" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff;" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff;" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff;" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
                 </a>
             </div>
             <div class="sociallinkimg">
                 <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff;" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff;" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
                 </a>
             </div>
         `);
@@ -776,7 +776,7 @@
             });
 
             if (count > 0) {
-              $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}"><td colspan=2 style="text-align: center;">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px;">${count}</span></td></a></tr>`);
+              $(".td-project-uppanel__wrapper").find("a[href^='/projects/leads/?projectid=']").find("tbody > tr").after(`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}"><td colspan=2 style="text-align: center">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px">${count}</span></td></a></tr>`);
             }
           });
 
@@ -819,9 +819,9 @@
                     <td>
                     </td>
                     <td class="td-project-uppanel__url">
-                        <span style="font-size: 12px;">
+                        <span style="font-size: 12px">
                             На весь сайт стоит пароль.
-                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_privacy" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Снять</a>.
+                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_privacy" style="color: #f4846b; text-decoration: underline; font-weight: 400">Снять</a>.
                         </span>
                     </td>
                 </tr>`);
@@ -834,9 +834,9 @@
                     <td>
                     </td>
                     <td class="td-project-uppanel__url">
-                        <span style="font-size: 12px;">
+                        <span style="font-size: 12px">
                             Сайт закрыт от индексации.
-                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400;">Открыть</a>.
+                            <a href="https://tilda.cc/projects/settings/?projectid=${projectid}#tab=ss_menu_seo" style="color: #f4846b; text-decoration: underline; font-weight: 400">Открыть</a>.
                         </span>
                     </td>
                 </tr>`);
@@ -857,7 +857,7 @@
                 <td>
                     <img src="https://favicon.yandex.net/favicon/${url}?size=32" style="width: 32px; height: 32px">
                 </td>
-                <td style="padding-left: 20px;">
+                <td style="padding-left: 20px">
                     <div class="ss-form-group">
                         <label class="ss-label">Иконка в Яндекс.Поиске</label>
                         <div class="ss-form-group__hint">
