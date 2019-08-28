@@ -782,7 +782,7 @@
 
           $('.td-page').each((i, el) => {
             let pageid = $(el).attr("id");
-            if (pageid.includes("page")) {
+            if (pageid.includes("page") && $(el).find('.td-page__note').text() === "") {
               pageid = pageid.replace("page", "");
               if ($(el).find('.td-page__note').text() === "") {
                 $(el).find(".td-page__buttons-td:last").attr("title", "Удалить страницу").find(".td-page__button-title").remove();
