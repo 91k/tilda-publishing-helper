@@ -293,6 +293,7 @@
           });
         }
 
+        /* Работа с Zero блоком */
         styleBody += `
             [data-record-type="360"] .tp-record-edit-icons-left__three {
                 pointer-events: none;
