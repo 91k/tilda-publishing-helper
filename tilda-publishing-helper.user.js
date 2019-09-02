@@ -294,6 +294,20 @@
         }
 
         /* Работа с Zero блоком */
+        let _body = document.querySelector("body");
+        const observer = new MutationObserver((mutationsList) => {
+          for (let mutation of mutationsList) {
+            if (mutation.type === "childList") {
+              let listChildren = [].slice.call(_body.children)
+                .map((node) => node.outerHTML)
+                .filter((s) => s.indexOf(`<iframe class="t396__iframe" src=`) === 0 ? true : false);
+
+              if (listChildren.length) iframeListener();
+            }
+          }
+        });
+        observer.observe(_body, { attributes: true, childList: true, subtree: true });
+
         styleBody += `
             [data-record-type="360"] .tp-record-edit-icons-left__three {
                 pointer-events: none;
