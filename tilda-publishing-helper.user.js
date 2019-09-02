@@ -199,7 +199,7 @@
               let titleTag = $('[name="title_tag"]');
               if (!isEmpty(titleTag.val())) {
                 let id = $("[data-rec-id").attr("data-rec-id");
-                let title = $("#rec" + id).find(".t-title").val();
+                let title = $(`#rec${id}`).find(".t-title").val();
                 if (typeof title === "undefined") {
                   $(titleTag).css("border", "1px solid red").before(`<span style="color: red">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
                 }
@@ -250,7 +250,7 @@
 
                   /* Если блок T173 Якорная ссылка */
                   if ($(el).parents("[data-record-type='215']").length) {
-                    value = "#" + value;
+                    value = `#${value}`;
                   }
 
                   option += `<span onclick="$('[name=${name}]').val('${value}')" style="padding: 0 8px 0 8px; cursor: context-menu; display: inline-block" title="Нажмите, чтобы вставить ссылку">${value}</span>`;
