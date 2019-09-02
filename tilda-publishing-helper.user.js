@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      44.0
+// @version      44.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -143,17 +143,19 @@
           let iframeWindow = iframe.eq(0)[0].contentWindow;
           content.on("keyup click", () => {
             if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
-              content.find(".tn-settings table table:nth-child(2) > tbody").append(`
-              <tr id="tidy">
-                <td style="width:50%;"><table style="width:100%;"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px;"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
-                <td style="width:70px;"></td>
-                <td style="width:50%;"><table style="width:100%;"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px;"><div><input type="number" value="0" name="vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
-              </tr>`);
+              content.find(".tn-settings table table:nth-child(3) > tbody").after(`
+              <table><tbody>
+                <tr id="tidy">
+                  <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                  <td style="width:70px"></td>
+                  <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                </tr>
+              </tbody></table>`);
 
               content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
                 iframeWindow.$(iframeWindow).off("keydown");
                 if (!content.find("#keyEnable").length) {
-                  content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px;">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
+                  content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
                   document.querySelector("iframe.t396__iframe").contentWindow.iframeRefresh = function() {
                     let iframe = $("iframe.t396__iframe");
                     let iframeWindow = iframe.eq(0)[0].contentWindow;
