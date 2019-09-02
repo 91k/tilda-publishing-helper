@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      42.0
+// @version      44.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -147,9 +147,9 @@
         addRecIDs();
 
         /* Упрощаем вид блока T803 */
-        $('.t803__multi-datablock center').append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left"></div><br>`);
-        $('.t803__multi-datablock center .t803__multi-data-bg').append($('.t803__multi-data-0 .t803__label')[0], $('.t803__multi-data-0 .t803__multi-key'), $('.t803__multi-data-0 .t803__label')[1], $('.t803__multi-data-0 .t803__multi-default'));
-        ($('.t803__multi-data-0')).prepend($($('center .t803__multi-data-bg .t803__label')[0]).clone(), $($('center .t803__multi-data-bg .t803__multi-key')[0]).clone(), $($('center .t803__multi-data-bg .t803__label')[1]).clone(), $($('center .t803__multi-data-bg .t803__multi-default')[0]).clone());
+        $(".t803__multi-datablock center").append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left"></div><br>`);
+        $(".t803__multi-datablock center .t803__multi-data-bg").append($(".t803__multi-data-0 .t803__label")[0], $(".t803__multi-data-0 .t803__multi-key"), $(".t803__multi-data-0 .t803__label")[1], $(".t803__multi-data-0 .t803__multi-default"));
+        ($(".t803__multi-data-0")).prepend($($("center .t803__multi-data-bg .t803__label")[0]).clone(), $($("center .t803__multi-data-bg .t803__multi-key")[0]).clone(), $($("center .t803__multi-data-bg .t803__label")[1]).clone(), $($("center .t803__multi-data-bg .t803__multi-default")[0]).clone());
 
         /* Используем переменную, чтобы уникализировать список элементов */
         let seen = {};
@@ -175,9 +175,9 @@
           $("#page_menu_publishlink").click(() => {
             setTimeout(() => {
               if (lang === "RU") {
-                $(".js-publish-noteunderbutton").html("Ваш браузер может сохранять старую версию страницы.<br><a href='https://yandex.ru/support/common/browsers-settings/cache.html' rel='noopener noreferrer' target='_blank'>Как очистить кэш в браузере.</a>");
+                $(".js-publish-noteunderbutton").html(`Ваш браузер может сохранять старую версию страницы.<br><a href="https://yandex.ru/support/common/browsers-settings/cache.html" rel="noopener noreferrer" target="_blank">Как очистить кэш в браузере.</a>`);
               } else {
-                $(".js-publish-noteunderbutton").html("Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.");
+                $(".js-publish-noteunderbutton").html(`Note: Following the link, please refresh the page twice to see the changes. Your browser may store the old version of the page.`);
               }
             }, 2000);
           });
