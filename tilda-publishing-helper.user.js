@@ -45,11 +45,11 @@
       }
 
       if (projectid) {
-        url = "https://project" + parseInt(projectid, 10) + ".tilda.ws/";
+        url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
       }
 
       if (pageid) {
-        url += "page" + parseInt(pageid, 10) + ".html";
+        url += `page${parseInt(pageid, 10)}.html`;
       }
 
       window.location.href = url;
