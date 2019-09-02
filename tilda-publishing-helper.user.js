@@ -221,7 +221,7 @@
               });
 
               $("input[name='zoom']").each((i, el) => {
-                if (Number($(el).val()) > 20 || Number($(el).val()) < 0) {
+                if (parseInt($(el).val()) > 20 || parseInt($(el).val()) < 0) {
                   $(el).css("border", "1px solid red").before(`<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
                 }
               });
@@ -483,7 +483,7 @@
           isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
         }
 
-        let isFree = $("[data-menu-item='#ss_menu_collaborators']").length == 0;
+        let isFree = $("[data-menu-item='#ss_menu_collaborators']").length === 0;
 
         if (isEmail === "none") {
           text = "630";
@@ -515,7 +515,7 @@
         /* Предупреждение для поля Google Analytics */
         let value = $("input.js-ga-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
+          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null&& value !== "") {
             $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
           }
         }
@@ -523,7 +523,7 @@
         /* Предупреждение для поля Яндекс.Метрика */
         value = $("input.js-metrika-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
+          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null&& value !== "") {
             $("input.js-metrika-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
           }
         }
@@ -668,7 +668,7 @@
             let autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
             let text = "";
             if (dateLag < 10 && dateLag > 0) {
-              if (autorenew.length == 0) {
+              if (autorenew.length === 0) {
                 text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600">оплатить</a>`;
               }
 
@@ -1044,7 +1044,7 @@
       }
 
       function mouseoutListener(event) {
-        if (event.relatedTarget && event.target.closest('a') == event.relatedTarget.closest('a')) {
+        if (event.relatedTarget && event.target.closest('a') === event.relatedTarget.closest('a')) {
           return;
         }
 
@@ -1062,7 +1062,7 @@
           return;
         }
 
-        if (urlToPreload == linkElement.href) {
+        if (urlToPreload === linkElement.href) {
           return;
         }
 
@@ -1076,7 +1076,7 @@
           return;
         }
 
-        if (preloadLocation.protocol == 'http:' && location.protocol == 'https:') {
+        if (preloadLocation.protocol === 'http:' && location.protocol === 'https:') {
           return;
         }
 
@@ -1084,7 +1084,7 @@
           return;
         }
 
-        if (preloadLocation.hash && preloadLocation.pathname + preloadLocation.search == location.pathname + location.search) {
+        if (preloadLocation.hash && preloadLocation.pathname + preloadLocation.search === location.pathname + location.search) {
           return;
         }
 
