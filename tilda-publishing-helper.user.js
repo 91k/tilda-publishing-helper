@@ -515,16 +515,16 @@
         /* Предупреждение для поля Google Analytics */
         let value = $("input.js-ga-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null&& value !== "") {
-            $("input.js-ga-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
+          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
+            $("input.js-ga-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
 
         /* Предупреждение для поля Яндекс.Метрика */
         value = $("input.js-metrika-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null&& value !== "") {
-            $("input.js-metrika-localinput").css("border", "1px solid red").before("<span style='color: red;'>В этом поле нужно только номер счётчика</span>");
+          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
+            $("input.js-metrika-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
 
@@ -532,7 +532,7 @@
         value = $("input#ss-input-alias").val();
         if (typeof value !== "undefined") {
           if (value.includes("_") && value !== "") {
-            $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before("<span style='color: red;'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах (например, Инстаграм)</span>");
+            $("input#ss-input-alias").css("border", "1px solid red").parent().parent().parent().parent().before(`<span style='color: red'>Использование знака подчёркивания может привести к проблемам в некоторых сервисах (например, Инстаграм)</span>`);
           }
         }
 
@@ -540,17 +540,17 @@
         value = $("[name='customcssfile']").val();
         if (typeof value !== "undefined") {
           if (value.includes("rel=stylesheet") && value !== "") {
-            $("[name='customcssfile']").css("border", "1px solid red").parent().before("<span style='color: red;'>Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>");
+            $("[name='customcssfile']").css("border", "1px solid red").parent().before(`<span style='color: red'>Некорректная ссылка на файл. Уберите, пожалуйста, в конце «rel=stylesheet»</span>`);
           }
         }
 
         /* Подсказка под полями счётчиков */
         text = "Добавьте только номер счётчика";
         if (typeof $(".js-ga-localinput").val() !== "undefined") {
-          $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none;'>${ text }<span>`);
+          $(".js-ga-localinput").attr("placeholder", "UA-56589716-1").after(`<span class='js-ga-localinput' style='display: none'>${ text }<span>`);
         }
         if (typeof $(".js-metrika-localinput").val() !== "undefined") {
-          $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none;'>${ text }<span>`);
+          $(".js-metrika-localinput").attr("placeholder", "25980874").after(`<span class='js-metrika-localinput' style='display: none'>${ text }<span>`);
         }
 
         if (typeof $("[name='googletmid']").val() !== "undefined") {
@@ -573,7 +573,7 @@
           if (lang === "RU") {
             text = $("[name^='testmodeoff']").parent().html();
             text = text.replace("Выключить", "в<b>Ы</b>ключить");
-            $("[name='testmodeoff-cb']").parent().html(text).parent().after("<br><span style='font-weight: 300;'>По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.");
+            $("[name='testmodeoff-cb']").parent().html(text).parent().after(`<br><span style="font-weight: 300">По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.`);
             $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
           }
         }
@@ -692,7 +692,7 @@
       ];
 
       let dom = identityGo.map(obj => {
-        return '<li><a href="https://tilda.cc/identity/go' + obj.href + '">' + obj.value + '</a></li>';
+        return `<li><a href="https://tilda.cc/identity/go${obj.href}">${obj.value}</a></li>`;
       });
 
       $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
