@@ -221,7 +221,7 @@
               });
 
               $("input[name='zoom']").each((i, el) => {
-                if (parseInt($(el).val()) > 20 || parseInt($(el).val()) < 0) {
+                if (parseInt($(el).val(), 10) > 20 || parseInt($(el).val(), 10) < 0) {
                   $(el).css("border", "1px solid red").before(`<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
                 }
               });
