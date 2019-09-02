@@ -1000,8 +1000,6 @@
       }
 
       function touchstartListener(event) {
-        /* Chrome on Android calls mouseover before touchcancel so `lastTouchTimestamp`
-         * must be assigned on touchstart to be measured on mouseover. */
         lastTouchTimestamp = performance.now();
 
         const linkElement = event.target.closest('a');
@@ -1102,7 +1100,6 @@
       function stopPreloading() {
         prefetcher.removeAttribute('href');
       }
-
     });
   }
 })(window);
