@@ -12,6 +12,7 @@
 // @exclude      https://store.tilda.cc/*
 // @exclude      https://experts.tilda.cc/*
 // @exclude      https://members.tilda.cc/*
+// @exclude      https://feeds.tildacdn.com/*
 // @exclude      https://crm.tilda.cc/*
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
