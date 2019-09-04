@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      45.1
+// @version      45.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -114,14 +114,14 @@
 
       function addRecIDs() {
         $("div.record").each((i, el) => {
-          if ($(el).children("div#mainleft").children("div").children().length < 6) {
+          if ($(el).children("div#mainleft").children(".tp-record-edit-icons-left__wrapper").children(".tp-record-edit-icons-left__one:last-child[recid]").length < 1) {
             let rid = $(el).attr("recordid");
             let recid = `#rec${ rid }`;
             let recordid = `#record${ rid }`;
             let copy = `let t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
             let mainleft = $(el).children("div#mainleft").children("div");
 
-            if($(el).height() <= 60) {
+            if ($(el).height() <= 60) {
               $(el).height(85);
               $(el).find(".recordediticons").css("display", "block");
             }
@@ -175,8 +175,6 @@
                             $("body").append(iframeCode);
                           }
                         }
-                      }
-                    };
                       };
 
                       const iframeObserver = new MutationObserver(callbackIframe);
@@ -411,16 +409,8 @@
         iframeObserver.observe(_body, { childList: true });
 
         let _records = document.querySelector("#allrecords");
-        const recordsObserver = new MutationObserver((mutationsList) => {
-          for (let mutation of mutationsList) {
-            if (mutation.type) {
-              let listChildren = [].slice.call(_records.children)
-                .map((node) => node.outerHTML)
-                .filter((s) => s.indexOf(`<br`) === 0 ? false : true);
-
-              // console.log(listChildren);
-            }
-          }
+        const recordsObserver = new MutationObserver(() => {
+          addRecIDs();
         });
         recordsObserver.observe(_records, { childList: true });
 
