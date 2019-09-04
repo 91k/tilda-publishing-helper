@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      45.2
+// @version      45.3
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -256,7 +256,7 @@
 
         /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
         $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
-          return (!(/^[A-Za-z0-9]*$/.test($(arr).attr("name"))));
+          return (!(/^[A-Za-z0-9_]*$/.test($(arr).attr("name"))));
         }).map((i, el) => {
           let value = $(el).attr("name");
 
