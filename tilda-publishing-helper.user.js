@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      45.3
+// @version      46.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -600,6 +600,56 @@
 
             .ss-menu__wrapper {
                 margin-bottom: 0 !important;
+            }
+
+            #checkdns {
+              margin-top: 30px;
+              border: 1px solid #d9d9d9;
+              padding: 25px 15px 15px 15px;
+            }
+
+            #checkdns h4 {
+              text-align: center;
+              padding: 0 0 15px 0;
+            }
+
+            #checkdns table {
+              margin: 20px auto;
+            }
+
+            #checkdns table th:first-child {
+              width: 170px;
+            }
+
+            #checkdns table img {
+              width: 30px;
+            }
+
+            #checkdns table td:first-child {
+              padding: 10px 0;
+            }
+            
+            #checkdns table td:last-child {
+              vertical-align: middle;
+            }
+
+            #checkdns table+a{
+              position: absolute;
+              bottom: 10px;
+              right: 10px;
+              color: #d9d9d9;
+            }
+
+            .isTildaIP {
+              border: 0;
+              box-shadow: none;
+              background: url(/tpl/img/popups/all-icons.svg) no-repeat -71px -327px;
+              width: 36px;
+              height: 35px;
+              display: inline-block;
+              transform: scale(0.6);
+              vertical-align: middle;
+              margin: -5px 0 0 -2px;
             }`;
           isEmail = $("[data-menu-item='#ss_menu_fonts']").css("display");
         }
@@ -681,6 +731,29 @@
         /* Просим кнопки больше не исчезать, когда юзер нажимает на «вручную» */
         $(".js-yandexmetrika-connect").removeClass("js-yandexmetrika-connect");
         $(".js-ga-connect").removeClass("js-ga-connect");
+
+        /* Делаем проверку IP адреса у домена */
+        if (typeof $("#checkdns").val() === "undefined") {
+          $("[name='customdomain']").parent().append(`<div id="checkdns"></div>`);
+
+          let domain = $("[name='customdomain']").val();
+
+          $.ajax(`https://static.roman-kosov.ru/getdns/?url=${domain}`).done((data) => {
+            $("#checkdns").empty();
+            let result = `<h4>Проверка IP адреса домена из разных стран</h4><table><thead><tr><th>Местонахождение</th><th>Результат</th></tr></thead><tbody>`;
+            let json = JSON.parse(data);
+            for (let i in json) {
+              if (json[i] !== null) {
+                let flag = i.slice(0, 2);
+                if (flag === "uk") flag = "gb";
+                let ip = json[i][0].A;
+                result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${["185.165.123.36", "185.165.123.206", "185.203.72.17", "77.220.207.191"].some(i => ip.includes(i)) ? "isTildaIP" : ""}"></div></td></tr>`;
+              }
+            }
+            result += `</tbody></table><a href="https://roman.ws/helper/" target="_blank"> Tilda Helper </a>`;
+            $("#checkdns").append(result);
+          });
+        }
 
         /* Добавляем подсказку по валютам */
         if (typeof $("[name=currency_txt] + div").val() !== "undefined") {
