@@ -393,18 +393,32 @@
 
         /* Работа с Zero блоком */
         let _body = document.querySelector("body");
-        const observer = new MutationObserver((mutationsList) => {
+        const iframeObserver = new MutationObserver((mutationsList) => {
           for (let mutation of mutationsList) {
             if (mutation.type === "childList") {
-              let listChildren = [].slice.call(_body.children)
+              let openIframe = [].slice.call(_body.children)
                 .map((node) => node.outerHTML)
                 .filter((s) => s.indexOf(`<iframe class="t396__iframe" src=`) === 0 ? true : false);
 
-              if (listChildren.length) iframeListener();
+              if (openIframe.length === 1) iframeListener();
             }
           }
         });
-        observer.observe(_body, { attributes: true, childList: true, subtree: true });
+        iframeObserver.observe(_body, { childList: true });
+
+        let _records = document.querySelector("#allrecords");
+        const recordsObserver = new MutationObserver((mutationsList) => {
+          for (let mutation of mutationsList) {
+            if (mutation.type) {
+              let listChildren = [].slice.call(_records.children)
+                .map((node) => node.outerHTML)
+                .filter((s) => s.indexOf(`<br`) === 0 ? false : true);
+
+              // console.log(listChildren);
+            }
+          }
+        });
+        recordsObserver.observe(_records, { childList: true });
 
         styleBody += `
             [data-record-type="360"] .tp-record-edit-icons-left__three {
