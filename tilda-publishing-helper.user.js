@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      44.1
+// @version      45.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -120,6 +120,11 @@
             let recordid = `#record${ rid }`;
             let copy = `let t = $('<input>'); $('body').append(t); t.val('#rec${ rid }').select(); document.execCommand('copy'); t.remove()`;
             let mainleft = $(el).children("div#mainleft").children("div");
+
+            if($(el).height() <= 60) {
+              $(el).height(85);
+              $(el).find(".recordediticons").css("display", "block");
+            }
 
             $(mainleft).append(`<div class="tp-record-edit-icons-left__one-right-space"></div>`);
 
