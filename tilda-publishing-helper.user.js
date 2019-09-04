@@ -145,10 +145,11 @@
         setTimeout(() => {
           let iframe = $("iframe.t396__iframe");
           let content = iframe.contents();
-          let iframeWindow = iframe.eq(0)[0].contentWindow;
-          content.on("keyup click", () => {
-            if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
-              content.find(".tn-settings table table:nth-child(3) > tbody").after(`
+          if (iframe.eq(0)[0] !== "undefined") {
+            let iframeWindow = iframe.eq(0)[0].contentWindow;
+            content.on("keyup click", () => {
+              if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
+                content.find(".tn-settings table table:nth-child(3) > tbody").after(`
               <table><tbody>
                 <tr id="tidy">
                   <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
@@ -157,80 +158,83 @@
                 </tr>
               </tbody></table>`);
 
-              content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
-                iframeWindow.$(iframeWindow).off("keydown");
-                if (!content.find("#keyEnable").length) {
-                  content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
-                  document.querySelector("iframe.t396__iframe").contentWindow.iframeRefresh = function() {
-                    let iframe = $("iframe.t396__iframe");
-                    let iframeWindow = iframe.eq(0)[0].contentWindow;
+                content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
+                  iframeWindow.$(iframeWindow).off("keydown");
+                  if (content.find("#keyEnable").length < 1) {
+                    content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
+                    document.querySelector("iframe.t396__iframe").contentWindow.iframeRefresh = function() {
+                      let _iframe = $("iframe.t396__iframe");
+                      let iframeWindow = _iframe.eq(0)[0].contentWindow;
 
-                    iframe = document.querySelector("iframe.t396__iframe").contentWindow.document.body;
-                    const callbackIframe = function(mutationsList) {
-                      for (let mutation of mutationsList) {
-                        if (mutation.type === "childList" && mutation.target.textContent === "Ok") {
-                          let iframeCode = document.querySelector("iframe.t396__iframe").outerHTML;
-                          $("iframe.t396__iframe").remove();
-                          $("body").append(iframeCode);
+                      _iframe = document.querySelector("iframe.t396__iframe").contentWindow.document.body;
+                      const callbackIframe = function(mutationsList) {
+                        for (let mutation of mutationsList) {
+                          if (mutation.type === "childList" && mutation.target.textContent === "Ok") {
+                            let iframeCode = document.querySelector("iframe.t396__iframe").outerHTML;
+                            $("iframe.t396__iframe").remove();
+                            $("body").append(iframeCode);
+                          }
                         }
                       }
                     };
+                      };
 
-                    const observerIframe = new MutationObserver(callbackIframe);
-                    observerIframe.observe(iframe, { attributes: true, childList: true, subtree: true });
+                      const iframeObserver = new MutationObserver(callbackIframe);
+                      iframeObserver.observe(_iframe, { attributes: true, childList: true, subtree: true });
 
-                    iframeWindow.artboard__Save__toDB();
-                  };
-                }
-              });
-
-              content.find("[name='horizontal-offset']").on("keydown keyup", () => {
-                let arr = [];
-                let value = parseInt(event.target.value, 10);
-                content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                  let left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
-                  let width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
-                  arr.push([el, left, width]);
-                });
-
-                arr = arr.sort((a, b) => a[1] - b[1]);
-                let left = arr[0][1];
-                let width = arr[0][2];
-
-                $(arr).each((i, el) => {
-                  if (i > 0) {
-                    iframeWindow.elem__setFieldValue($(el[0]), "left", left + width + value);
-                    iframeWindow.elem__renderViewOneField($(el[0]), "left");
-                    width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
-                    left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
+                      iframeWindow.artboard__Save__toDB();
+                    };
                   }
                 });
-              });
 
-              content.find("[name='vertical-offset']").on("keydown keyup", () => {
-                let arr = [];
-                let value = parseInt(event.target.value, 10);
-                content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                  let top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
-                  let height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
-                  arr.push([el, top, height]);
+                content.find("[name='horizontal-offset']").on("keydown keyup", () => {
+                  let arr = [];
+                  let value = parseInt(event.target.value, 10);
+                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
+                    let left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
+                    let width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
+                    arr.push([el, left, width]);
+                  });
+
+                  arr = arr.sort((a, b) => a[1] - b[1]);
+                  let left = arr[0][1];
+                  let width = arr[0][2];
+
+                  $(arr).each((i, el) => {
+                    if (i > 0) {
+                      iframeWindow.elem__setFieldValue($(el[0]), "left", left + width + value);
+                      iframeWindow.elem__renderViewOneField($(el[0]), "left");
+                      width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
+                      left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
+                    }
+                  });
                 });
 
-                arr = arr.sort((a, b) => a[1] - b[1]);
-                let top = arr[0][1];
-                let height = arr[0][2];
+                content.find("[name='vertical-offset']").on("keydown keyup", () => {
+                  let arr = [];
+                  let value = parseInt(event.target.value, 10);
+                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
+                    let top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
+                    let height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
+                    arr.push([el, top, height]);
+                  });
 
-                $(arr).each((i, el) => {
-                  if (i > 0) {
-                    iframeWindow.elem__setFieldValue($(el[0]), "top", top + height + value);
-                    iframeWindow.elem__renderViewOneField($(el[0]), "top");
-                    top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
-                    height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
-                  }
+                  arr = arr.sort((a, b) => a[1] - b[1]);
+                  let top = arr[0][1];
+                  let height = arr[0][2];
+
+                  $(arr).each((i, el) => {
+                    if (i > 0) {
+                      iframeWindow.elem__setFieldValue($(el[0]), "top", top + height + value);
+                      iframeWindow.elem__renderViewOneField($(el[0]), "top");
+                      top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
+                      height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
+                    }
+                  });
                 });
-              });
-            }
-          });
+              }
+            });
+          }
         }, 1500);
       }
 
