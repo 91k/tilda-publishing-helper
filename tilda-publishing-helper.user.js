@@ -748,7 +748,8 @@
                 let flag = i.slice(0, 2);
                 if (flag === "uk") flag = "gb";
                 let ip = json[i][0].A;
-                result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${["185.165.123.36", "185.165.123.206", "185.203.72.17", "77.220.207.191"].some(i => ip.includes(i)) ? "isTildaIP" : ""}"></div></td></tr>`;
+                let isTildaIP = ["185.165.123.36", "185.165.123.206", "185.203.72.17", "77.220.207.191"].some(i => ip.includes(i)) ? "isTildaIP" : "";
+                result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
               }
             }
             result += `</tbody></table><a href="https://roman.ws/helper/" target="_blank"> Tilda Helper </a>`;
