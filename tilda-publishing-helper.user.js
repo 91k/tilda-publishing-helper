@@ -146,7 +146,7 @@
         setTimeout(() => {
           let iframe = $("iframe.t396__iframe");
           let content = iframe.contents();
-          if (iframe.eq(0)[0] !== "undefined") {
+          if (typeof iframe.eq(0)[0] !== "undefined") {
             let iframeWindow = iframe.eq(0)[0].contentWindow;
             content.on("keyup click", () => {
               if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
@@ -272,7 +272,7 @@
         });
 
         /* Другая подсказка после публикации страницы  */
-        if ($("#page_menu_publishlink").val() !== "undefined") {
+        if (typeof $("#page_menu_publishlink").val() !== "undefined") {
           $("#page_menu_publishlink").click(() => {
             setTimeout(() => {
               if (lang === "RU") {
@@ -839,7 +839,7 @@
         });
 
         /* Попытка разместить чёрный плашку внизу на больших экрана как можно ниже */
-        if ($(".td-sites-grid__cell").val() !== "undefined") {
+        if (typeof $(".td-sites-grid__cell").val() !== "undefined") {
           $("body").css("background-color", "#f0f0f0").append("<footer></footer>");
           $("#rec271198, #rec266148, #rec103634, body > .t-row").appendTo("footer");
           if ($(window).height() > $("body").height()) {
