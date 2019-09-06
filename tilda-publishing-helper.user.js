@@ -17,6 +17,7 @@
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
 // @license      MIT
+// jshint esversion:6
 // ==/UserScript==
 (async function(window) {
   "use strict";
