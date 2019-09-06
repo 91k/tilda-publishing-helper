@@ -100,7 +100,7 @@
       }
 
       function isEmpty(obj) {
-        if (obj == null) return true;
+        if (obj === null) return true;
 
         if (obj.length > 0) return false;
         if (obj.length === 0) return true;
@@ -687,7 +687,7 @@
         /* Предупреждение для поля Google Analytics */
         let value = $("input.js-ga-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
+          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) === null && value !== "") {
             $("input.js-ga-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
@@ -695,7 +695,7 @@
         /* Предупреждение для поля Яндекс.Метрика */
         value = $("input.js-metrika-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
+          if (value.match(new RegExp("^(([0-9]+){4,})$")) === null && value !== "") {
             $("input.js-metrika-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
