@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      46.1
+// @version      46.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -736,26 +736,28 @@
 
         /* Делаем проверку IP адреса у домена */
         if (typeof $("#checkdns").val() === "undefined") {
-          $("[name='customdomain']").parent().append(`<div id="checkdns"></div>`);
-
           let domain = $("[name='customdomain']").val();
 
-          $.ajax(`https://static.roman-kosov.ru/getdns/?url=${domain}`).done((data) => {
-            $("#checkdns").empty();
-            let result = `<h4>Проверка IP адреса домена из разных стран</h4><table><thead><tr><th>Местонахождение</th><th>Результат</th></tr></thead><tbody>`;
-            let json = JSON.parse(data);
-            for (let i in json) {
-              if (json[i] !== null) {
-                let flag = i.slice(0, 2);
-                if (flag === "uk") flag = "gb";
-                let ip = json[i][0].A;
-                let isTildaIP = ["185.165.123.36", "185.165.123.206", "185.203.72.17", "77.220.207.191"].some(i => ip.includes(i)) ? "isTildaIP" : "";
-                result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
+          if (!isEmpty(domain)) {
+            $("[name='customdomain']").parent().append(`<div id="checkdns"></div>`);
+
+            $.ajax(`https://static.roman-kosov.ru/getdns/?url=${domain}`).done((data) => {
+              $("#checkdns").empty();
+              let result = `<h4>Проверка IP адреса домена из разных стран</h4><table><thead><tr><th>Местонахождение</th><th>Результат</th></tr></thead><tbody>`;
+              let json = JSON.parse(data);
+              for (let i in json) {
+                if (json[i] !== null) {
+                  let flag = i.slice(0, 2);
+                  if (flag === "uk") flag = "gb";
+                  let ip = json[i][0].A;
+                  let isTildaIP = ["185.165.123.36", "185.165.123.206", "185.203.72.17", "77.220.207.191"].some(i => ip.includes(i)) ? "isTildaIP" : "";
+                  result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
+                }
               }
-            }
-            result += `</tbody></table><a href="https://roman.ws/helper/" target="_blank"> Tilda Helper </a>`;
-            $("#checkdns").append(result);
-          });
+              result += `</tbody></table><a href="https://roman.ws/helper/" target="_blank"> Tilda Helper </a>`;
+              $("#checkdns").append(result);
+            });
+          }
         }
 
         /* Добавляем подсказку по валютам */
