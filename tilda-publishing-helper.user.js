@@ -343,6 +343,7 @@
                 });
               }
 
+              /* Добавлем быстрые ссылки на якори */
               $("input[name*='link']").each((i, el) => {
                 let option = "";
                 let name = $(el).attr("name");
