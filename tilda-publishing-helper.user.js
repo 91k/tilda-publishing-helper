@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      46.3
+// @version      46.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -75,6 +75,46 @@
         factory(jQuery); // eslint-disable-line
       }
     })(function($) {
+      /* Заносим все новые стили в переменную */
+      let styleBody = `
+        .ui-sortable-handle > td:nth-child(1) {
+            padding-right: 20px;
+        }
+
+        /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
+        .td-popup-window__bottom-right .td-popup-btn {
+            margin: 0 0 0 15px !important;
+        }
+
+        /* Делаем кнопку «Домой» интерактивной */
+        .td-page__ico-home:hover {
+            filter: opacity(.5); !important;
+        }
+
+        /* Меняем текст в попапе при публикации страницы */
+        .js-publish-noteunderbutton {
+            width: 92% !important;
+            color: #333 !important;
+            font-family: unset !important;
+        }
+
+        .modal-body {
+            font-weight: 300;
+        }
+
+        .js-publish-noteunderbutton a,
+        .pub-left-bottom-link a {
+            text-decoration: underline;
+        }
+
+        #referralpopup {
+          z-index: 1 !important;
+        }
+      `;
+
+      /* Заносим все внешние функции в переменную */
+      let scriptBody = "";
+
       /* Переменная для вывода текста */
       let text = "";
 
@@ -90,17 +130,8 @@
 
       let email = "";
 
-      if (window.location.pathname === "/identity/plan/") {
-        $.ajax("https://tilda.cc/identity/").done((data) => {
-          let dom = new DOMParser().parseFromString(data, "text/html");
-          email = $(dom).find("[name=email]").val();
-
-          $("[name='paybox']").before(`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px">Email: ${email}</div>`);
-        });
-      }
-
       function isEmpty(obj) {
-        if (obj === null) return true;
+        if (obj == null) return true;
 
         if (obj.length > 0) return false;
         if (obj.length === 0) return true;
@@ -151,13 +182,16 @@
             content.on("keyup click", () => {
               if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
                 content.find(".tn-settings table table:nth-child(3) > tbody").after(`
-              <table><tbody>
-                <tr id="tidy">
-                  <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
-                  <td style="width:70px"></td>
-                  <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
-                </tr>
-              </tbody></table>`);
+                <table><tbody>
+                  <tr id="tidy">
+                    <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:70px"></td>
+                    <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <!-- https://static.tildacdn.com/tild3730-3635-4538-b164-353033396134/tidy-all.svg -->
+                    <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
+                    <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
+                  </tr>
+                </tbody></table>`);
 
                 content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
                   iframeWindow.$(iframeWindow).off("keydown");
@@ -237,11 +271,40 @@
         }, 1500);
       }
 
-      /* Заносим все новые стили в переменную */
-      let styleBody = "";
+      if (window.location.pathname === "/identity/plan/") {
+        showmore_prices(); // eslint-disable-line
 
-      /* Заносим все внешние функции в переменную */
-      let scriptBody = "";
+        $.ajax("https://tilda.cc/identity/").done((data) => {
+          let dom = new DOMParser().parseFromString(data, "text/html");
+          email = $(dom).find("[name=email]").val();
+
+          $("[name='paybox']").before(`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px">Email: ${email}</div>`);
+        });
+      }
+
+      if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
+        /* Добавляем ссылку на удаление аккаунта */
+        $("[href='/identity/changepassword/']").after(`<a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>`);
+
+        /* Исправляем слишком длинную кнопку в Профиле */
+        $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
+        $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
+      }
+
+      if (window.location.pathname === "/domains/" || window.location.pathname === "/identity/courses/") {
+        /* Исправляем отступ слева у кнопки в Доменах */
+        $("center > a > table > tbody > tr > td").css("padding-left", "0");
+      }
+
+      if (window.location.search.includes("addnewpage=yes")) {
+        /* Перемещаем «Указать ID шаблона» */
+        if (typeof $("#welcome-middle").val() !== "undefined") {
+          $("#previewprojex").append(`
+                      <span>Или укажите номер шаблона</span>
+                  `);
+          $("#welcome-middle").next().next().after($("#welcome-middle"));
+        }
+      }
 
       if (window.location.pathname === "/page/") {
         /* Добавляем recid для каждого блока на странице */
@@ -484,109 +547,43 @@
             }`;
       }
 
-      /* Заносим все новые стили в переменную */
-      styleBody += `
-        /* Меняем размер подзаголовков в Настройках сайта */
-        .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
-            font-size: 18px !important;
-            line-height: unset !important;
-        }
-
-        #rec271198 > div > div > div {
-            float: unset !important;
-            text-align: center;
-        }
-
-        /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
-        .ss-container {
-            min-height: ${$(window).height()+15}px;
-        }
-
-        .ui-sortable-handle > td:nth-child(1) {
-            padding-right: 20px;
-        }
-
-        /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
-        .td-popup-window__bottom-right .td-popup-btn {
-            margin: 0 0 0 15px !important;
-        }
-
-        /* Убираем отступ у ссылки «Корзина (...)», если ссылка сайта крайне длинная */
-        table.td-project-uppanel__button:nth-child(5) {
-            margin-right: 0 !important;
-        }
-
-        /* Красная обводка для подскази о перепубликации страниц */
-        #ss_menu_analytics .t265-wrapper {
-            border: 2px red dashed;
-        }
-
-        #ss_menu_analytics .ss-btn, 
-        #ss_menu_seo .ss-btn {
-            border: 1px solid #ccc !important;
-        }
-
-        /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
-        span.js-ga-localinput,
-        span.js-metrika-localinput,
-        span.js-gtm-localinput {
-            opacity: 0.75;
-            padding-top: 15px;
-            margin-top: 15px;
-            font-weight: 300;
-            font-size: 14px;
-        }
-
-        /* Добавляем кнопку заявок к карточкам проектов */
-        .td-site__settings {
-            margin-right: 15px;
-        }
-    
-        .td-site__settings-title {
-            font-size: 12px;
-        }
-    
-        .td-site__url-link {
-            font-size: 14px;
-        }
-    
-        .td-site__section-two {
-            padding: 0 30px;
-        }
-
-        /* Делаем кнопку «Домой» интерактивной */
-        .td-page__ico-home:hover {
-            filter: opacity(.5); !important;
-        }
-
-        /* Меняем текст в попапе при публикации страницы */
-        .js-publish-noteunderbutton {
-            width: 92% !important;
-            color: #333 !important;
-            font-family: unset !important;
-        }
-
-        .modal-body {
-            font-weight: 300;
-        }
-
-        .js-publish-noteunderbutton a,
-        .pub-left-bottom-link a {
-            text-decoration: underline;
-        }
-        
-        /* Убираем отступ сверху у иконок */
-        #preview16icon,
-        #preview152icon,
-        #preview270icon {
-            padding-top: 0 !important;
-        }`;
-
       if (window.location.pathname === "/projects/settings/") {
         /* Делаем боковое меню плавающим */
         let isEmail;
         if ($("[data-menu-item='#ss_menu_fonts']")) {
           styleBody += `
+            /* Красная обводка для подсказки о перепубликации страниц */
+            #ss_menu_analytics .t265-wrapper {
+                border: 2px red dashed;
+            }
+
+            #ss_menu_analytics .ss-btn, 
+            #ss_menu_seo .ss-btn {
+                border: 1px solid #ccc !important;
+            }
+
+            /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
+            span.js-ga-localinput,
+            span.js-metrika-localinput,
+            span.js-gtm-localinput {
+                opacity: 0.75;
+                padding-top: 15px;
+                margin-top: 15px;
+                font-weight: 300;
+                font-size: 14px;
+            }
+            
+            /* Меняем размер подзаголовков в Настройках сайта */
+            .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
+                font-size: 18px !important;
+                line-height: unset !important;
+            }
+
+            /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
+            .ss-container {
+                min-height: ${$(window).height()+15}px;
+            }
+            
             .ss-menu {
                 position: -webkit-sticky;
                 position: sticky;
@@ -687,7 +684,7 @@
         /* Предупреждение для поля Google Analytics */
         let value = $("input.js-ga-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) === null && value !== "") {
+          if (value.match(new RegExp("^(UA-([0-9]+){6,}-[0-9]+)$")) == null && value !== "") {
             $("input.js-ga-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
@@ -695,7 +692,7 @@
         /* Предупреждение для поля Яндекс.Метрика */
         value = $("input.js-metrika-localinput").val();
         if (typeof value !== "undefined") {
-          if (value.match(new RegExp("^(([0-9]+){4,})$")) === null && value !== "") {
+          if (value.match(new RegExp("^(([0-9]+){4,})$")) == null && value !== "") {
             $("input.js-metrika-localinput").css("border", "1px solid red").before(`<span style='color: red'>В этом поле нужно только номер счётчика</span>`);
           }
         }
@@ -780,15 +777,7 @@
         }
       }
 
-      /* Перемещаем «Указать ID шаблона» */
-      if (typeof $("#welcome-middle").val() !== "undefined") {
-        $("#previewprojex").append(`
-                    <span>Или укажите номер шаблона</span>
-                `);
-        $("#welcome-middle").next().next().after($("#welcome-middle"));
-      }
-
-      if (window.location.pathname === "/projects/" || window.location.pathname.includes("store/parts")) {
+      if (window.location.pathname === "/projects/") {
         /* Создаём дополнительные ссылки в карточках проектов */
         $(".td-sites-grid__cell").each((i, el) => {
           let projectid = $(el).attr("id");
@@ -854,6 +843,32 @@
           } else {
             $("footer").css("position", "relative");
           }
+
+          /* Добавляем ссылки на социальные сети */
+          $("#rec271198 > div > div > div > div").append(`
+            <div class="sociallinkimg">
+                <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
+                </a>
+            </div>
+            <div class="sociallinkimg">
+                <a href="https://www.instagram.com/${ lang === "RU" ? "tildapublishing" : "tilda.cc" }/" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
+                </a>
+            </div>
+            <div class="sociallinkimg">
+                <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
+                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
+                </a>
+            </div>
+          `);
+
+          styleBody += `
+            #rec271198 > div > div > div {
+              float: unset !important;
+              text-align: center;
+            }
+          `;
         }
 
         $.ajax({
@@ -883,78 +898,39 @@
             }
           }
         });
+
+        let identityGo = [{ href: "news", value: "Каналы новостей" },
+          { href: "crm", value: "CRM" },
+          { href: "experts", value: "Experts" },
+          { href: "education", value: "Education" },
+          { href: "upwidget", value: "Сервисы хранения файлов" }
+        ];
+
+        let dom = identityGo.map(obj => {
+          return `<li><a href="https://tilda.cc/identity/go${obj.href}">${obj.value}</a></li>`;
+        });
+
+        $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
+
+        styleBody += `
+          /* Добавляем кнопку заявок к карточкам проектов */
+          .td-site__settings {
+              margin-right: 15px;
+          }
+      
+          .td-site__settings-title {
+              font-size: 12px;
+          }
+      
+          .td-site__url-link {
+              font-size: 14px;
+          }
+      
+          .td-site__section-two {
+              padding: 0 30px;
+          }
+        `;
       }
-
-      let identityGo = [{ href: "news", value: "Каналы новостей" },
-        { href: "crm", value: "CRM" },
-        { href: "experts", value: "Experts" },
-        { href: "education", value: "Education" },
-        { href: "upwidget", value: "Сервисы хранения файлов" }
-      ];
-
-      let dom = identityGo.map(obj => {
-        return `<li><a href="https://tilda.cc/identity/go${obj.href}">${obj.value}</a></li>`;
-      });
-
-      $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
-
-      $("#referralpopup").css("z-index", 1);
-
-      /* Добавляем пункт «Домены» в верхнее меню */
-      let domains = 0;
-
-      $(".t-menu__item").each((i, el) => {
-        let href = $(el).attr("href");
-        if (href === "/domains/") {
-          domains += 1;
-        }
-      });
-
-      if (domains < 1) {
-        $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item ${window.location.pathname === "/domains/" ? "t-menu__item_active" : ""}">${ lang === "RU" ? "Домены" : "Domains" }</a>`);
-      }
-
-      if (window.location.pathname === "/identity/" || window.location.pathname === "/identity/deleteaccount/" || window.location.pathname === "/identity/promocode/") {
-        /* Добавляем ссылку на удаление аккаунта */
-        $("[href='/identity/changepassword/']").after(`<a href="/identity/deleteaccount/" style="float: right; font-size: 16px; opacity: 0.3">${ lang === "RU" ? "Удалить аккаунт" : "Delete Account" }</a>`);
-
-        /* Исправляем слишком длинную кнопку в Профиле */
-        $("button.btn.btn-primary").css("padding-left", "0").css("padding-right", "0").css("min-width", "180px").css("margin", "-1px");
-        $("input.form-control").css("padding-left", "0").css("padding-right", "0").css("box-shadow", "unset").css("border-radius", "unset").addClass("td-input");
-      }
-
-      if (window.location.pathname === "/domains/" || window.location.pathname === "/identity/courses/") {
-        /* Исправляем отступ слева у кнопки в Доменах */
-        $("center > a > table > tbody > tr > td").css("padding-left", "0");
-      }
-
-      /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
-      $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
-      $(".form-horizontal").after(`
-            <div class="ss-form-group__hint" style="text-align: center">
-                <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">Отмена</a>
-                </div>
-            <br><br>
-        `);
-
-      /* Добавляем ссылки на социальные сети */
-      $("#rec271198 > div > div > div > div").append(`
-            <div class="sociallinkimg">
-                <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
-                </a>
-            </div>
-            <div class="sociallinkimg">
-                <a href="https://www.instagram.com/${ lang === "RU" ? "tildapublishing" : "tilda.cc" }/" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
-                </a>
-            </div>
-            <div class="sociallinkimg">
-                <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
-                </a>
-            </div>
-        `);
 
       if (window.location.pathname === "/projects/" && window.location.search.includes("?projectid=")) {
         /* Определяем есть ли список страниц */
@@ -1088,7 +1064,6 @@
       }
 
       if (window.location.pathname === "/projects/favicons/") {
-
         /* Есть ли на странице иконка */
         if (typeof $("#preview16icon").val() !== "undefined") {
           let url = $(".ss-menu-pane__title:last").text().trim().match(/(\b[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig);
@@ -1111,11 +1086,39 @@
                     </div>
                 </td>
             </tr>`);
+
+          styleBody += `
+            /* Убираем отступ сверху у иконок */
+            #preview16icon,
+            #preview152icon,
+            #preview270icon {
+                padding-top: 0 !important;
+            }
+          `;
         }
       }
 
-      if (window.location.pathname === "/identity/plan/") {
-        showmore_prices(); // eslint-disable-line
+      /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
+      $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
+      $(".form-horizontal").after(`
+        <div class="ss-form-group__hint" style="text-align: center">
+            <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">Отмена</a>
+            </div>
+        <br><br>
+      `);
+
+      /* Добавляем пункт «Домены» в верхнее меню */
+      let domains = 0;
+
+      $(".t-menu__item").each((i, el) => {
+        let href = $(el).attr("href");
+        if (href === "/domains/") {
+          domains += 1;
+        }
+      });
+
+      if (domains < 1) {
+        $(".t-menu__leftitems").append(`<a href="https://tilda.cc/domains/" class="t-menu__item ${window.location.pathname === "/domains/" ? "t-menu__item_active" : ""}">${ lang === "RU" ? "Домены" : "Domains" }</a>`);
       }
 
       /* Clippy */
