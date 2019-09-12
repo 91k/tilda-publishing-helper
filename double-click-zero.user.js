@@ -27,9 +27,9 @@
       $("div.record").each((i, el) => {
         let rid = $(el).attr("recordid");
 
-        $(el).find(".t396__filter").attr("title", "Двойной клик откроет редактирование Zero блока").dblclick(function() {
-          t396_openeditor(rid); // eslint-disable-line
-        });
+        $(el).find(".t396__filter").attr("title", "Двойной клик откроет редактирование Zero блока").dblclick(() =>
+          t396_openeditor(rid) // eslint-disable-line
+        );
 
       });
     }
@@ -39,9 +39,9 @@
     }
 
     let _records = document.querySelector("#allrecords");
-    const recordsObserver = new MutationObserver(() => {
-      activateDblclick();
-    });
+    const recordsObserver = new MutationObserver(() =>
+      activateDblclick()
+    );
     recordsObserver.observe(_records, { childList: true });
   });
 })(window);
