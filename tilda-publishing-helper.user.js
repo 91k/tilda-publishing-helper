@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      46.4
+// @version      46.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -768,12 +768,8 @@
       if (window.location.pathname === "/projects/payments/") {
         /* Делаем более заметней галочку «Выключить тестовый режим» */
         if (typeof $("[name^='testmodeoff']").val() !== "undefined") {
-          if (lang === "RU") {
-            text = $("[name^='testmodeoff']").parent().html();
-            text = text.replace("Выключить", "в<b>Ы</b>ключить");
-            $("[name='testmodeoff-cb']").parent().html(text).parent().after(`<br><span style="font-weight: 300">По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.`);
-            $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
-          }
+          $("[name='testmodeoff-cb']").parent().parent().after(`<br><span style="font-weight: 300">По умолчанию тестовый режим активен. Поставьте галочку, если вы уже протестировали оплату и вам нужен «боевой» режим</span>.`);
+          $("[name='testmodeoff-cb']").parents(".ss-form-group").css("outline", "1px red solid").css("outline-offset", "8px");
         }
       }
 
