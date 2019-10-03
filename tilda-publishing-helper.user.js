@@ -198,13 +198,26 @@
                   </tr>
                   <tr>
                     <td colspan="3">
-                      <label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Групповое редактирование размера элементов</label>
+                      <label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Редактирование размера элементов</label>
                     </td>
                   </tr>
                   <tr id="group-resize">
-                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">w</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-width" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">w</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" data-group-name="all" data-group-value="width" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
                     <td style="width:70px"></td>
-                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">h</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-height" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">h</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" data-group-name="all" data-group-value="height" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      <label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Редактирование текстовых элементов</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">size</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" data-group-name="text" data-group-value="fontsize" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                  </tr>
+                  <tr>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">spacing</label></td><td style="width:100%;min-width:75px"><div><input type="number" value="1.55" step="0.05" lang="en" data-group-name="text" data-group-value="lineheight" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:70px"></td>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td colspan="2" style="width:100%;min-width:50px"><div><input type="number" value="0" step="0.5" data-group-name="text" data-group-value="letterspacing" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
                   </tr>
                 </tbody></table>
                 <style>
@@ -225,7 +238,7 @@
                 }
                 </style>`);
 
-                content.find("[name='horizontal-offset'], [name='vertical-offset'], [name='group-width'], [name='group-height']").click(() => {
+                content.find("[name^='group'], [data-group-name]").click(() => {
                   iframeWindow.$(iframeWindow).off("keydown");
                   if (content.find("#keyEnable").length < 1) {
                     content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
@@ -252,7 +265,7 @@
                   }
                 });
 
-                content.find("[name='horizontal-offset']").on("keydown keyup", () => {
+                content.find("[name='group-horizontal-offset']").on("keydown keyup", () => {
                   let arr = [];
                   let value = parseInt(event.target.value, 10);
                   content.find(".tn-elem.tn-elem__selected").each((i, el) => {
@@ -275,7 +288,7 @@
                   });
                 });
 
-                content.find("[name='vertical-offset']").on("keydown keyup", () => {
+                content.find("[name='group-vertical-offset']").on("keydown keyup", () => {
                   let arr = [];
                   let value = parseInt(event.target.value, 10);
                   content.find(".tn-elem.tn-elem__selected").each((i, el) => {
@@ -298,21 +311,21 @@
                   });
                 });
 
-                content.find("[name='group-width']").on("keydown keyup", () => {
-                  let value = parseInt(event.target.value, 10);
-                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                    iframeWindow.elem__setFieldValue($(el), "width", value);
-                    iframeWindow.elem__renderViewOneField($(el), "width");
+                content.find("[data-group-name='all'], [data-group-name='text']").on("keydown keyup", (event) => {
+                  let name = $(event.currentTarget).data("group-value");
+                  let value = 0;
+                  let step = ($(event.currentTarget).attr("step") || "");
+                  if(step.includes(",") > 0 || step.includes(".") > 0) {
+                    value = parseFloat(event.target.value.replace(/,/g, "."));
+                  } else {
+                    value = parseInt(event.target.value, 10);
+                  }
+                  content.find(".tn-elem.tn-elem__selected[data-elem-type='text']").each((i, el) => {
+                    iframeWindow.elem__setFieldValue($(el), name, value);
+                    iframeWindow.elem__renderViewOneField($(el), name);
                   });
                 });
 
-                content.find("[name='group-height']").on("keydown keyup", () => {
-                  let value = parseInt(event.target.value, 10);
-                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                    iframeWindow.elem__setFieldValue($(el), "height", value);
-                    iframeWindow.elem__renderViewOneField($(el), "height");
-                  });
-                });
               }
             });
           }
