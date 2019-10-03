@@ -402,7 +402,7 @@
                   }
                 });
 
-                content.find("[name='group-horizontal-offset']").on("keydown keyup", () => {
+                content.find("[name='group-horizontal-offset']").on("keydown keyup change", () => {
                   let arr = [];
                   let value = parseInt(event.target.value, 10);
                   content.find(".tn-elem.tn-elem__selected").each((i, el) => {
@@ -425,7 +425,7 @@
                   });
                 });
 
-                content.find("[name='group-vertical-offset']").on("keydown keyup", () => {
+                content.find("[name='group-vertical-offset']").on("keydown keyup change", () => {
                   let arr = [];
                   let value = parseInt(event.target.value, 10);
                   content.find(".tn-elem.tn-elem__selected").each((i, el) => {
@@ -448,8 +448,9 @@
                   });
                 });
 
-                content.find("[data-group-name='all'], [data-group-name='text']").on("keydown keyup", (event) => {
-                  let name = $(event.currentTarget).data("group-value");
+                content.find("[data-group-name='all'], [data-group-name='text']").on("keydown keyup change", (event) => {
+                  let target = event.target;
+                  let name = $(target).data("group-value");
                   let value = 0;
                   let step = ($(event.currentTarget).attr("step") || "");
                   if(step.includes(",") > 0 || step.includes(".") > 0) {
