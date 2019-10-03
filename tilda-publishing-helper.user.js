@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      46.5
+// @version      46.6
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -895,10 +895,11 @@
           }
         });
 
-        let identityGo = [{ href: "news", value: "Каналы новостей" },
+        let identityGo = [
           { href: "crm", value: "CRM" },
           { href: "experts", value: "Experts" },
           { href: "education", value: "Education" },
+          { href: "news", value: "Каналы новостей" },
           { href: "upwidget", value: "Сервисы хранения файлов" }
         ];
 
@@ -1092,6 +1093,15 @@
             }
           `;
         }
+      }
+
+      if (window.location.pathname === "/identity/payments/") {
+        styleBody += `
+            /* Убираем отступ сверху у иконок */
+            .t-container a {
+                text-decoration: underline !important;
+            }
+          `;
       }
 
       /* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
