@@ -192,6 +192,16 @@
                     <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
                     <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
                   </tr>
+                  <tr>
+                    <td colspan="3">
+                      <label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Групповое редактирование размера элементов</label>
+                    </td>
+                  </tr>
+                  <tr id="group-resize">
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">w</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-width" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:70px"></td>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><label class="sui-label">h</label></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-height" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                  </tr>
                 </tbody></table>
                 <style>
                 .sui-form-group input[type=number]::-webkit-inner-spin-button, 
@@ -200,7 +210,7 @@
                   margin: 0; 
                 }</style>`);
 
-                content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
+                content.find("[name='horizontal-offset'], [name='vertical-offset'], [name='group-width'], [name='group-height']").click(() => {
                   iframeWindow.$(iframeWindow).off("keydown");
                   if (content.find("#keyEnable").length < 1) {
                     content.find("#mainmenu .tn-res-wrapper").before(`<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>`);
@@ -270,6 +280,22 @@
                       top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
                       height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
                     }
+                  });
+                });
+
+                content.find("[name='group-width']").on("keydown keyup", () => {
+                  let value = parseInt(event.target.value, 10);
+                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
+                    iframeWindow.elem__setFieldValue($(el), "width", value);
+                    iframeWindow.elem__renderViewOneField($(el), "width");
+                  });
+                });
+
+                content.find("[name='group-height']").on("keydown keyup", () => {
+                  let value = parseInt(event.target.value, 10);
+                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
+                    iframeWindow.elem__setFieldValue($(el), "height", value);
+                    iframeWindow.elem__renderViewOneField($(el), "height");
                   });
                 });
               }
