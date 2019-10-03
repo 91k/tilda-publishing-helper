@@ -452,13 +452,22 @@
                   let target = event.target;
                   let name = $(target).data("group-value");
                   let value = 0;
-                  let step = ($(event.currentTarget).attr("step") || "");
-                  if(step.includes(",") > 0 || step.includes(".") > 0) {
-                    value = parseFloat(event.target.value.replace(/,/g, "."));
-                  } else {
-                    value = parseInt(event.target.value, 10);
+                  let step = ($(target).attr("step") || "");
+                  let type = ($(target).attr("type") || "");
+
+                  if(type === "text" || $(target).hasClass("sui-select")) {
+                    value = target.value;
                   }
-                  content.find(".tn-elem.tn-elem__selected[data-elem-type='text']").each((i, el) => {
+
+                  if (type === "number") {
+                    if(step.includes(",") > 0 || step.includes(".") > 0) {
+                      value = parseFloat(target.value.replace(/,/g, "."));
+                    } else {
+                      value = parseInt(target.value, 10);
+                    }
+                  }
+
+                  content.find(".tn-elem.tn-elem__selected").each((i, el) => {
                     iframeWindow.elem__setFieldValue($(el), name, value);
                     iframeWindow.elem__renderViewOneField($(el), name);
                   });
