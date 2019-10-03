@@ -179,15 +179,19 @@
           let content = iframe.contents();
           if (typeof iframe.eq(0)[0] !== "undefined") {
             let iframeWindow = iframe.eq(0)[0].contentWindow;
-            content.on("keyup click", () => {
-              if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
             content.on("keyup keydown click", () => {
+              if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#group-editor").length === 0) {
                 content.find(".tn-settings table table:nth-child(3) > tbody").after(`
-                <table><tbody>
-                  <tr id="tidy">
-                    <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                <table id="group-editor"><tbody>
+                  <tr>
+                    <td colspan="3">
+                      <label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Изменение расстояние между элементами</label>
+                    </td>
+                  </tr>
+                  <tr id="group-tidy">
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-horizontal-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
                     <td style="width:70px"></td>
-                    <td style="width:50%; padding-top:20px"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left" style="padding-left:0px; padding-right: 10px; height: 13px"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
+                    <td style="width:50%"><table style="width:100%"><tbody><tr><td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td><td style="width:100%;min-width:50px"><div><input type="number" value="0" name="group-vertical-offset" class="sui-input" autocomplete="off"></div></td></tr></tbody></table></td>
                     <!-- https://static.tildacdn.com/tild3730-3635-4538-b164-353033396134/tidy-all.svg -->
                     <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
                     <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
@@ -204,11 +208,22 @@
                   </tr>
                 </tbody></table>
                 <style>
-                .sui-form-group input[type=number]::-webkit-inner-spin-button, 
-                .sui-form-group input[type=number]::-webkit-outer-spin-button { 
-                  -webkit-appearance: none; 
-                  margin: 0; 
-                }</style>`);
+                #group-editor input[type=number]::-webkit-inner-spin-button,
+                #group-editor input[type=number]::-webkit-outer-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+
+                #group-editor #group-tidy .sui-btn-arr-left {
+                  padding-left: 0;
+                  padding-right: 10px;
+                  height: 13px;
+                }
+
+                #group-editor #group-resize .sui-label {
+                  width: 17px;
+                }
+                </style>`);
 
                 content.find("[name='horizontal-offset'], [name='vertical-offset'], [name='group-width'], [name='group-height']").click(() => {
                   iframeWindow.$(iframeWindow).off("keydown");
