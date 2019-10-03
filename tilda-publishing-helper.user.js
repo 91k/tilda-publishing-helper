@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      47.0
+// @version      47.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -218,7 +218,7 @@
                     <table style="width:100%">
                         <tbody>
                             <tr>
-                                <td style="max-width: 25px"><label class="sui-label">w</label></td>
+                                <td><label class="sui-label" style="max-width:20px">w</label></td>
                                 <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="width" class="sui-input" autocomplete="off"></td>
                             </tr>
                         </tbody>
@@ -228,7 +228,7 @@
                     <table style="width:100%">
                         <tbody>
                             <tr>
-                                <td style="max-width: 25px"><label class="sui-label">h</label></td>
+                                <td><label class="sui-label" style="max-width:20px">h</label></td>
                                 <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="height" class="sui-input" autocomplete="off"></td>
                             </tr>
                         </tbody>
