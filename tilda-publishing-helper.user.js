@@ -243,8 +243,8 @@
                     if (i > 0) {
                       iframeWindow.elem__setFieldValue($(el[0]), "left", left + width + value);
                       iframeWindow.elem__renderViewOneField($(el[0]), "left");
-                      width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
                       left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
+                      width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
                     }
                   });
                 });
