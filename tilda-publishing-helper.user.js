@@ -191,7 +191,13 @@
                     <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
                     <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
                   </tr>
-                </tbody></table>`);
+                </tbody></table>
+                <style>
+                .sui-form-group input[type=number]::-webkit-inner-spin-button, 
+                .sui-form-group input[type=number]::-webkit-outer-spin-button { 
+                  -webkit-appearance: none; 
+                  margin: 0; 
+                }</style>`);
 
                 content.find("[name='horizontal-offset'], [name='vertical-offset']").click(() => {
                   iframeWindow.$(iframeWindow).off("keydown");
@@ -544,7 +550,8 @@
             .t803__multi-data-column .t803__label:nth-of-type(2),
             .t803__multi-data-column .t803__multi-default {
                 display: none !important;
-            }`;
+            }
+            `;
       }
 
       if (window.location.pathname === "/projects/settings/") {
