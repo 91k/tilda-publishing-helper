@@ -181,6 +181,7 @@
             let iframeWindow = iframe.eq(0)[0].contentWindow;
             content.on("keyup click", () => {
               if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#tidy").length === 0) {
+            content.on("keyup keydown click", () => {
                 content.find(".tn-settings table table:nth-child(3) > tbody").after(`
                 <table><tbody>
                   <tr id="tidy">
