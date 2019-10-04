@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      47.1
+// @version      47.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -456,7 +456,7 @@
                   let type = ($(target).attr("type") || "");
 
                   if(type === "text" || $(target).hasClass("sui-select")) {
-                    value = target.value;
+                    value = $(target).val();
                   }
 
                   if (type === "number") {
