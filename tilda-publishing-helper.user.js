@@ -183,196 +183,199 @@
               if (content.find(".tn-elem.tn-elem__selected").length > 1 && content.find("#group-editor").length === 0) {
                 /* eslint-disable */
                 content.find(".tn-settings .sui-panel__section.sui-panel__section-align").after(`
-<div id="group-editor" class="sui-panel__section sui-panel__section-align">
-    <table class="sui-panel__table sui-panel__padd_b-10">
-        <tbody>
-            <tr><td colspan="2"><label class="sui-label" style="width:100%; font-size:11px">Изменение расстояние между элементами</label></td></tr>
-            <tr id="group-tidy">
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td>
-                                <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-horizontal-offset" class="sui-input" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td>
-                                <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-vertical-offset" class="sui-input" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <!-- https://static.tildacdn.com/tild3730-3635-4538-b164-353033396134/tidy-all.svg -->
-                <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
-                <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
-            </tr>
-            <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Общие настройки элементов</label></td></tr>
-            <tr>
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label" style="max-width:20px">w</label></td>
-                                <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="width" class="sui-input" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label" style="max-width:20px">h</label></td>
-                                <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="height" class="sui-input" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">link</label></td>
-                                <td style="width:100%">
-                                    <div class="sui-input-div"><input type="text" value="" data-group-name="all" data-group-value="link" class="sui-input" autocomplete="off"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">target</label></td>
-                                <td style="width:100%">
-                                    <div class="sui-select"><select class="sui-input sui-select" data-group-name="all" data-group-value="linktarget">
-                                            <option value="">Same window</option>
-                                            <option value="_blank">New window</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <tbody>
-            <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Редактирование текстовых элементов</label></td></tr>
-            <tr>
-                <td colspan="32style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">size</label></td>
-                                <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="text" data-group-value="fontsize" class="sui-input" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="32style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">typeface</label></td>
-                                <td style="width:100%">
-                                    <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontfamily">
-                                            <option value="${$headlinefont}">${$headlinefont}</option>
-                                            <option value="${$textfont}">${$textfont}</option>
-                                            <option value="Arial">Arial</option>
-                                            <option value="Georgia">Georgia</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="32style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">weight</label></td>
-                                <td style="width:100%">
-                                    <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontweight">
-                                            <option value="100">Thin</option>
-                                            <option value="300">Light</option>
-                                            <option value="400">Normal</option>
-                                            <option value="500">Medium</option>
-                                            <option value="600">Semi Bold</option>
-                                            <option value="700">Bold</option>
-                                        </select></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td><label class="sui-label">spacing</label></td>
-                                <td style="width:100%;min-width:75px">
-                                    <input type="number" value="1.55" step="0.05" lang="en" data-group-name="text" data-group-value="lineheight" class="sui-input" autocomplete="off">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="width:50%">
-                    <table style="width:100%">
-                        <tbody>
-                            <tr>
-                                <td colspan="2" style="width:100%;min-width:50px">
-                                    <input type="number" value="0" step="0.5" data-group-name="text" data-group-value="letterspacing" class="sui-input" autocomplete="off">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<style>
-    #group-editor input[type=number]::-webkit-inner-spin-button,
-    #group-editor input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+                  <div id="group-editor" class="sui-panel__section sui-panel__section-align">
+                      <table class="sui-panel__table sui-panel__padd_b-10">
+                          <tbody>
+                              <tr><td colspan="2"><label class="sui-label" style="width:100%; font-size:11px">Изменение расстояние между элементами</label></td></tr>
+                              <tr id="group-tidy">
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td>
+                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-horizontal-offset" class="sui-input" autocomplete="off"></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td>
+                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-vertical-offset" class="sui-input" autocomplete="off"></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                                  <!-- https://static.tildacdn.com/tild3730-3635-4538-b164-353033396134/tidy-all.svg -->
+                                  <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
+                                  <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
+                              </tr>
+                              <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Общие настройки элементов</label></td></tr>
+                              <tr>
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label" style="max-width:20px">w</label></td>
+                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="width" class="sui-input" autocomplete="off"></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label" style="max-width:20px">h</label></td>
+                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="height" class="sui-input" autocomplete="off"></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">link</label></td>
+                                                  <td style="width:100%">
+                                                      <div class="sui-input-div"><input type="text" value="" data-group-name="all" data-group-value="link" class="sui-input" autocomplete="off"></div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">target</label></td>
+                                                  <td style="width:100%">
+                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="all" data-group-value="linktarget">
+                                                              <option value="">Same window</option>
+                                                              <option value="_blank">New window</option>
+                                                          </select></div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <table>
+                          <tbody>
+                              <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Редактирование текстовых элементов</label></td></tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">size</label></td>
+                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="text" data-group-value="fontsize" class="sui-input" autocomplete="off"></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">typeface</label></td>
+                                                  <td style="width:100%">
+                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontfamily">
+                                                              <option value="${$headlinefont}">${$headlinefont}</option>
+                                                              <option value="${$textfont}">${$textfont}</option>
+                                                              <option value="Arial">Arial</option>
+                                                              <option value="Georgia">Georgia</option>
+                                                          </select></div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">weight</label></td>
+                                                  <td style="width:100%">
+                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontweight">
+                                                              <option value="100">Thin</option>
+                                                              <option value="300">Light</option>
+                                                              <option value="400">Normal</option>
+                                                              <option value="500">Medium</option>
+                                                              <option value="600">Semi Bold</option>
+                                                              <option value="700">Bold</option>
+                                                          </select></div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td><label class="sui-label">spacing</label></td>
+                                                  <td style="width:100%;min-width:75px">
+                                                      <input type="number" value="1.55" step="0.05" lang="en" data-group-name="text" data-group-value="lineheight" class="sui-input" autocomplete="off">
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                                  <td style="width:50%">
+                                      <table style="width:100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td colspan="2" style="width:100%;min-width:50px">
+                                                      <input type="number" value="0" step="0.5" data-group-name="text" data-group-value="letterspacing" class="sui-input" autocomplete="off">
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <style>
+                      #group-editor input[type=number]::-webkit-inner-spin-button,
+                      #group-editor input[type=number]::-webkit-outer-spin-button {
+                          -webkit-appearance: none;
+                          margin: 0;
+                      }
 
-    #group-editor #group-tidy .sui-btn-arr-left {
-        padding-left: 0;
-        padding-right: 10px;
-        height: 13px;
-    }
+                      #group-editor #group-tidy .sui-btn-arr-left {
+                          padding-left: 0;
+                          padding-right: 10px;
+                          height: 13px;
+                      }
 
-    #group-editor table table td {
-        padding-bottom: 10px;
-    }
+                      #group-editor table table td {
+                          padding-bottom: 10px;
+                      }
 
-    #group-editor #group-resize .sui-label {
-        width: 17px;
-    }
-</style>
-`);
+                      #group-editor #group-resize .sui-label {
+                          width: 17px;
+                      }
+
+                      .tn-multiselected .tn-elem__selected .tn-atom__tip {
+                          display: block !important;
+                      }
+                  </style>`);
                 /* eslint-enable */
 
                 content.find("[name^='group'], [data-group-name]").click(() => {
@@ -455,12 +458,12 @@
                   let step = ($(target).attr("step") || "");
                   let type = ($(target).attr("type") || "");
 
-                  if(type === "text" || $(target).hasClass("sui-select")) {
+                  if (type === "text" || $(target).hasClass("sui-select")) {
                     value = $(target).val();
                   }
 
                   if (type === "number") {
-                    if(step.includes(",") > 0 || step.includes(".") > 0) {
+                    if (step.includes(",") > 0 || step.includes(".") > 0) {
                       value = parseFloat(target.value.replace(/,/g, "."));
                     } else {
                       value = parseInt(target.value, 10);
@@ -472,7 +475,6 @@
                     iframeWindow.elem__renderViewOneField($(el), name);
                   });
                 });
-
               }
             });
           }
