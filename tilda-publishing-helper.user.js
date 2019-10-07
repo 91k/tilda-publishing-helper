@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      47.3
+// @version      47.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -524,25 +524,6 @@
         $(".t803__multi-datablock center").append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left"></div><br>`);
         $(".t803__multi-datablock center .t803__multi-data-bg").append($(".t803__multi-data-0 .t803__label")[0], $(".t803__multi-data-0 .t803__multi-key"), $(".t803__multi-data-0 .t803__label")[1], $(".t803__multi-data-0 .t803__multi-default"));
         ($(".t803__multi-data-0")).prepend($($("center .t803__multi-data-bg .t803__label")[0]).clone(), $($("center .t803__multi-data-bg .t803__multi-key")[0]).clone(), $($("center .t803__multi-data-bg .t803__label")[1]).clone(), $($("center .t803__multi-data-bg .t803__multi-default")[0]).clone());
-
-        /* Используем переменную, чтобы уникализировать список элементов */
-        let seen = {};
-
-        /* Сообщаем о том, что поле названо с использованием символов не из ланитицы */
-        $("input[value]:not(.t-calc__hiddeninput,[type='hidden'])").filter((el, arr) => {
-          return (!(/^[A-Za-z0-9_]*$/.test($(arr).attr("name"))));
-        }).map((i, el) => {
-          let value = $(el).attr("name");
-
-          if (Object.prototype.hasOwnProperty.call(seen, value)) {
-            return null;
-          }
-
-          seen[value] = true;
-          return el;
-        }).each((i, el) => {
-          $(el).parents(".t-input-group").css("border", "1px solid red").prepend(`<span style="color: red">Имя переменной: "${$(el).attr("name")}". Используйте латинские буквы.</span>`);
-        });
 
         /* Другая подсказка после публикации страницы  */
         if (typeof $("#page_menu_publishlink").val() !== "undefined") {
