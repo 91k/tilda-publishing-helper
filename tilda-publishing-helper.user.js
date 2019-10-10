@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      47.4
+// @version      48.0
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -630,6 +630,53 @@
               });
             }, 2000);
           });
+        }
+
+        /* Показываем результаты тестов в блоках BF918 */
+        if (typeof $("[data-record-type='806'] .tp-record-edit-icons-left__three").val() !== "undefined") {
+          $("[data-vote-id]").each((i, el) => {
+            let voteid = $(el).attr("data-vote-id");
+            $.ajax({
+              type: "GET",
+              url: `https://vote.tildacdn.com/vote/2/getresult/?voteid=${voteid}&host=https%3A%2F%2Ftilda.cc`
+            }).done((data) => {
+              let json = JSON.parse(JSON.stringify(data).replace(/-[0-9]+-[0-9]+/g, ""))[0];
+              let question = Object.keys(json);
+              let sumCount = 0;
+              question.forEach(id => {
+                sumCount = 0;
+                $(`[data-question-id='${id}']`).find("[data-answer-id]").each((i, el) => {
+                  let count = parseInt(Object.values(json[`${id}`])[i] || 0);
+                  sumCount += count;
+                  $(el).find(".t-vote__btn-res").prepend(`<span>${count}</span>`);
+                });
+              });
+              $(el).append(`<div style="padding: 25px;">Тест прошли: ${sumCount} раз${sumCount%10 >= 2 && sumCount%10 <= 4 ? "а" : ""}</div>`);
+            });
+          });
+
+          styleBody += `
+            .t806__answers .t806__answer .t-vote__btn-res {
+              opacity: 1 !important;
+            }
+
+            .t806__btn_next {
+              display: block !important;
+            }
+
+            .t806__details {
+              display: block !important;
+              opacity: .4 !important;
+            }
+
+            .t-vote__btn-res__percent.js-vote-percent:before {
+              content: '(';
+            }
+
+            .t-vote__btn-res__percent.js-vote-percent:after {
+              content: ')';
+            }
+          `;
         }
 
         /* Предупреждение в Контенте блока CL46 */
