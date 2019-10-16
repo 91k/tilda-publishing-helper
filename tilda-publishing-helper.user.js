@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      48.1
+// @version      48.2
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1271,10 +1271,12 @@
             }
           };`;
 
+          let site = $(".td-project-uppanel__url-link a[href]").attr("href");
+
           /* Добавляем «Сайт закрыт от индексации» под ссылкой на сайт */
           $.ajax({
             type: "GET",
-            url: `https://static.roman-kosov.ru/get-dom/?url=https://project${projectid}.tilda.ws/robots.txt`
+            url: `https://static.roman-kosov.ru/get-dom/?url=${site}/robots.txt`
           }).done((text) => {
             if (text !== null) {
               /* Стоит ли пароль на сайт */
