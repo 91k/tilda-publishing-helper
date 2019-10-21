@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      48.2
+// @version      48.3
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1108,10 +1108,10 @@
         ];
 
         let dom = identityGo.map(obj => {
-          return `<li><a href="https://tilda.cc/identity/go${obj.href}">${obj.value}</a></li>`;
+          return `<a href="https://tilda.cc/identity/go${obj.href}" style="color:#777">${obj.value}</a>&nbsp;&nbsp;&nbsp;`;
         });
 
-        $(".td-sites-grid").after(`<div class="td-footer__menu"><div class="t-container"><div class="t-row"><ul>${dom.join("")}</ul></div></div></div>`);
+        $(".td-sites-grid").after(`<center style="font-size:16px">${dom.join("")}</center>`);
 
         styleBody += `
           /* Добавляем кнопку заявок к карточкам проектов */
