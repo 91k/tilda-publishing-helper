@@ -570,13 +570,13 @@
             setTimeout(() => {
               /* Предупреждение о ссылках с кавычкой */
               $("input[name*='link']").each((i, el) => {
-                if ($(el).val().includes('"')) {
+                if ($(el).parent().children("span").length == 0 && $(el).val().includes('"')) {
                   $(el).css("border", "1px solid red").before(`<span style="color: red">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>`);
                 }
               });
 
               $("input[name='zoom']").each((i, el) => {
-                if (parseInt($(el).val(), 10) > 20 || parseInt($(el).val(), 10) < 0) {
+                if ($(el).parent().children("span").length == 0 && parseInt($(el).val(), 10) > 20 || parseInt($(el).val(), 10) < 0) {
                   $(el).css("border", "1px solid red").before(`<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>`);
                 }
               });
@@ -590,7 +590,7 @@
                 });
 
                 $("input[name*='link'][value^='#rec']").each((i, el) => {
-                  if (typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
+                  if ($(el).parent().children("span").length == 0 && typeof $("#allrecords").find($($("input[name*='link'][value^='#rec']").val())).val() === "undefined") {
                     $(el).css("border", "1px solid red").before(`<span style="color: red">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>`);
                   }
                 });
