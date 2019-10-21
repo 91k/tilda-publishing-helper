@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      48.3
+// @version      48.4
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -584,7 +584,7 @@
               /* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
               if (typeof $(".headerfooterpagearea").val() === "undefined") {
                 $("input[name*='link'][value^='#popup']").each((i, el) => {
-                  if (!$("#allrecords").text().includes($(el).val())) {
+                  if ($(el).parent().children("span").length == 0 && !$("#allrecords").text().includes($(el).val()) && $(el).parents("[data-rec-tplid]").attr("data-rec-tplid") != "868") {
                     $(el).css("border", "1px solid red").before(`<span style="color: red">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>`);
                   }
                 });
