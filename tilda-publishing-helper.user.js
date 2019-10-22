@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      48.4
+// @version      48.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1083,7 +1083,7 @@
             let dateLag = Math.ceil(Math.abs(dateNow.getTime() - datePlan.getTime()) / (1000 * 3600 * 24));
             let autorenew = $(dom).find(".tip__plantitle + br + div + div").text().trim();
             let text = "";
-            if (dateLag < 10 && dateLag > 0) {
+            if (dateLag < 10 && dateLag > 3) {
               if (autorenew.length === 0) {
                 text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600">оплатить</a>`;
               }
