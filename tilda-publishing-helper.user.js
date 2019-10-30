@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      48.6
+// @version      48.7
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1432,6 +1432,21 @@
                 height: 63px;
                 width: 200px;
             }`;
+      }
+
+      if(d.getDate() === 31 & d.getMonth() + 1 === 10) {
+        $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3839-6266-4038-b233-346630653130/jack-o-lantern.png");
+
+        styleBody += `
+            .t-help-bubble {
+                background-color: unset !important;
+                box-shadow: unset !important;
+                width: unset !important;
+                height: unset !important;
+                right: 15px !important;
+                bottom: 15px !important;
+            }
+        `;
       }
 
       $("body").append(`<script>${scriptBody}</script>`);
