@@ -555,8 +555,11 @@
               if (!isEmpty(titleTag.val())) {
                 let id = $("[data-rec-id").attr("data-rec-id");
                 let title = $(`#rec${id}`).find(".t-title").val();
+                let t120 = $(`#rec${id}`).find(".t120__title").val();
                 if (typeof title === "undefined") {
-                  $(titleTag).css("border", "1px solid red").before(`<span style="color: red">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
+                  if (typeof t120 === "undefined") {
+                    $(titleTag).css("border", "1px solid red").before(`<span style="color: red">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>`);
+                  }
                 }
               }
 
