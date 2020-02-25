@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      49.0
+// @version      49.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
@@ -522,7 +522,9 @@
 
         /* Упрощаем вид блока T803 */
         $(".t803__multi-datablock center").append(`<br><br><div class="t803__multi-data-bg" style="max-width: 370px; text-align: left"></div><br>`);
-        $(".t803__multi-datablock center .t803__multi-data-bg").append($(".t803__multi-data-0 .t803__label")[0], $(".t803__multi-data-0 .t803__multi-key"), $(".t803__multi-data-0 .t803__label")[1], $(".t803__multi-data-0 .t803__multi-default"));
+        $(".t803__multi-datablock").each((i, el) => {
+          $(el).find("center .t803__multi-data-bg").append($(el).find(".t803__multi-data-0 .t803__label")[0], $(el).find(".t803__multi-data-0 .t803__multi-key"), $(el).find(".t803__multi-data-0 .t803__label")[1], $(el).find(".t803__multi-data-0 .t803__multi-default"));
+        });
         ($(".t803__multi-data-0")).prepend($($("center .t803__multi-data-bg .t803__label")[0]).clone(), $($("center .t803__multi-data-bg .t803__multi-key")[0]).clone(), $($("center .t803__multi-data-bg .t803__label")[1]).clone(), $($("center .t803__multi-data-bg .t803__multi-default")[0]).clone());
 
         /* Другая подсказка после публикации страницы  */
