@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      49.2
+// @version      49.3
 // @description  try to take over the world!
 // @author       Roman Kosov
-// @copyright    2017 - 2019, Roman Kosov (https://greasyfork.org/users/167647)
+// @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
 // @match        https://tilda.cc/domains/*
 // @match        https://tilda.cc/projects/*
@@ -552,7 +552,7 @@
               /* Предупреждение для полей, в которых должно быть px, но юзер это упустил */
               $("input[placeholder*='px']").each((i, el) => {
                 let value = $(el).val();
-                if (!value.includes("px") && value !== "") {
+                if (!value.includes("px") && value !== "" && $(el).css('border-color') != "rgb(255, 0, 0)") {
                   $(el).css("border", "1px solid red").before(`<span style="color: red">В этом поле нужно указать значение с "px"</span>`);
                 }
               });
