@@ -1453,7 +1453,7 @@
         }`;
       }
 
-      if (d.getDate() === 31 & d.getMonth() + 1 === 10) {
+      if (d.getDate() === 31 && d.getMonth() + 1 === 10) {
         $(".t-help-bubble img").attr("src", "https://static.tildacdn.com/tild3839-6266-4038-b233-346630653130/jack-o-lantern.png");
 
         styleBody += `
