@@ -1376,7 +1376,7 @@
       $(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
       $(".form-horizontal").after(`
         <div class="ss-form-group__hint" style="text-align: center">
-            <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">Отмена</a>
+            <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">← ${ lang === "RU" ? "Назад" : "Back" }</a>
             </div>
         <br><br>
       `);
