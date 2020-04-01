@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/roman-kosov/tilda-publishing-helper.git"
+    "url": "git+https://github.com/91k/tilda-publishing-helper.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Roman Kosov",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/roman-kosov/tilda-publishing-helper/issues"
+    "url": "https://github.com/91k/tilda-publishing-helper/issues"
   },
-  "homepage": "https://github.com/roman-kosov/tilda-publishing-helper#readme",
+  "homepage": "https://roman-kosov.ru/helper",
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^13.2.0",
