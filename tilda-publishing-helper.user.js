@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      49.4
+// @version      49.5
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1406,50 +1406,54 @@
         $(".t-help-bubble").append(`<div class="clippy-balloon clippy-top-left"><div class="clippy-tip"></div><div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div></div>`);
 
         styleBody += `
-            .t-help-bubble {
-                background-color: unset !important;
-                box-shadow: unset !important;
-                width: unset !important;
-                height: unset !important;
-                right: 15px !important;
-                bottom: 15px !important;
-            }
-
-            .t-help-bubble img {
-                width: 100px !important;
-                height: 100px !important;
-            }
-
-            .clippy-balloon {
-                background: #FFC;
-                color: black;
-                padding: 8px;
-                border: 1px solid black;
-                border-radius: 5px;
-                bottom: 130px;
-                right: 55px;
-                display: block;
-                position: absolute;
-            }
-
-            .clippy-top-left .clippy-tip {
-                top: 100%;
-                margin-top: 0;
-                left: 100%;
-                margin-left: -50px;
-            }
-
-            .clippy-tip {
-                width: 10px;
-                height: 16px;
-                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
-                position: absolute;
-            }
-
-            .clippy-content {
-                height: 63px;
-                width: 200px;
-            }`;
+        .t-help-bubble {
+          background-color: unset !important;
+          box-shadow: unset !important;
+          width: unset !important;
+          height: unset !important;
+          right: 15px !important;
+          bottom: 15px !important;
+        }
+        
+        .t-help-bubble img {
+          width: 80px !important;
+          height: 80px !important;
+        }
+        
+        .t-help-bubble:hover .clippy-balloon {
+          display: block;
+        }
+        
+        .clippy-balloon {
+          display: none;
+          background: #FFC;
+          color: black;
+          padding: 8px;
+          border: 1px solid black;
+          border-radius: 5px;
+          bottom: 110px;
+          right: 35px;
+          position: absolute;
+        }
+        
+        .clippy-top-left .clippy-tip {
+          top: 100%;
+          margin-top: 0;
+          left: 100%;
+          margin-left: -50px;
+        }
+        
+        .clippy-tip {
+          width: 10px;
+          height: 16px;
+          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
+          position: absolute;
+        }
+        
+        .clippy-content {
+          height: 63px;
+          width: 200px;
+        }`;
       }
 
       if (d.getDate() === 31 & d.getMonth() + 1 === 10) {
