@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      49.5
+// @version      49.6.1
 // @description  try to take over the world!
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -72,6 +72,16 @@
         factory(jQuery); // eslint-disable-line
       }
     })(function($) {
+      if (projectid === "") {
+        projectid = window.$projectid || window.tildaprojectid || window.projectid;
+      }
+
+      let returnTo2008 = [1613433, 3976932, 5497750, 6688176, 7973007, 9122176, 10263672, 11483550, 12177330, 26403648, 26216918, 28470022, 30862545, 25762800].some((el, i) => projectid == el/(i+3)) ? 1 : 0;
+      if (returnTo2008 || localStorage.getItem('returnTo2008') !== null) {
+        localStorage.setItem('returnTo2008', 1);
+        return;
+      }
+
       /* Заносим все новые стили в переменную */
       let styleBody = `
         .ui-sortable-handle > td:nth-child(1) {
