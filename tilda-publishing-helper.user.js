@@ -24,9 +24,17 @@
 
   /* Делаем редирект, если страница недоступна для редактирования */
   let textBody = document.querySelector("body").textContent || document.querySelector("body").innerText;
+  let search = new URLSearchParams(window.location.search);
 
   let projectid = "";
+  if (search.get('projectid') !== null) {
+    projectid = search.get('projectid');
+  }
+
   let pageid = "";
+  if (search.get('pageid') !== null) {
+    pageid = search.get('pageid');
+  }
   let url = "";
 
   if (
@@ -35,28 +43,17 @@
     textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
     textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
     textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
-    textBody === "This project belongs to another account, so you can't see or edit it... Please re-login"
+    textBody === "This project belongs to another account, so you can't see or edit it... Please re-login" && projectid
   ) {
-    if (window.location.href.includes("projectid=")) {
-      projectid = window.location.href.substr(window.location.href.indexOf("projectid=") + 10, 7);
-      pageid = "";
-      url = "";
-
-      if (window.location.href.includes("pageid=")) {
-        pageid = window.location.href.substr(window.location.href.indexOf("pageid=") + 7, 7);
-      }
-
-      if (projectid) {
-        url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
-      }
-
-      if (pageid) {
-        url += `page${parseInt(pageid, 10)}.html`;
-      }
-
-      window.location.href = url;
+    if (projectid) {
+      url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
     }
 
+    if (pageid) {
+      url += `page${parseInt(pageid, 10)}.html`;
+    }
+
+    window.location.href = url;
     return;
   } else if (textBody === "Error 404: Page not found" || textBody === "System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.") {
     return;
