@@ -17,7 +17,7 @@
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
 // @license      MIT
-// jshint esversion:6
+// jshint esversion: 6
 // ==/UserScript==
 (async function(window) {
   "use strict";
@@ -76,7 +76,7 @@
         projectid = window.$projectid || window.tildaprojectid || window.projectid;
       }
 
-      let returnTo2008 = [1613433, 3976932, 5497750, 6688176, 7973007, 9122176, 10263672, 11483550, 12177330, 26403648, 26216918, 28470022, 30862545, 25762800].some((el, i) => projectid == el/(i+3)) ? 1 : 0;
+      let returnTo2008 = [1613433, 3976932, 5497750, 6688176, 7973007, 9122176, 10263672, 11483550, 12177330, 26403648, 26216918, 28470022, 30862545, 25762800].some((el, i) => parseInt(projectid, 10) === el/(i+3)) ? 1 : 0;
       if (returnTo2008 || localStorage.getItem('returnTo2008') !== null) {
         localStorage.setItem('returnTo2008', 1);
         return;
