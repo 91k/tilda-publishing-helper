@@ -1432,7 +1432,7 @@
           border: 1px solid black;
           border-radius: 5px;
           bottom: 110px;
-          right: 35px;
+          right: 25px;
           position: absolute;
         }
         
