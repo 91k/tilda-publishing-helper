@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      50.1.3
-// @description  try to take over the world!
+// @version      50.1.4
+// @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
