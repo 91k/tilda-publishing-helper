@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      50.1.4
+// @version      50.1.5
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -195,32 +195,6 @@
                   <div id="group-editor" class="sui-panel__section sui-panel__section-align">
                       <table class="sui-panel__table sui-panel__padd_b-10">
                           <tbody>
-                              <tr><td colspan="2"><label class="sui-label" style="width:100%; font-size:11px">Изменение расстояние между элементами</label></td></tr>
-                              <tr id="group-tidy">
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild3466-3730-4034-b130-373035393832/hor.svg"></div></td>
-                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-horizontal-offset" class="sui-input" autocomplete="off"></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><div class="sui-btn-arr-left"><img src="https://static.tildacdn.com/tild6163-6466-4035-a364-376362333263/vert.svg"></div></td>
-                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" name="group-vertical-offset" class="sui-input" autocomplete="off"></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                                  <!-- https://static.tildacdn.com/tild3730-3635-4538-b164-353033396134/tidy-all.svg -->
-                                  <!-- https://static.tildacdn.com/tild3838-3435-4332-b033-373334306533/tidy-horizontal.svg -->
-                                  <!-- https://static.tildacdn.com/tild3032-3537-4065-b761-333838333566/tidy-vertical.svg -->
-                              </tr>
                               <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Общие настройки элементов</label></td></tr>
                               <tr>
                                   <td style="width:50%">
@@ -412,52 +386,6 @@
                         iframeWindow.artboard__Save__toDB();
                       };
                     }
-                  });
-
-                  content.find("[name='group-horizontal-offset']").on("keydown keyup change", () => {
-                    let arr = [];
-                    let value = parseInt(event.target.value, 10);
-                    content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                      let left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
-                      let width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
-                      arr.push([el, left, width]);
-                    });
-
-                    arr = arr.sort((a, b) => a[1] - b[1]);
-                    let left = arr[0][1];
-                    let width = arr[0][2];
-
-                    $(arr).each((i, el) => {
-                      if (i > 0) {
-                        iframeWindow.elem__setFieldValue($(el[0]), "left", left + width + value);
-                        iframeWindow.elem__renderViewOneField($(el[0]), "left");
-                        left = parseInt(iframeWindow.elem__getFieldValue($(el), "left"), 10);
-                        width = parseInt(iframeWindow.elem__getFieldValue($(el), "width"), 10);
-                      }
-                    });
-                  });
-
-                  content.find("[name='group-vertical-offset']").on("keydown keyup change", () => {
-                    let arr = [];
-                    let value = parseInt(event.target.value, 10);
-                    content.find(".tn-elem.tn-elem__selected").each((i, el) => {
-                      let top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
-                      let height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
-                      arr.push([el, top, height]);
-                    });
-
-                    arr = arr.sort((a, b) => a[1] - b[1]);
-                    let top = arr[0][1];
-                    let height = arr[0][2];
-
-                    $(arr).each((i, el) => {
-                      if (i > 0) {
-                        iframeWindow.elem__setFieldValue($(el[0]), "top", top + height + value);
-                        iframeWindow.elem__renderViewOneField($(el[0]), "top");
-                        top = parseInt(iframeWindow.elem__getFieldValue($(el), "top"), 10);
-                        height = parseInt(iframeWindow.elem__getFieldValue($(el), "height"), 10);
-                      }
-                    });
                   });
 
                   content.find("[data-group-name='all'], [data-group-name='text']").on("keydown keyup change", (event) => {
