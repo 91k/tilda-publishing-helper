@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      51.0.1
+// @version      51.1.0
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -713,7 +713,9 @@ timeout: 1000*10
             for (let mutation of mutationsList) {
               if (mutation.type === "childList") {
                 if ($(mutation.removedNodes[0]).hasClass("editinplacefield")) {
-                  replaceTypograph(mutation.target);
+                  $(mutation.target).parent().find('.tn-atom, .t-title, .t-uptitle, .t-text, .t-descr').each(function(i, el) {
+                    replaceTypograph(el);
+                  });
                 }
               }
             }
