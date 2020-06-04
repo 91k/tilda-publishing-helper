@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      50.1.5
+// @version      51.0.1
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -691,6 +691,34 @@ timeout: 1000*10
             addRecIDs();
           });
           recordsObserver.observe(_records, { childList: true });
+
+          /* Апгрейд типографа */
+          function replaceTypograph(el) {
+            var html = $(el).html();
+            var replaced = html.replace(/#nbsp;/g, '⦁').replace(/#shy;/g, '╍');
+            if (html !== replaced) {
+              $(el).html(replaced);
+              $(el).on('click', function() {
+                $(el).html(html);
+                $(el).off('click');
+              });
+            }
+          }
+
+          $('.tn-atom, .t-title, .t-uptitle, .t-text, .t-descr').each(function(i, el) {
+            replaceTypograph(el);
+          });
+
+          const recordsFieldsObserver = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+              if (mutation.type === "childList") {
+                if ($(mutation.removedNodes[0]).hasClass("editinplacefield")) {
+                  replaceTypograph(mutation.target);
+                }
+              }
+            }
+          });
+          recordsFieldsObserver.observe(_records, { childList: true, subtree: true });
 
           styleBody += `
             [data-record-type="360"] .tp-record-edit-icons-left__three {
