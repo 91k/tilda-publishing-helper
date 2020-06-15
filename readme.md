@@ -2,7 +2,7 @@
 <br>
 <br>Мой сайт: https://roman-kosov.ru/
 <br>Поблагодарить меня: https://roman-kosov.ru/donate/
-<br
+<br>
 <br>Страница расширения Tilda Helper: https://roman-kosov.ru/helper/
 <br>Другое расширение возможностей Тильды — открытие любого блока по двойному нажатию: https://greasyfork.org/ru/scripts/389820/
 <br>
