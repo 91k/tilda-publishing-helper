@@ -199,7 +199,7 @@
 							const mainleft = $(el).children('div#mainleft').children('div');
 
 							if ($(el).height() <= 50) {
-								$(el).find('.recordediticons').css('display', 'block');
+								$(el).find('.recordediticons').css('display', 'block').css('z-index', '999');
 							}
 
 							$(mainleft).append(
