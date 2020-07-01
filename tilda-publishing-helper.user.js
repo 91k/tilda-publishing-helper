@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      51.1.2
+// @version      51.1.3
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1026,33 +1026,6 @@ timeout: 1000*10
                 font-weight: 300;
                 font-size: 14px;
             }
-            
-            /* Меняем размер подзаголовков в Настройках сайта */
-            .ss-menu-pane:not(#ss_menu_fonts) .ss-form-group .ss-label {
-                font-size: 18px !important;
-                line-height: unset !important;
-            }
-
-            /* изменяем высоту Настроек сайта, чтобы не дёргалось при переключении */
-            .ss-container {
-                min-height: ${$(window).height() + 15}px;
-            }
-            
-            .ss-menu {
-                position: -webkit-sticky;
-                position: sticky;
-                border: 1px solid #ddd;
-                margin: 2px;
-            }
-
-            .ss-menu__item a {
-                padding: 16px 30px;
-                font-size: 16px;
-            }
-
-            .ss-menu__wrapper {
-                margin-bottom: 0 !important;
-            }
 
             #checkdns {
               margin-top: 30px;
@@ -1103,20 +1076,7 @@ timeout: 1000*10
               vertical-align: middle;
               margin: -5px 0 0 -2px;
             }`;
-						isEmail = $("[data-menu-item='#ss_menu_fonts']").css('display');
 					}
-
-					const isFree = $("[data-menu-item='#ss_menu_collaborators']").length === 0;
-
-					if (isEmail === 'none') {
-						text = '630';
-					} else if (isFree) {
-						text = '715';
-					} else {
-						text = '820';
-					}
-
-					styleBody += `.ss-content { margin-top: -${text}px; }`;
 
 					/* Убираем подсказу из Настроек сайта → Ещё */
 					if (typeof $('#ss_menu_more').val() !== 'undefined') {
