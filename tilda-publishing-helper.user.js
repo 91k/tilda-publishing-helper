@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      51.1.5
+// @version      52.0.0
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1542,7 +1542,8 @@ timeout: 1000*10
 									.remove();
 								$(el).find('.td-page__buttons-spacer:last').css('width', '20px');
 
-								// дополнительные кнопки: снять с публикации, назначить Главной, Хедером или Футером
+								// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
+								const duplicate = `td__dublicatePage(${pageid})`;
 								const unpublish = `unpublish(${projectid}, ${pageid})`;
 								const setIndex = `setPage(${projectid}, ${pageid}, 'Index')`;
 								const setHeader = `setPage(${projectid}, ${pageid}, 'Header')`;
@@ -1551,6 +1552,9 @@ timeout: 1000*10
 								$(el)
 									.find('.td-page__buttons-table tr')
 									.append(
+										$(
+											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Дублировать страницу (создать копию)" class="td-page__buttons-td" style="height: 14px; top: 4px; position: relative;"><a onclick="${duplicate}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 25" style="height: 14px"><path fill="#000" d="M20.416 24.985H4.418c-.365 0-.715-.132-.973-.366a1.195 1.195 0 01-.402-.884c0-.331.144-.65.402-.884.258-.234.608-.366.973-.366h14.78V6.41c0-.332.145-.65.403-.884.258-.234.608-.366.972-.366.365 0 .715.132.973.366.257.235.402.552.402.884v17.183c0 .767-.687 1.392-1.532 1.392z"/><path fill="#000" d="M16.264 20.978H1.807c-.816 0-1.48-.664-1.48-1.48V2.403c0-.815.664-1.479 1.48-1.479h14.457c.816 0 1.48.664 1.48 1.48v17.094c0 .816-.664 1.48-1.48 1.48zm-13.436-2.5h12.416V3.423H2.828v15.055z"/></svg></a></td>`,
+										),
 										$(
 											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px"></a></td>`,
 										),
