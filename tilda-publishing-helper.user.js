@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      51.1.4
+// @version      51.1.5
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1721,8 +1721,8 @@ timeout: 1000*10
 
 				if (domains < 1) {
 					$('.t-menu__leftitems').append(
-						`<a href="https://tilda.cc/domains/" class="t-menu__item ${
-							window.location.pathname === '/domains/' ? 't-menu__item_active' : ''
+						`<a href="https://tilda.cc/domainsjs/" class="t-menu__item ${
+							window.location.pathname === '/domainsjs/' ? 't-menu__item_active' : ''
 						}">${lang === 'RU' ? 'Домены' : 'Domains'}</a>`,
 					);
 				}
