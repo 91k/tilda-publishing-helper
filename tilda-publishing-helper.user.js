@@ -17,7 +17,6 @@
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
 // @run-at       document-idle
-// @license      MIT
 // ==/UserScript==
 (async function (window) {
 	'use strict';
