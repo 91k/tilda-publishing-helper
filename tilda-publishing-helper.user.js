@@ -42,11 +42,11 @@
 		textBody === "You can't edit this project.." ||
 		textBody === 'You can not edit this project...' ||
 		textBody ===
-			"This page belongs to another account, so you can't see or edit it... Please re-login" ||
+		"This page belongs to another account, so you can't see or edit it... Please re-login" ||
 		textBody ===
-			"This page belongs to another account, so you can't see or edit it. Please re-login" ||
+		"This page belongs to another account, so you can't see or edit it. Please re-login" ||
 		textBody ===
-			"This project belongs to another account, so you can't see or edit it. Please re-login" ||
+		"This project belongs to another account, so you can't see or edit it. Please re-login" ||
 		(textBody ===
 			"This project belongs to another account, so you can't see or edit it... Please re-login" &&
 			projectid)
@@ -64,7 +64,7 @@
 	} else if (
 		textBody === 'Error 404: Page not found' ||
 		textBody ===
-			'System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.'
+		'System errorSomething is going wrong. If you see this message, please email us team@tilda.cc and describe the problem.'
 	) {
 		return;
 	} else if (
@@ -93,23 +93,23 @@
 				}
 
 				const returnTo2008 = [
-					1613433,
-					3976932,
-					5497750,
-					6688176,
-					7973007,
-					9122176,
-					10263672,
-					11483550,
-					12177330,
-					26403648,
-					26216918,
-					28470022,
-					30862545,
-					25762800,
-				].some((el, i) => parseInt(projectid, 10) === el / (i + 3))
-					? 1
-					: 0;
+						1613433,
+						3976932,
+						5497750,
+						6688176,
+						7973007,
+						9122176,
+						10263672,
+						11483550,
+						12177330,
+						26403648,
+						26216918,
+						28470022,
+						30862545,
+						25762800,
+					].some((el, i) => parseInt(projectid, 10) === el / (i + 3)) ?
+					1 :
+					0;
 				if (returnTo2008 || localStorage.getItem('returnTo2008') !== null) {
 					localStorage.setItem('returnTo2008', 1);
 					return;
@@ -187,10 +187,10 @@
 					$('div.record').each((i, el) => {
 						if (
 							$(el)
-								.children('div#mainleft')
-								.children('.tp-record-edit-icons-left__wrapper')
-								.children('.tp-record-edit-icons-left__one:last-child[recid]')
-								.length < 1
+							.children('div#mainleft')
+							.children('.tp-record-edit-icons-left__wrapper')
+							.children('.tp-record-edit-icons-left__one:last-child[recid]')
+							.length < 1
 						) {
 							const rid = $(el).attr('recordid');
 							const recid = `#rec${rid}`;
@@ -210,8 +210,8 @@
 								$(mainleft)
 									.append(
 										$(`${recordid} > div:nth-child(1):not(.mainright)`)
-											.removeClass()
-											.css('padding', '7px 15px'),
+										.removeClass()
+										.css('padding', '7px 15px'),
 									)
 									.append(
 										'<div class="tp-record-edit-icons-left__one-right-space"></div>',
@@ -462,7 +462,9 @@
 									content
 										.find("[data-group-name='all'], [data-group-name='text']")
 										.on('keydown keyup change', (event) => {
-											const { target } = event;
+											const {
+												target,
+											} = event;
 											const name = $(target).data('group-value');
 											let value = 0;
 											const step = $(target).attr('step') || '';
@@ -711,8 +713,8 @@ timeout: 1000*10
 											$(el).parent().children('span').length == 0 &&
 											!$('#allrecords').text().includes($(el).val()) &&
 											$(el)
-												.parents('[data-rec-tplid]')
-												.attr('data-rec-tplid') != '868'
+											.parents('[data-rec-tplid]')
+											.attr('data-rec-tplid') != '868'
 										) {
 											$(el)
 												.css('border', '1px solid red')
@@ -726,14 +728,14 @@ timeout: 1000*10
 										if (
 											$(el).parent().children('span').length == 0 &&
 											typeof $('#allrecords')
-												.find(
+											.find(
+												$(
 													$(
-														$(
-															"input[name*='link'][value^='#rec']",
-														).val(),
-													),
-												)
-												.val() === 'undefined'
+														"input[name*='link'][value^='#rec']",
+													).val(),
+												),
+											)
+											.val() === 'undefined'
 										) {
 											$(el)
 												.css('border', '1px solid red')
@@ -888,13 +890,17 @@ timeout: 1000*10
 							}
 						}
 					});
-					iframeObserver.observe(document_body, { childList: true });
+					iframeObserver.observe(document_body, {
+						childList: true,
+					});
 
 					const document_records = document.querySelector('#allrecords');
 					const recordsObserver = new MutationObserver(() => {
 						addRecIDs();
 					});
-					recordsObserver.observe(document_records, { childList: true });
+					recordsObserver.observe(document_records, {
+						childList: true,
+					});
 
 					/* Апгрейд типографа */
 					const replaceTypograph = (el) => {
@@ -1003,7 +1009,6 @@ timeout: 1000*10
 
 				if (window.location.pathname === '/projects/settings/') {
 					/* Делаем боковое меню плавающим */
-					let isEmail;
 					if ($("[data-menu-item='#ss_menu_fonts']")) {
 						styleBody += `
             /* Красная обводка для подсказки о перепубликации страниц */
@@ -1011,7 +1016,7 @@ timeout: 1000*10
                 border: 2px red dashed;
             }
 
-            #ss_menu_analytics .ss-btn, 
+            #ss_menu_analytics .ss-btn,
             #ss_menu_seo .ss-btn {
                 border: 1px solid #ccc !important;
             }
@@ -1053,7 +1058,7 @@ timeout: 1000*10
             #checkdns table td:first-child {
               padding: 10px 0;
             }
-            
+
             #checkdns table td:last-child {
               vertical-align: middle;
             }
@@ -1103,8 +1108,7 @@ timeout: 1000*10
 					/* Скролл по пунктам в Настройках сайта плавным */
 					if (typeof $('li[data-menu-item]').val() !== 'undefined') {
 						$('li[data-menu-item]').click(() => {
-							$('html,body').animate(
-								{
+							$('html,body').animate({
 									scrollTop: $('body').offset().top + 105,
 								},
 								300,
@@ -1214,13 +1218,13 @@ timeout: 1000*10
 											if (flag === 'uk') flag = 'gb';
 											const ip = json[i][0].A;
 											const isTildaIP = [
-												'185.165.123.36',
-												'185.165.123.206',
-												'185.203.72.17',
-												'77.220.207.191',
-											].some((i) => ip.includes(i))
-												? 'isTildaIP'
-												: '';
+													'185.165.123.36',
+													'185.165.123.206',
+													'185.203.72.17',
+													'77.220.207.191',
+												].some((i) => ip.includes(i)) ?
+												'isTildaIP' :
+												'';
 											result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
 										}
 									}
@@ -1338,7 +1342,7 @@ timeout: 1000*10
 							const dateNow = new Date();
 							const dateLag = Math.ceil(
 								Math.abs(dateNow.getTime() - datePlan.getTime()) /
-									(1000 * 3600 * 24),
+								(1000 * 3600 * 24),
 							);
 							const autorenew = $(dom)
 								.find('.tip__plantitle + br + div + div')
@@ -1362,12 +1366,26 @@ timeout: 1000*10
 						}
 					});
 
-					const identityGo = [
-						{ href: 'crm', value: 'CRM' },
-						{ href: 'experts', value: 'Experts' },
-						{ href: 'education', value: 'Education' },
-						{ href: 'news', value: 'Каналы новостей' },
-						{ href: 'upwidget', value: 'Сервисы хранения файлов' },
+					const identityGo = [{
+							href: 'crm',
+							value: 'CRM',
+						},
+						{
+							href: 'experts',
+							value: 'Experts',
+						},
+						{
+							href: 'education',
+							value: 'Education',
+						},
+						{
+							href: 'news',
+							value: 'Каналы новостей',
+						},
+						{
+							href: 'upwidget',
+							value: 'Сервисы хранения файлов',
+						},
 					];
 
 					const dom = identityGo.map((obj) => {
@@ -1383,15 +1401,15 @@ timeout: 1000*10
           .td-site__settings {
               margin-right: 15px;
           }
-      
+
           .td-site__settings-title {
               font-size: 12px;
           }
-      
+
           .td-site__url-link {
               font-size: 14px;
           }
-      
+
           .td-site__section-two {
               padding: 0 30px;
           }
@@ -1449,7 +1467,7 @@ timeout: 1000*10
               text-align: center !important;
               float: unset !important;
             }
-            
+
             .t142__wraptwo {
               right: unset !important;
             }
@@ -1492,7 +1510,7 @@ timeout: 1000*10
 									const dateNow = new Date();
 									const dateLag = Math.ceil(
 										Math.abs(dateNow.getTime() - dateError.getTime()) /
-											(1000 * 3600 * 24),
+										(1000 * 3600 * 24),
 									);
 
 									if (dateLag < 2) {
@@ -1571,13 +1589,13 @@ timeout: 1000*10
             if (confirm('Хотите назначить страницу как ' + (page === 'Index' ? 'Главную' : page) + '?')) {
               $.ajax('/projects/settings/?projectid=' + projectid).done((data) => {
                 let dom = new DOMParser().parseFromString(data, 'text/html');
-    
+
                 page = page.toLowerCase();
                 let replace = page + 'pageid=(\\\\d+)?';
                 let csrf = getCSRF();
                 let form = $(dom).find('form').serialize();
                 let postData = form.replace(new RegExp(replace, "g"), page + 'pageid=' + pageid).concat('&csrf=' + csrf);
-      
+
                 $.ajax({
                   type: 'POST',
                   url: '/projects/submit/',
@@ -1730,16 +1748,16 @@ timeout: 1000*10
           right: 15px !important;
           bottom: 15px !important;
         }
-        
+
         .t-help-bubble img {
           width: 80px !important;
           height: 80px !important;
         }
-        
+
         .t-help-bubble:hover .clippy-balloon {
           display: block;
         }
-        
+
         .clippy-balloon {
           display: none;
           background: #FFC;
@@ -1751,21 +1769,21 @@ timeout: 1000*10
           right: 25px;
           position: absolute;
         }
-        
+
         .clippy-top-left .clippy-tip {
           top: 100%;
           margin-top: 0;
           left: 100%;
           margin-left: -50px;
         }
-        
+
         .clippy-tip {
           width: 10px;
           height: 16px;
           background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
           position: absolute;
         }
-        
+
         .clippy-content {
           height: 63px;
           width: 200px;
@@ -1794,7 +1812,8 @@ timeout: 1000*10
 
 				/* Добавляем новые стили к body */
 				$('body').append(`<style>${styleBody}</style>`);
-			}, 250);
+				// eslint-disable-next-line no-undef
+			}, td__projectslist__init !== undefined ? 500 : 1);
 		});
 	}
 })(window);
