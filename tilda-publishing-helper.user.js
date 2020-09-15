@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru
-// @version      52.0.1
+// @version      52.0.3
 // @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1435,25 +1435,33 @@ timeout: 1000*10
 					}
 
 					/* Добавляем ссылки на социальные сети */
-					$('#rec271198 > div > div > div > div').append(`
+					if ($('[href="https://www.youtube.com/channel/UC6-ppjYyf8AmvNuwr28CS_w"]').length < 1) {
+						$('#rec271198 > div > div > div > div').append(`
             <div class="sociallinkimg">
                 <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
                     <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
                 </a>
-            </div>
+			</div>`);
+					}
+					if ($('[href="https://www.instagram.com/tildapublishing/"]').length < 1) {
+						$('#rec271198 > div > div > div > div').append(`
             <div class="sociallinkimg">
                 <a href="https://www.instagram.com/${
 					lang === 'RU' ? 'tildapublishing' : 'tilda.cc'
 				}/" target="_blank" rel="nofollow">
                     <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
                 </a>
-            </div>
+			</div>`);
+					}
+					if ($('[href="https://t.me/tildanews"]').length < 1) {
+						$('#rec271198 > div > div > div > div').append(`
             <div class="sociallinkimg">
                 <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
                     <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
                 </a>
             </div>
-          `);
+		  `);
+					}
 
 					styleBody += `
             #rec271198 > div > div > div {
@@ -1529,10 +1537,12 @@ timeout: 1000*10
 
 						$('.td-page').each((i, el) => {
 							let pageid = $(el).attr('id');
-							if (
-								pageid.includes('page') &&
-								$(el).find('.td-page__note').text() === ''
-							) {
+
+							// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
+							const duplicate = `td__dublicatePage(${pageid})`;
+							const unpublish = `unpublish(${projectid}, ${pageid})`;
+
+							if (pageid.includes('page')) {
 								pageid = pageid.replace('page', '');
 								$(el)
 									.find('.td-page__buttons-td:last')
@@ -1541,32 +1551,15 @@ timeout: 1000*10
 									.remove();
 								$(el).find('.td-page__buttons-spacer:last').css('width', '20px');
 
-								// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
-								const duplicate = `td__dublicatePage(${pageid})`;
-								const unpublish = `unpublish(${projectid}, ${pageid})`;
-								const setIndex = `setPage(${projectid}, ${pageid}, 'Index')`;
-								const setHeader = `setPage(${projectid}, ${pageid}, 'Header')`;
-								const setFooter = `setPage(${projectid}, ${pageid}, 'Footer')`;
+								$(el).find('.td-page__buttons-table tr').append(
+									$(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Дублировать страницу (создать копию)" class="td-page__buttons-td" style="height: 14px; top: 3px; position: relative;"><a onclick="${duplicate}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 25" style="height: 14px"><path fill="#000" d="M20.416 24.985H4.418c-.365 0-.715-.132-.973-.366a1.195 1.195 0 01-.402-.884c0-.331.144-.65.402-.884.258-.234.608-.366.973-.366h14.78V6.41c0-.332.145-.65.403-.884.258-.234.608-.366.972-.366.365 0 .715.132.973.366.257.235.402.552.402.884v17.183c0 .767-.687 1.392-1.532 1.392z"/><path fill="#000" d="M16.264 20.978H1.807c-.816 0-1.48-.664-1.48-1.48V2.403c0-.815.664-1.479 1.48-1.479h14.457c.816 0 1.48.664 1.48 1.48v17.094c0 .816-.664 1.48-1.48 1.48zm-13.436-2.5h12.416V3.423H2.828v15.055z"/></svg></a></td>`),
+								);
 
-								$(el)
-									.find('.td-page__buttons-table tr')
-									.append(
-										$(
-											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Дублировать страницу (создать копию)" class="td-page__buttons-td" style="height: 14px; top: 4px; position: relative;"><a onclick="${duplicate}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 25" style="height: 14px"><path fill="#000" d="M20.416 24.985H4.418c-.365 0-.715-.132-.973-.366a1.195 1.195 0 01-.402-.884c0-.331.144-.65.402-.884.258-.234.608-.366.973-.366h14.78V6.41c0-.332.145-.65.403-.884.258-.234.608-.366.972-.366.365 0 .715.132.973.366.257.235.402.552.402.884v17.183c0 .767-.687 1.392-1.532 1.392z"/><path fill="#000" d="M16.264 20.978H1.807c-.816 0-1.48-.664-1.48-1.48V2.403c0-.815.664-1.479 1.48-1.479h14.457c.816 0 1.48.664 1.48 1.48v17.094c0 .816-.664 1.48-1.48 1.48zm-13.436-2.5h12.416V3.423H2.828v15.055z"/></svg></a></td>`,
-										),
-										$(
-											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -2px"></a></td>`,
-										),
-										$(
-											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Главную" class="td-page__buttons-td"><a onclick="${setIndex}"><img src="/tpl/img/td-icon-home.png" class="td-page__button-ico" style="padding: 0; margin-top: -2px; width: 12px"></a></td>`,
-										),
-										$(
-											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Header (Шапку)" class="td-page__buttons-td"><a onclick="${setHeader}"><img src="/tpl/img/td-icon-header.png" class="td-page__button-ico" style="padding: 0; margin-top: -6px; width: 20px"></a></td>`,
-										),
-										$(
-											`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Назначить страницу как Footer (Подвал)" class="td-page__buttons-td"><a onclick="${setFooter}"><img src="/tpl/img/td-icon-footer.png" class="td-page__button-ico" style="padding: 0; margin-top: 8px; width: 20px"></a></td>`,
-										),
+								if ($(el).find('.td-page__note').text() === '') {
+									$(el).find('.td-page__buttons-table tr').append(
+										$(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Снять страницу с публикации" class="td-page__buttons-td"><a onclick="${unpublish}"><img src="/tpl/img/td-icon-publish-black.png" width="14px" class="td-page__button-ico" style="transform: rotate(180deg); padding: 0; margin-top: -3px"></a></td>`),
 									);
+								}
 							}
 						});
 
@@ -1583,29 +1576,6 @@ timeout: 1000*10
                   }
               }).done(() => {
                   window.location.reload()
-              });
-            }
-          };`;
-
-						/* Функция назначения страницы как Главную, Хедер или Футер */
-						scriptBody += `function setPage(projectid, pageid, page) {
-            if (confirm('Хотите назначить страницу как ' + (page === 'Index' ? 'Главную' : page) + '?')) {
-              $.ajax('/projects/settings/?projectid=' + projectid).done((data) => {
-                let dom = new DOMParser().parseFromString(data, 'text/html');
-
-                page = page.toLowerCase();
-                let replace = page + 'pageid=(\\\\d+)?';
-                let csrf = getCSRF();
-                let form = $(dom).find('form').serialize();
-                let postData = form.replace(new RegExp(replace, "g"), page + 'pageid=' + pageid).concat('&csrf=' + csrf);
-
-                $.ajax({
-                  type: 'POST',
-                  url: '/projects/submit/',
-                  data: postData
-                }).done(() => {
-                  window.location.reload();
-                });
               });
             }
           };`;
