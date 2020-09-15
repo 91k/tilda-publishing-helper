@@ -6,8 +6,6 @@
 // @author       Roman Kosov
 // @copyright    2019 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
-// @license      MIT
-// jshint esversion:6
 // ==/UserScript==
 (async function (window) {
 	'use strict';
