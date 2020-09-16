@@ -4,7 +4,7 @@
 // @version      1.0.0
 // @description  Tilda Helper: показать какие блоки используются на странице
 // @author       Roman Kosov
-// @copyright    2020, Roman Kosov (https://greasyfork.org/users/167647)
+// @copyright    2018 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
 // @include      *
 // @exclude      https://tilda.cc/*
 // @run-at       context-menu
