@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
-// @namespace    https://roman-kosov.ru
-// @version      52.0.3
-// @description  Тильда Хелпер: Вспомогательные фичи, улучшенный интерфейс, апгрейд Zero блока
+// @namespace    https://roman-kosov.ru/donate
+// @version      52.0.4
+// @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
@@ -17,6 +17,7 @@
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
 // @run-at       document-idle
+// @icon         https://www.google.com/s2/favicons?domain=tilda.cc
 // ==/UserScript==
 (async function (window) {
 	'use strict';
