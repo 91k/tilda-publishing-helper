@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.0.4
+// @version      52.0.5
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1538,13 +1538,11 @@ timeout: 1000*10
 
 						$('.td-page').each((i, el) => {
 							let pageid = $(el).attr('id');
-
-							// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
-							const duplicate = `td__dublicatePage(${pageid})`;
-							const unpublish = `unpublish(${projectid}, ${pageid})`;
-
 							if (pageid.includes('page')) {
 								pageid = pageid.replace('page', '');
+								// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
+								const duplicate = `td__dublicatePage(${pageid})`;
+								const unpublish = `unpublish(${projectid}, ${pageid})`;
 								$(el)
 									.find('.td-page__buttons-td:last')
 									.attr('title', 'Удалить страницу')
@@ -1579,7 +1577,7 @@ timeout: 1000*10
                   window.location.reload()
               });
             }
-          };`;
+		  };`;
 
 						const site = $('.td-project-uppanel__url-link a[href]').attr('href');
 
