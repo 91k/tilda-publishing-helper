@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.1.0
+// @version      52.2.1
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1478,42 +1478,55 @@ timeout: 1000*10
 							".td-page__td-title > a[href^='https://tilda.cc/projects/settings/?projectid=']",
 						).append($("[src='/tpl/img/td-icon-home.png']"));
 
-						$.ajax(
-							`https://tilda.cc/projects/leads/errors/?projectid=${projectid}`,
-						).done((data) => {
-							const dom = new DOMParser().parseFromString(data, 'text/html');
-							let count = 0;
+						if ($('.td-project-uppanel__wrapper > a, .td-project-uppanel__wrapper > div').length > 6) {
+							$('.td-project-uppanel__url-span').remove();
+						}
 
-							$(dom)
-								.find('.td-leads__table')
-								.children('div')
-								.find('div:nth-child(2)')
-								.each((i, el) => {
-									const date = $(el)
-										.text()
-										.replace(/Date:\s/, '');
-									const dateError = new Date(date);
-
-									const dateNow = new Date();
-									const dateLag = Math.ceil(
-										Math.abs(dateNow.getTime() - dateError.getTime()) /
-										(1000 * 3600 * 24),
-									);
-
-									if (dateLag < 2) {
-										count++;
+						fetch('https://tilda.cc/projects/get/getleadserrors/', {
+								credentials: 'include',
+								headers: {
+									'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+								},
+								body: `comm=getleadserrors&projectid=${projectid}`,
+								method: 'POST',
+								mode: 'cors',
+							})
+							.then((response) => response.json())
+							.then((data) => {
+								if (data.errors !== null) {
+									const count = data.errors.length;
+									if (count > 0) {
+										$('.td-project-uppanel__wrapper')
+											.find("a[href^='/projects/leads/?projectid=']")
+											.find('.td-project-uppanel__title')
+											.after(`<span style="background: red;border-radius: 50%;color: #fff;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px" title="Присутствуют заявки с ошибками">${count}</span>`);
 									}
-								});
+								}
+							});
 
-							if (count > 0) {
-								$('.td-project-uppanel__wrapper')
-									.find("a[href^='/projects/leads/?projectid=']")
-									.find('tbody > tr')
-									.after(
-										`<tr><a href="https://tilda.cc/projects/leads/errors/?projectid=${projectid}"><td colspan=2 style="text-align: center">Есть ошибки <span style="background: red;border-radius: 50%;color: #fff;position: absolute;text-align: center;width: 1em;height: 1em;font-size: 1em;line-height: 1em;margin-left: 5px;padding: 3px">${count}</span></td></a></tr>`,
-									);
-							}
-						});
+						fetch('https://tilda.cc/projects/submit/leads/', {
+								credentials: 'include',
+								headers: {
+									'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+								},
+								body: 'comm=getleads&c=1600441178107&projectid=1591865',
+								method: 'POST',
+								mode: 'cors',
+							})
+							.then((response) => response.json())
+							.then((data) => {
+								if (data.leads !== null) {
+									const count = data.leads.length;
+									if (count > 0) {
+										const title = $('.td-project-uppanel__wrapper')
+											.find("a[href^='/projects/leads/?projectid=']")
+											.find('.td-project-uppanel__title');
+										const text = title.text();
+
+										title.text(`${text} (${count})`);
+									}
+								}
+							});
 
 						$('.td-page').each((i, el) => {
 							let pageid = $(el).attr('id');
