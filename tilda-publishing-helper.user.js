@@ -1312,44 +1312,38 @@ timeout: 1000*10
 						}
 					});
 
-					$.ajax({
-						type: 'GET',
-						url: 'https://tilda.cc/identity/plan/',
-					}).done((data) => {
-						const dom = new DOMParser().parseFromString(data, 'text/html');
-						const plan = $(dom)
-							.find('.tip__plantitle + br + div')
-							.text()
-							.trim()
-							.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-						if (!isEmpty(plan)) {
-							const datePlan = new Date(`${plan[3]}-${plan[2]}-${plan[1]}`);
-							const dateNow = new Date();
-							const dateLag = Math.ceil(
-								Math.abs(dateNow.getTime() - datePlan.getTime()) /
-								(1000 * 3600 * 24),
-							);
-							const autorenew = $(dom)
-								.find('.tip__plantitle + br + div + div')
-								.text()
-								.trim();
-							let text = '';
-							if (dateLag < 10 && dateLag > 3) {
-								if (autorenew.length === 0) {
-									text = `Пробный тариф закончится через ${dateLag} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600">оплатить</a>`;
-								}
+					fetch('https://tilda.cc/identity/get/getplan/', {
+							credentials: 'include',
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+							},
+							body: 'comm=getplan',
+							method: 'POST',
+							mode: 'cors',
+						})
+						.then((response) => response.json())
+						.then((data) => {
+							if (data.endsubscription !== null && data.subscription_nextchargedate == null) {
+								const endsubscription = `${data.endsubscription}000`;
+								const diff = Math.ceil(Math.abs(parseInt(endsubscription, 10) - new Date().getTime()) / (1000 * 3600 * 24));
 
-								if (!isEmpty(text)) {
-									$('.td-maincontainer')
-										.prepend(`<div style="padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px">
-                      <div style="max-width: 1180px; margin: 0 auto">
-                          <spn style="font-weight: 500; color: #fff">${text}</span>
-                      </div>
-                  </div>`);
+								let text = '';
+								if (diff < 14 && diff > 3) {
+									if (data.userpay !== null) {
+										if (data.userpay === '') {
+											text = 'Пробный тариф';
+										} else {
+											text = 'Тариф';
+										}
+									}
+									text += ` закончится через ${diff} д. Пожалуйста, не забудьте <a href="/identity/plan/" style="background-color:rgba(0,0,0,.2);padding:6px 10px;color:#fff;font-weight:600">оплатить</a>`;
+
+									if (text !== '') {
+										$('.td-maincontainer').prepend(`<div style="position:relative; padding:30px 60px; background-color: #f4846b; text-align:center; font-size:18px"><a href="https://roman-kosov.ru/helper" target="_blank" style="opacity:.4; position:absolute; bottom:5px; right:5px; font-size:14px; color:#fff">Tilda Helper</a><div style="max-width: 1180px; margin: 0 auto"><spn style="font-weight: 500; color: #fff">${text}</span></div></div>`);
+									}
 								}
 							}
-						}
-					});
+						});
 
 					const identityGo = [{
 							href: 'crm',
