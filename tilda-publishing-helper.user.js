@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.0.5
+// @version      52.1.0
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1278,16 +1278,13 @@ timeout: 1000*10
 							const link = $(el).find(
 								"a[href^='/projects/?projectid=']:not(.td-site__section-one)",
 							);
-							let leads = '',
-								settings = '';
+							let leads = '';
 
 							if (lang === 'RU') {
 								leads = 'Заявки';
-								settings = 'Настройки';
 								$(link).html('Редактировать');
 							} else if (lang === 'EN') {
 								leads = 'Leads';
-								settings = 'Settings';
 								$(link).html('EDIT');
 							} else {
 								return;
@@ -1307,18 +1304,6 @@ timeout: 1000*10
                             </td>
                             <td class="td-site__settings-title">
                                 <a href="./leads/?projectid=${id}">${leads}</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="td-site__settings" style="margin-right: 0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/tpl/img/td-site__settings.png" width="14px" height="14px" style="padding:5px">
-                            </td>
-                            <td class="td-site__settings-title">
-                                <a href="./settings/?projectid=${id}">${settings}</a>
                             </td>
                         </tr>
                     </tbody>
