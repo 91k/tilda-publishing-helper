@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.2.2
+// @version      52.3.0
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1532,8 +1532,9 @@ timeout: 1000*10
 							let pageid = $(el).attr('id');
 							if (pageid.includes('page')) {
 								pageid = pageid.replace('page', '');
-								// дополнительные кнопки: дублировать, снять с публикации, назначить Главной, Хедером или Футером
-								const duplicate = `td__dublicatePage(${pageid})`;
+								// дополнительные кнопки: дублировать, переместить, снять с публикации
+								const duplicate = `td__pagesettings__dublicatePage(${pageid})`;
+								const move = `https://tilda.cc/projects/pagemove/?pageid=${pageid}`;
 								const unpublish = `unpublish(${projectid}, ${pageid})`;
 								$(el)
 									.find('.td-page__buttons-td:last')
@@ -1544,6 +1545,10 @@ timeout: 1000*10
 
 								$(el).find('.td-page__buttons-table tr').append(
 									$(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Дублировать страницу (создать копию)" class="td-page__buttons-td" style="height: 14px; top: 3px; position: relative;"><a onclick="${duplicate}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 25" style="height: 14px"><path fill="#000" d="M20.416 24.985H4.418c-.365 0-.715-.132-.973-.366a1.195 1.195 0 01-.402-.884c0-.331.144-.65.402-.884.258-.234.608-.366.973-.366h14.78V6.41c0-.332.145-.65.403-.884.258-.234.608-.366.972-.366.365 0 .715.132.973.366.257.235.402.552.402.884v17.183c0 .767-.687 1.392-1.532 1.392z"/><path fill="#000" d="M16.264 20.978H1.807c-.816 0-1.48-.664-1.48-1.48V2.403c0-.815.664-1.479 1.48-1.479h14.457c.816 0 1.48.664 1.48 1.48v17.094c0 .816-.664 1.48-1.48 1.48zm-13.436-2.5h12.416V3.423H2.828v15.055z"/></svg></a></td>`),
+								);
+
+								$(el).find('.td-page__buttons-table tr').append(
+									$(`<td class="td-page__buttons-spacer" style="width: 10px"></td><td title="Перенести страницу (в другой проект)" class="td-page__buttons-td" style="height: 14px; position: relative;"><a href="${move}"><div style="width: 27px; height: 23px; background: url(/tpl/img/popups/all-icons.svg) no-repeat -322px -276px; transform: scale(0.6, 0.6)"></div></a></td>`),
 								);
 
 								if ($(el).find('.td-page__note').text() === '') {
