@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.3.1
+// @version      52.3.2
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
-// @copyright    2017 - 2020, Roman Kosov (https://greasyfork.org/users/167647)
+// @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
 // @match        https://tilda.cc/domains/*
 // @match        https://tilda.cc/projects/*
@@ -1509,7 +1509,7 @@ timeout: 1000*10
 								headers: {
 									'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 								},
-								body: 'comm=getleads&c=1600441178107&projectid=1591865',
+								body: `comm=getleads&projectid=${projectid}`,
 								method: 'POST',
 								mode: 'cors',
 							})
