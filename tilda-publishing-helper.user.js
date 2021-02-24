@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.3.2
+// @version      52.3.3
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -53,13 +53,13 @@
 	) {
 		if (projectid) {
 			url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
-		}
 
-		if (pageid) {
-			url += `page${parseInt(pageid, 10)}.html`;
-		}
+			if (pageid) {
+				url += `page${parseInt(pageid, 10)}.html`;
+			}
 
-		window.location.href = url;
+			window.location.href = url;
+		}
 		return;
 	} else if (
 		textBody === 'Error 404: Page not found' ||
