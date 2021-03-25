@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.3.3
+// @version      52.3.4
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -38,28 +38,21 @@
 	}
 	let url = '';
 
-	if (
+	if ((
 		textBody === "You can't edit this project.." ||
 		textBody === 'You can not edit this project...' ||
-		textBody ===
-		"This page belongs to another account, so you can't see or edit it... Please re-login" ||
-		textBody ===
-		"This page belongs to another account, so you can't see or edit it. Please re-login" ||
-		textBody ===
-		"This project belongs to another account, so you can't see or edit it. Please re-login" ||
-		(textBody ===
-			"This project belongs to another account, so you can't see or edit it... Please re-login" &&
-			projectid)
+		textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
+		textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
+		textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
+		textBody === "This project belongs to another account, so you can't see or edit it... Please re-login") && projectid
 	) {
-		if (projectid) {
-			url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
+		url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
 
-			if (pageid) {
-				url += `page${parseInt(pageid, 10)}.html`;
-			}
-
-			window.location.href = url;
+		if (pageid) {
+			url += `page${parseInt(pageid, 10)}.html`;
 		}
+
+		window.location.href = url;
 		return;
 	} else if (
 		textBody === 'Error 404: Page not found' ||
