@@ -39,13 +39,12 @@
 	let url = '';
 
 	if ((
-		textBody === "You can't edit this project.." ||
-		textBody === 'You can not edit this project...' ||
-		textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
-		textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
-		textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
-		textBody === "This project belongs to another account, so you can't see or edit it... Please re-login") && projectid
-	) {
+			textBody === "You can't edit this project.." ||
+			textBody === 'You can not edit this project...' ||
+			textBody === "This page belongs to another account, so you can't see or edit it... Please re-login" ||
+			textBody === "This page belongs to another account, so you can't see or edit it. Please re-login" ||
+			textBody === "This project belongs to another account, so you can't see or edit it. Please re-login" ||
+			textBody === "This project belongs to another account, so you can't see or edit it... Please re-login") && projectid) {
 		url = `https://project${parseInt(projectid, 10)}.tilda.ws/`;
 
 		if (pageid) {
