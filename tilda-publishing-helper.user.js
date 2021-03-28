@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.3.4
+// @version      52.3.5
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -1658,98 +1658,6 @@ timeout: 1000*10
                 text-decoration: underline !important;
             }
           `;
-				}
-
-				/* Кнопка «Отмена» («Назад») после всех кнопок «Сохранить» */
-				$(".ss-form-group__hint > a[href='/identity/banktransfer/']").remove();
-				$('.form-horizontal').after(`
-        <div class="ss-form-group__hint" style="text-align: center">
-            <a onclick="javascript:(window.history.go(-1))" style="cursor: pointer">← ${
-				lang === 'RU' ? 'Назад' : 'Back'
-			}</a>
-            </div>
-        <br><br>
-      `);
-
-				/* Clippy */
-				const d = new Date();
-				if (d.getDate() === 1 && d.getMonth() + 1 === 4) {
-					$('.t-help-bubble img').attr(
-						'src',
-						'https://static.tildacdn.com/tild3630-3666-4835-b239-643431626531/clippy.png',
-					);
-
-					$('.t-help-bubble').append(
-						'<div class="clippy-balloon clippy-top-left"><div class="clippy-tip"></div><div class="clippy-content">When all else fails, bind some paper together. My name is Clippy.</div></div>',
-					);
-
-					styleBody += `
-        .t-help-bubble {
-          background-color: unset !important;
-          box-shadow: unset !important;
-          width: unset !important;
-          height: unset !important;
-          right: 15px !important;
-          bottom: 15px !important;
-        }
-
-        .t-help-bubble img {
-          width: 80px !important;
-          height: 80px !important;
-        }
-
-        .t-help-bubble:hover .clippy-balloon {
-          display: block;
-        }
-
-        .clippy-balloon {
-          display: none;
-          background: #FFC;
-          color: black;
-          padding: 8px;
-          border: 1px solid black;
-          border-radius: 5px;
-          bottom: 110px;
-          right: 25px;
-          position: absolute;
-        }
-
-        .clippy-top-left .clippy-tip {
-          top: 100%;
-          margin-top: 0;
-          left: 100%;
-          margin-left: -50px;
-        }
-
-        .clippy-tip {
-          width: 10px;
-          height: 16px;
-          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAgCAMAAAAlvKiEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF///MAAAA////52QwgAAAAAN0Uk5T//8A18oNQQAAAGxJREFUeNqs0kEOwCAIRFHn3//QTUU6xMyyxii+jQosrTPkyPEM6IN3FtzIRk1U4dFeKWQiH6pRRowMVKEmvronEynkwj0uZJgR22+YLopPSo9P34wJSamLSU7lSIWLJU7NkNomNlhqxUeAAQC+TQLZyEuJBwAAAABJRU5ErkJggg==) no-repeat;
-          position: absolute;
-        }
-
-        .clippy-content {
-          height: 63px;
-          width: 200px;
-        }`;
-				}
-
-				if (d.getDate() === 31 && d.getMonth() + 1 === 10) {
-					$('.t-help-bubble img').attr(
-						'src',
-						'https://static.tildacdn.com/tild3839-6266-4038-b233-346630653130/jack-o-lantern.png',
-					);
-
-					styleBody += `
-            .t-help-bubble {
-                background-color: unset !important;
-                box-shadow: unset !important;
-                width: unset !important;
-                height: unset !important;
-                right: 15px !important;
-                bottom: 15px !important;
-            }
-        `;
 				}
 
 				$('body').append(`<script>${scriptBody}</script>`);
