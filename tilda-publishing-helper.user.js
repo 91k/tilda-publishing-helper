@@ -109,40 +109,39 @@
 
 				/* Заносим все новые стили в переменную */
 				let styleBody = `
-        .ui-sortable-handle > td:nth-child(1) {
-            padding-right: 20px;
-        }
+.ui-sortable-handle > td:nth-child(1) {
+	padding-right: 20px;
+}
 
-        /* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
-        .td-popup-window__bottom-right .td-popup-btn {
-            margin: 0 0 0 15px !important;
-        }
+/* Меняем расстояние между кнопками «Закрыть» и «Сохранить изменения» */
+.td-popup-window__bottom-right .td-popup-btn {
+	margin: 0 0 0 15px !important;
+}
 
-        /* Делаем кнопку «Домой» интерактивной */
-        .td-page__ico-home:hover {
-            filter: opacity(.5); !important;
-        }
+/* Делаем кнопку «Домой» интерактивной */
+.td-page__ico-home:hover {
+	filter: opacity(.5); !important;
+}
 
-        /* Меняем текст в попапе при публикации страницы */
-        .js-publish-noteunderbutton {
-            width: 92% !important;
-            color: #333 !important;
-            font-family: unset !important;
-        }
+/* Меняем текст в попапе при публикации страницы */
+.js-publish-noteunderbutton {
+	width: 92% !important;
+	color: #333 !important;
+	font-family: unset !important;
+}
 
-        .modal-body {
-            font-weight: 300;
-        }
+.modal-body {
+	font-weight: 300;
+}
 
-        .js-publish-noteunderbutton a,
-        .pub-left-bottom-link a {
-            text-decoration: underline;
-        }
+.js-publish-noteunderbutton a,
+.pub-left-bottom-link a {
+	text-decoration: underline;
+}
 
-        #referralpopup {
-          z-index: 1 !important;
-        }
-      `;
+#referralpopup {
+	z-index: 1 !important;
+}`;
 
 				/* Заносим все внешние функции в переменную */
 				let scriptBody = '';
@@ -199,8 +198,7 @@
 							);
 
 							if (!$(`${recordid} > div:nth-child(1)`).hasClass('mainright')) {
-								$(mainleft)
-									.append(
+								$(mainleft).append(
 										$(`${recordid} > div:nth-child(1):not(.mainright)`)
 										.removeClass()
 										.css('padding', '7px 15px'),
@@ -210,8 +208,8 @@
 									);
 							}
 
-							$(mainleft)
-								.append(`<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer">
+							$(mainleft).append(`
+			<div class="tp-record-edit-icons-left__one" recid style="cursor: pointer">
                 <div class="tp-record-edit-icons-left__item-title" data-title="Скопировать id этого блока">
                     <span onclick="${copy}" class="tp-record-edit-icons-left__item-tplcod" style="font-weight: 400">${recid}</span>
                 </div>
@@ -220,317 +218,35 @@
 					});
 				};
 
-				const iframeListener = () => {
-					setTimeout(() => {
-						const iframe = $('iframe.t396__iframe');
-						const content = iframe.contents();
-						if (typeof iframe.eq(0)[0] !== 'undefined') {
-							const iframeWindow = iframe.eq(0)[0].contentWindow;
-							content.on('keyup keydown click', () => {
-								if (
-									content.find('.tn-elem.tn-elem__selected').length > 1 &&
-									content.find('#group-editor').length === 0
-								) {
-									/* eslint-disable */
-									content.find(
-										'.tn-settings .sui-panel__section.sui-panel__section-align',
-									).after(`
-                  <div id="group-editor" class="sui-panel__section sui-panel__section-align">
-                      <table class="sui-panel__table sui-panel__padd_b-10">
-                          <tbody>
-                              <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Общие настройки элементов</label></td></tr>
-                              <tr>
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label" style="max-width:20px">w</label></td>
-                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="width" class="sui-input" autocomplete="off"></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label" style="max-width:20px">h</label></td>
-                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="all" data-group-value="height" class="sui-input" autocomplete="off"></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="2">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">link</label></td>
-                                                  <td style="width:100%">
-                                                      <div class="sui-input-div"><input type="text" value="" data-group-name="all" data-group-value="link" class="sui-input" autocomplete="off"></div>
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="2">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">target</label></td>
-                                                  <td style="width:100%">
-                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="all" data-group-value="linktarget">
-                                                              <option value="">Same window</option>
-                                                              <option value="_blank">New window</option>
-                                                          </select></div>
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                      <table>
-                          <tbody>
-                              <tr><td colspan="2"><label class="sui-label" style="width:100%; padding-top:20px; font-size:11px">Редактирование текстовых элементов</label></td></tr>
-                              <tr>
-                                  <td colspan="2">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">size</label></td>
-                                                  <td style="width:100%;min-width:50px"><input type="number" value="0" data-group-name="text" data-group-value="fontsize" class="sui-input" autocomplete="off"></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="2">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">typeface</label></td>
-                                                  <td style="width:100%">
-                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontfamily">
-                                                              <option value="${$headlinefont}">${$headlinefont}</option>
-                                                              <option value="${$textfont}">${$textfont}</option>
-                                                              <option value="Arial">Arial</option>
-                                                              <option value="Georgia">Georgia</option>
-                                                          </select></div>
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="2">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">weight</label></td>
-                                                  <td style="width:100%">
-                                                      <div class="sui-select"><select class="sui-input sui-select" data-group-name="text" data-group-value="fontweight">
-                                                              <option value="100">Thin</option>
-                                                              <option value="300">Light</option>
-                                                              <option value="400">Normal</option>
-                                                              <option value="500">Medium</option>
-                                                              <option value="600">Semi Bold</option>
-                                                              <option value="700">Bold</option>
-                                                          </select></div>
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td><label class="sui-label">spacing</label></td>
-                                                  <td style="width:100%;min-width:75px">
-                                                      <input type="number" value="1.55" step="0.05" lang="en" data-group-name="text" data-group-value="lineheight" class="sui-input" autocomplete="off">
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                                  <td style="width:50%">
-                                      <table style="width:100%">
-                                          <tbody>
-                                              <tr>
-                                                  <td colspan="2" style="width:100%;min-width:50px">
-                                                      <input type="number" value="0" step="0.5" data-group-name="text" data-group-value="letterspacing" class="sui-input" autocomplete="off">
-                                                  </td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-                  <style>
-                      #group-editor input[type=number]::-webkit-inner-spin-button,
-                      #group-editor input[type=number]::-webkit-outer-spin-button {
-                          -webkit-appearance: none;
-                          margin: 0;
-                      }
-
-                      #group-editor #group-tidy .sui-btn-arr-left {
-                          padding-left: 0;
-                          padding-right: 10px;
-                          height: 13px;
-                      }
-
-                      #group-editor table table td {
-                          padding-bottom: 10px;
-                      }
-
-                      #group-editor #group-resize .sui-label {
-                          width: 17px;
-                      }
-
-                      .tn-multiselected .tn-elem__selected .tn-atom__tip {
-                          display: block !important;
-                      }
-                  </style>`);
-									/* eslint-enable */
-
-									content.find("[name^='group'], [data-group-name]").click(() => {
-										iframeWindow.$(iframeWindow).off('keydown');
-										if (content.find('#keyEnable').length < 1) {
-											content
-												.find('#mainmenu .tn-res-wrapper')
-												.before(
-													'<span id="keyEnable" style="float: left; margin-left: 100px">Горячие клавиши <strong>отключены</strong>! <button onclick="javascript:window.iframeRefresh()">Включить</button></span>',
-												);
-											document.querySelector(
-												'iframe.t396__iframe',
-											).contentWindow.iframeRefresh = function () {
-												let t396__iframe = $('iframe.t396__iframe');
-												const iframeWindow = t396__iframe.eq(0)[0]
-													.contentWindow;
-
-												t396__iframe = document.querySelector(
-													'iframe.t396__iframe',
-												).contentWindow.document.body;
-												const callbackIframe = function (mutationsList) {
-													for (const mutation of mutationsList) {
-														if (
-															mutation.type === 'childList' &&
-															mutation.target.textContent === 'Ok'
-														) {
-															const iframeCode = document.querySelector(
-																'iframe.t396__iframe',
-															).outerHTML;
-															$('iframe.t396__iframe').remove();
-															$('body').append(iframeCode);
-														}
-													}
-												};
-
-												const iframeObserver = new MutationObserver(
-													callbackIframe,
-												);
-												iframeObserver.observe(t396__iframe, {
-													attributes: true,
-													childList: true,
-													subtree: true,
-												});
-
-												iframeWindow.artboard__Save__toDB();
-											};
-										}
-									});
-
-									content
-										.find("[data-group-name='all'], [data-group-name='text']")
-										.on('keydown keyup change', (event) => {
-											const {
-												target,
-											} = event;
-											const name = $(target).data('group-value');
-											let value = 0;
-											const step = $(target).attr('step') || '';
-											const type = $(target).attr('type') || '';
-
-											if (
-												type === 'text' ||
-												$(target).hasClass('sui-select')
-											) {
-												value = $(target).val();
-											}
-
-											if (type === 'number') {
-												if (
-													step.includes(',') > 0 ||
-													step.includes('.') > 0
-												) {
-													value = parseFloat(
-														target.value.replace(/,/g, '.'),
-													);
-												} else {
-													value = parseInt(target.value, 10);
-												}
-											}
-
-											content
-												.find('.tn-elem.tn-elem__selected')
-												.each((i, el) => {
-													iframeWindow.elem__setFieldValue(
-														$(el),
-														name,
-														value,
-													);
-													iframeWindow.elem__renderViewOneField(
-														$(el),
-														name,
-													);
-												});
-										});
-								}
-							});
-						}
-					}, 1500);
-				};
-
 				if (window.location.pathname === '/identity/plan/') {
 					$('body').append(
 						'<script async src="/tpl/js/new_ti-profile-all.min.js"></script>',
 					);
-					$('body').append(`<script>
-$(document).ready(function(){
-var ts=Date.now();
-var data={};
-data['comm']='getidentity';
-if(typeof window.xhr_getprojects!='undefined')window.xhr_getprojects.abort();
-window.xhr_getprojects = $.ajax({
-type: "POST",
-url: "/identity/get/getprofile/",
-data: data,
-dataType : "text",
-success: function(datastr){
-check_logout(datastr);
-if(datastr==''){
-}else{
-var obj=JSON.parse(datastr);
-if(typeof obj=='object'){
-if(obj===null)obj={};
-$("[name='paybox']").before(\`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px">Email: $\{obj.useremail}</div>\`);
-showmore_prices();
-}
-}
-},
-timeout: 1000*10
-});
+					$('body').append(`
+<script>
+$(document).ready(function () {
+	var ts = Date.now();
+	var data = {};
+	data['comm'] = 'getidentity';
+	if (typeof window.xhr_getprojects != 'undefined') window.xhr_getprojects.abort();
+	window.xhr_getprojects = $.ajax({
+		type: "POST",
+		url: "/identity/get/getprofile/",
+		data: data,
+		dataType: "text",
+		success: function (datastr) {
+			check_logout(datastr);
+			if (datastr == '') {} else {
+				var obj = JSON.parse(datastr);
+				if (typeof obj == 'object') {
+					if (obj === null) obj = {};
+					$("[name='paybox']").before(\`<div style="font-size: 26px; font-weight: 600; background-color: #eee; padding: 30px; margin-top: -40px; margin-bottom: 15px">Email: $\{obj.useremail}</div>\`);
+					showmore_prices();
+				}
+			}
+		},
+		timeout: 1000 * 10
+	});
 });
 </script>`);
 				}
@@ -579,10 +295,11 @@ timeout: 1000*10
 					}
 				}
 
-				styleBody += `.td-welcome-bottom {
-        font-size: 18px;
-        padding-bottom: 25px;
-      }`;
+				styleBody += `
+.td-welcome-bottom {
+	font-size: 18px;
+	padding-bottom: 25px;
+}`;
 
 				if (window.location.pathname === '/page/') {
 					/* Добавляем recid для каждого блока на странице */
@@ -795,11 +512,7 @@ timeout: 1000*10
 					}
 
 					/* Показываем результаты тестов в блоках BF918 */
-					if (
-						typeof $(
-							"[data-record-type='806'] .tp-record-edit-icons-left__three",
-						).val() !== 'undefined'
-					) {
+					if (typeof $("[data-record-type='806'] .tp-record-edit-icons-left__three", ).val() !== 'undefined') {
 						$('[data-vote-id]').each((i, el) => {
 							const voteid = $(el).attr('data-vote-id');
 							$.ajax({
@@ -834,58 +547,38 @@ timeout: 1000*10
 							});
 						});
 
+
 						styleBody += `
-            .t806__answers .t806__answer .t-vote__btn-res {
-              opacity: 1 !important;
-            }
+.t806__answers .t806__answer .t-vote__btn-res {
+	opacity: 1 !important;
+}
 
-            .t806__btn_next {
-              display: block !important;
-            }
+.t806__btn_next {
+	display: block !important;
+}
 
-            .t806__details {
-              display: block !important;
-              opacity: .4 !important;
-            }
+.t806__details {
+	display: block !important;
+	opacity: .4 !important;
+}
 
-            .t-vote__btn-res__percent.js-vote-percent:before {
-              content: '(';
-            }
+.t-vote__btn-res__percent.js-vote-percent:before {
+	content: '(';
+}
 
-            .t-vote__btn-res__percent.js-vote-percent:after {
-              content: ')';
-            }
-          `;
+.t-vote__btn-res__percent.js-vote-percent:after {
+	content: ')';
+}`;
 					}
 
-					$('#guidesmenubutton > a').text(`${lang === 'RU' ? 'Сетка' : 'Grid'}`);
+					$('#guidesmenubutton > a').text('▦').css('font-size', '18px');
 
 					styleBody += `
-          #guidesmenubutton {
-            display: block !important;
-          }
-		`;
+#guidesmenubutton {
+	display: block !important;
+}`;
 
-					/* Работа с Zero блоком */
-					const document_body = document.querySelector('body');
-					const iframeObserver = new MutationObserver((mutationsList) => {
-						for (const mutation of mutationsList) {
-							if (mutation.type === 'childList') {
-								const openIframe = [].slice
-									.call(document_body.children)
-									.map((node) => node.outerHTML)
-									.filter(
-										(s) => s.indexOf('<iframe class="t396__iframe" src=') === 0,
-									);
-
-								if (openIframe.length === 1) iframeListener();
-							}
-						}
-					});
-					iframeObserver.observe(document_body, {
-						childList: true,
-					});
-
+					/* Работа с блоками */
 					const document_records = document.querySelector('#allrecords');
 					const recordsObserver = new MutationObserver(() => {
 						addRecIDs();
@@ -931,148 +624,147 @@ timeout: 1000*10
 					});
 
 					styleBody += `
-            [data-record-type="360"] .tp-record-edit-icons-left__three {
-                pointer-events: none;
-            }
+[data-record-type="360"] .tp-record-edit-icons-left__three {
+	pointer-events: none;
+}
 
-            /* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
-            #editforms {
-                background-color: rgba(255, 255, 255, 0.99) !important;
-            }
+/* Меняем фон на менее прозрачный, очень бесит прозрачность (0.92), когда редактируешь Настройки у бокового меню ME901 */
+#editforms {
+	background-color: rgba(255, 255, 255, 0.99) !important;
+}
 
-            /* Меняем жёлтую плашку */
-            div[style*='position:fixed;background-color:yellow;'] {
-                right: 15px !important;
-                bottom: 15px !important;
-                width: auto !important;
-            }
+/* Меняем жёлтую плашку */
+	div[style*='position:fixed;background-color:yellow;'] {
+	right: 15px !important;
+	bottom: 15px !important;
+	width: auto !important;
+}
 
-            /* Делаем полоску светлеее в Настройках и Контенте блоков */
-            .editrecordcontent_container hr,
-            .panel-body hr {
-                border-top: 1px solid #dedede !important;
-            }
+/* Делаем полоску светлеее в Настройках и Контенте блоков */
+.editrecordcontent_container hr,
+.panel-body hr {
+	border-top: 1px solid #dedede !important;
+}
 
-            /* Всплывающая подсказка около ID блока */
-            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
-                background: #ffffff;
-                border-radius: 5px;
-                bottom: -30px;
-                right: -100px;
-                box-shadow: 0 0 10px #3d3d3d;
-                box-shadow: 0 0 10px rgba(61, 61, 61, .5);
-                box-sizing: border-box;
-                color: #3d3d3d;
-                content: attr(data-title);
-                font-size: 12px;
-                font-weight: 400;
-                min-width: 125px;
-                padding: 5px 10px;
-                position: absolute;
-                text-align: center;
-                z-index: 3;
-                width: auto;
-                white-space: nowrap;
-                overflow: visible;
-            }
+/* Всплывающая подсказка около ID блока */
+.tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:after {
+	background: #ffffff;
+	border-radius: 5px;
+	bottom: -30px;
+	right: -100px;
+	box-shadow: 0 0 10px #3d3d3d;
+	box-shadow: 0 0 10px rgba(61, 61, 61, .5);
+	box-sizing: border-box;
+	color: #3d3d3d;
+	content: attr(data-title);
+	font-size: 12px;
+	font-weight: 400;
+	min-width: 125px;
+	padding: 5px 10px;
+	position: absolute;
+	text-align: center;
+	z-index: 3;
+	width: auto;
+	white-space: nowrap;
+	overflow: visible;
+}
 
-            .tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
-                border: solid;
-                border-color: #ffffff transparent;
-                border-width: 6px 6px 0 6px;
-                bottom: -5px;
-                right: 36px;
-                content: "";
-                position: absolute;
-                z-index: 4;
-                overflow: visible;
-                transform: rotate(180deg);
-            }
+.tp-record-edit-icons-left__one .tp-record-edit-icons-left__item-title[data-title]:hover:before {
+	border: solid;
+	border-color: #ffffff transparent;
+	border-width: 6px 6px 0 6px;
+	bottom: -5px;
+	right: 36px;
+	content: "";
+	position: absolute;
+	z-index: 4;
+	overflow: visible;
+	transform: rotate(180deg);
+}
 
-            /* Убираем лишние значения в блоке T803 */
-            .t803__multi-data-column .t803__label:nth-of-type(1),
-            .t803__multi-data-column .t803__multi-key,
-            .t803__multi-data-column .t803__label:nth-of-type(2),
-            .t803__multi-data-column .t803__multi-default {
-                display: none !important;
-            }
-            `;
+/* Убираем лишние значения в блоке T803 */
+.t803__multi-data-column .t803__label:nth-of-type(1),
+.t803__multi-data-column .t803__multi-key,
+.t803__multi-data-column .t803__label:nth-of-type(2),
+.t803__multi-data-column .t803__multi-default {
+	display: none !important;
+}`;
 				}
 
 				if (window.location.pathname === '/projects/settings/') {
 					/* Делаем боковое меню плавающим */
 					if ($("[data-menu-item='#ss_menu_fonts']")) {
 						styleBody += `
-            /* Красная обводка для подсказки о перепубликации страниц */
-            #ss_menu_analytics .t265-wrapper {
-                border: 2px red dashed;
-            }
+/* Красная обводка для подсказки о перепубликации страниц */
+#ss_menu_analytics .t265-wrapper {
+	border: 2px red dashed;
+}
 
-            #ss_menu_analytics .ss-btn,
-            #ss_menu_seo .ss-btn {
-                border: 1px solid #ccc !important;
-            }
+#ss_menu_analytics .ss-btn,
+#ss_menu_seo .ss-btn {
+	border: 1px solid #ccc !important;
+}
 
-            /* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
-            span.js-ga-localinput,
-            span.js-metrika-localinput,
-            span.js-gtm-localinput {
-                opacity: 0.75;
-                padding-top: 15px;
-                margin-top: 15px;
-                font-weight: 300;
-                font-size: 14px;
-            }
+/* Подсказка под полями Google Analytics, GTM и Яндекс.Метрикой */
+span.js-ga-localinput,
+span.js-metrika-localinput,
+span.js-gtm-localinput {
+	opacity: 0.75;
+	padding-top: 15px;
+	margin-top: 15px;
+	font-weight: 300;
+	font-size: 14px;
+}
 
-            #checkdns {
-              margin-top: 30px;
-              border: 1px solid #d9d9d9;
-              padding: 25px 15px 15px 15px;
-            }
+#checkdns {
+	margin-top: 30px;
+	border: 1px solid #d9d9d9;
+	padding: 25px 15px 15px 15px;
+}
 
-            #checkdns h4 {
-              text-align: center;
-              padding: 0 0 15px 0;
-            }
+#checkdns h4 {
+	text-align: center;
+	padding: 0 0 15px 0;
+}
 
-            #checkdns table {
-              margin: 20px auto;
-            }
+#checkdns table {
+	margin: 20px auto;
+}
 
-            #checkdns table th:first-child {
-              width: 170px;
-            }
+#checkdns table th:first-child {
+	width: 170px;
+}
 
-            #checkdns table img {
-              width: 30px;
-            }
+#checkdns table img {
+	width: 30px;
+}
 
-            #checkdns table td:first-child {
-              padding: 10px 0;
-            }
+#checkdns table td:first-child {
+	padding: 10px 0;
+}
 
-            #checkdns table td:last-child {
-              vertical-align: middle;
-            }
+#checkdns table td:last-child {
+	vertical-align: middle;
+}
 
-            #checkdns table+a{
-              position: absolute;
-              bottom: 10px;
-              right: 10px;
-              color: #d9d9d9;
-            }
+#checkdns table+a{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: #d9d9d9;
+}
 
-            .isTildaIP {
-              border: 0;
-              box-shadow: none;
-              background: url(/tpl/img/popups/all-icons.svg) no-repeat -71px -327px;
-              width: 36px;
-              height: 35px;
-              display: inline-block;
-              transform: scale(0.6);
-              vertical-align: middle;
-              margin: -5px 0 0 -2px;
-            }`;
+.isTildaIP {
+	border: 0;
+	box-shadow: none;
+	background: url(/tpl/img/popups/all-icons.svg) no-repeat -71px -327px;
+	width: 36px;
+	height: 35px;
+	display: inline-block;
+	transform: scale(0.6);
+	vertical-align: middle;
+	margin: -5px 0 0 -2px;
+}`;
 					}
 
 					/* Убираем подсказу из Настроек сайта → Ещё */
@@ -1368,23 +1060,22 @@ timeout: 1000*10
 					);
 
 					styleBody += `
-          /* Добавляем кнопку заявок к карточкам проектов */
-          .td-site__settings {
-              margin-right: 15px;
-          }
+/* Добавляем кнопку заявок к карточкам проектов */
+.td-site__settings {
+	margin-right: 15px;
+}
 
-          .td-site__settings-title {
-              font-size: 12px;
-          }
+.td-site__settings-title {
+	font-size: 12px;
+}
 
-          .td-site__url-link {
-              font-size: 14px;
-          }
+.td-site__url-link {
+	font-size: 14px;
+}
 
-          .td-site__section-two {
-              padding: 0 30px;
-          }
-        `;
+.td-site__section-two {
+	padding: 0 30px;
+}`;
 				}
 
 				if (
@@ -1406,51 +1097,21 @@ timeout: 1000*10
 						$(footer).css('position', 'relative');
 					}
 
-					/* Добавляем ссылки на социальные сети */
-					if ($('[href="https://www.youtube.com/channel/UC6-ppjYyf8AmvNuwr28CS_w"]').length < 1) {
-						$('#rec271198 > div > div > div > div').append(`
-            <div class="sociallinkimg">
-                <a href="https://www.youtube.com/tildapublishing" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px" viewBox="-455 257 48 48" enable-background="new -455 257 48 48" xml:space="preserve"><desc>Youtube</desc><path style="fill: #ffffff" d="M-431,257.013c13.248,0,23.987,10.74,23.987,23.987s-10.74,23.987-23.987,23.987s-23.987-10.74-23.987-23.987S-444.248,257.013-431,257.013z M-419.185,275.093c-0.25-1.337-1.363-2.335-2.642-2.458c-3.054-0.196-6.119-0.355-9.178-0.357c-3.059-0.002-6.113,0.154-9.167,0.347c-1.284,0.124-2.397,1.117-2.646,2.459c-0.284,1.933-0.426,3.885-0.426,5.836s0.142,3.903,0.426,5.836c0.249,1.342,1.362,2.454,2.646,2.577c3.055,0.193,6.107,0.39,9.167,0.39c3.058,0,6.126-0.172,9.178-0.37c1.279-0.124,2.392-1.269,2.642-2.606c0.286-1.93,0.429-3.879,0.429-5.828C-418.756,278.971-418.899,277.023-419.185,275.093zM-433.776,284.435v-7.115l6.627,3.558L-433.776,284.435z"></path></svg>
-                </a>
-			</div>`);
-					}
-					if ($('[href="https://www.instagram.com/tildapublishing/"]').length < 1) {
-						$('#rec271198 > div > div > div > div').append(`
-            <div class="sociallinkimg">
-                <a href="https://www.instagram.com/${
-					lang === 'RU' ? 'tildapublishing' : 'tilda.cc'
-				}/" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 30 30" xml:space="preserve"><desc>Instagram</desc><path style="fill: #ffffff" d="M15,11.014 C12.801,11.014 11.015,12.797 11.015,15 C11.015,17.202 12.802,18.987 15,18.987 C17.199,18.987 18.987,17.202 18.987,15 C18.987,12.797 17.199,11.014 15,11.014 L15,11.014 Z M15,17.606 C13.556,17.606 12.393,16.439 12.393,15 C12.393,13.561 13.556,12.394 15,12.394 C16.429,12.394 17.607,13.561 17.607,15 C17.607,16.439 16.444,17.606 15,17.606 L15,17.606 Z"></path><path style="fill: #ffffff" d="M19.385,9.556 C18.872,9.556 18.465,9.964 18.465,10.477 C18.465,10.989 18.872,11.396 19.385,11.396 C19.898,11.396 20.306,10.989 20.306,10.477 C20.306,9.964 19.897,9.556 19.385,9.556 L19.385,9.556 Z"></path><path style="fill: #ffffff" d="M15.002,0.15 C6.798,0.15 0.149,6.797 0.149,15 C0.149,23.201 6.798,29.85 15.002,29.85 C23.201,29.85 29.852,23.202 29.852,15 C29.852,6.797 23.201,0.15 15.002,0.15 L15.002,0.15 Z M22.666,18.265 C22.666,20.688 20.687,22.666 18.25,22.666 L11.75,22.666 C9.312,22.666 7.333,20.687 7.333,18.28 L7.333,11.734 C7.333,9.312 9.311,7.334 11.75,7.334 L18.25,7.334 C20.688,7.334 22.666,9.312 22.666,11.734 L22.666,18.265 L22.666,18.265 Z"></path></svg>
-                </a>
-			</div>`);
-					}
-					if ($('[href="https://t.me/tildanews"]').length < 1) {
-						$('#rec271198 > div > div > div > div').append(`
-            <div class="sociallinkimg">
-                <a href="https://t.me/tildanews" target="_blank" rel="nofollow">
-                    <svg class="t-sociallinks__svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 60 60" xml:space="preserve"><desc>Telegram</desc><path style="fill: #ffffff" d="M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm16.9 13.9l-6.7 31.5c-.1.6-.8.9-1.4.6l-10.3-6.9-5.5 5.2c-.5.4-1.2.2-1.4-.4L18 32.7l-9.5-3.9c-.7-.3-.7-1.5 0-1.8l37.1-14.1c.7-.2 1.4.3 1.3 1z"></path><path style="fill: #ffffff" d="M22.7 40.6l.6-5.8 16.8-16.3-20.2 13.3"></path></svg>
-                </a>
-            </div>
-		  `);
-					}
-
 					styleBody += `
-            #rec271198 > div > div > div {
-              float: unset !important;
-              text-align: center;
-            }
+#rec271198 > div > div > div {
+	float: unset !important;
+	text-align: center;
+}
 
-            .t142__wrapone {
-              right: unset !important;
-              text-align: center !important;
-              float: unset !important;
-            }
+.t142__wrapone {
+	right: unset !important;
+	text-align: center !important;
+	float: unset !important;
+}
 
-            .t142__wraptwo {
-              right: unset !important;
-            }
-          `;
+.t142__wraptwo {
+	right: unset !important;
+}`;
 				}
 
 				if (
@@ -1552,21 +1213,22 @@ timeout: 1000*10
 						});
 
 						/* Функция распубликации страницы */
-						scriptBody = `function unpublish(projectid, pageid) {
-            if ( confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
-              let csrf = getCSRF();
-              $.ajax({
-                  type: 'POST',
-                  url: '/page/unpublish/',
-                  data: {
-                      pageid: pageid,
-                      csrf: csrf
-                  }
-              }).done(() => {
-                  window.location.reload()
-              });
-            }
-		  };`;
+						scriptBody = `
+function unpublish(projectid, pageid) {
+	if (confirm('Вы точно уверены, что хотите снять страницу с публикации?')) {
+		let csrf = getCSRF();
+		$.ajax({
+			type: 'POST',
+			url: '/page/unpublish/',
+			data: {
+				pageid: pageid,
+				csrf: csrf
+			}
+		}).done(() => {
+			window.location.reload()
+		});
+	}
+};`;
 
 						const site = $('.td-project-uppanel__url-link a[href]').attr('href');
 
@@ -1581,7 +1243,8 @@ timeout: 1000*10
 									new RegExp('<b>Authorization Required.</b>'),
 								);
 								if (!isEmpty(auth)) {
-									$('.td-project-uppanel__url tbody').append(`<tr>
+									$('.td-project-uppanel__url tbody').append(`
+				<tr>
                     <td>
                     </td>
                     <td class="td-project-uppanel__url">
@@ -1596,7 +1259,8 @@ timeout: 1000*10
 								/* Стоит ли запрет на идексацию сайта */
 								const index = text.match(new RegExp('Disallow: /\\n'));
 								if (!isEmpty(index)) {
-									$('.td-project-uppanel__url tbody').append(`<tr>
+									$('.td-project-uppanel__url tbody').append(`
+				<tr>
                     <td>
                     </td>
                     <td class="td-project-uppanel__url">
@@ -1640,23 +1304,21 @@ timeout: 1000*10
             </tr>`);
 
 						styleBody += `
-            /* Убираем отступ сверху у иконок */
-            #preview16icon,
-            #preview152icon,
-            #preview270icon {
-                padding-top: 0 !important;
-            }
-          `;
+/* Убираем отступ сверху у иконок */
+#preview16icon,
+#preview152icon,
+#preview270icon {
+	padding-top: 0 !important;
+}`;
 					}
 				}
 
 				if (window.location.pathname === '/identity/payments/') {
 					styleBody += `
-            /* Убираем отступ сверху у иконок */
-            .t-container a {
-                text-decoration: underline !important;
-            }
-          `;
+/* Убираем отступ сверху у иконок */
+.t-container a {
+	text-decoration: underline !important;
+}`;
 				}
 
 				$('body').append(`<script>${scriptBody}</script>`);
