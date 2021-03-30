@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      53.0.1
+// @version      53.0.2
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -580,7 +580,8 @@ $(document).ready(function () {
 						_this.css('overflow', '');
 					});
 
-					$('#guidesmenubutton > a').text('▦').css('font-size', '18px');
+					/* Добавить кнопку для активации сетки */
+					$('#guidesmenubutton > a').text('▦').css('font-size', '18px').attr('title', 'В Тильде используется 12-колоночная сетка. Эта кнопка де-/активирует показ сетки');
 
 					styleBody += `
 #guidesmenubutton {
