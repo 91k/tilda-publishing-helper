@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      52.3.5
+// @version      53.0.1
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -570,6 +570,15 @@ $(document).ready(function () {
 	content: ')';
 }`;
 					}
+
+					/* Отмена overflow:visible для Zero блоков, которые могут перекрывать своим контентом соседние */
+					$('body').on('mouseover', '.record', function () {
+						var _this = $(this);
+						var t396 = '.record[data-record-cod="T396"]';
+						_this.prev(t396).css('overflow', 'hidden');
+						_this.next(t396).css('overflow', 'hidden');
+						_this.css('overflow', '');
+					});
 
 					$('#guidesmenubutton > a').text('▦').css('font-size', '18px');
 
