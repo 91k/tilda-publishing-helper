@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Показать блоки Tilda на странице
 // @namespace    https://roman-kosov.ru/donate
-// @version      1.0.2
+// @version      1.0.3
 // @description  Tilda Helper: показать какие блоки используются на странице
 // @author       Roman Kosov
 // @copyright    2018 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -43,7 +43,7 @@ const get = function (path, method, success, error) {
     if (!document.querySelector('#tilda-helper-script') && (isTilda || isTildaEmail) && !isTildaCC) {
         const script = document.createElement('script');
         script.id = 'tilda-helper-script';
-        script.src = `https://cdn.jsdelivr.net/gh/roman-kosov/svn-for-t-extension/tpls.min.js`;
+        script.src = `https://cdn.jsdelivr.net/gh/roman-kosov/tilda-publishing-helper/tilda-show-blocks-helper.min.js`;
         if (document.body) {
             document.body.appendChild(script);
         }
