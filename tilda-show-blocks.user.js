@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Показать блоки Tilda на странице
 // @namespace    https://roman-kosov.ru/donate
-// @version      1.0.3
+// @version      1.0.4
 // @description  Tilda Helper: показать какие блоки используются на странице
 // @author       Roman Kosov
 // @copyright    2018 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -10,29 +10,6 @@
 // @run-at       context-menu
 // @icon         https://www.google.com/s2/favicons?domain=tilda.cc
 // ==/UserScript==
-
-const get = function (path, method, success, error) {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                if (success) {
-                    if (method === 'JSON') {
-                        success(JSON.parse(xhr.responseText));
-                    } else {
-                        success(xhr.responseText);
-                    }
-                }
-            } else {
-                if (error) {
-                    error(xhr);
-                }
-            }
-        }
-    };
-    xhr.open('GET', path, true);
-    xhr.send();
-};
 
 (function () {
     'use strict';
@@ -43,7 +20,7 @@ const get = function (path, method, success, error) {
     if (!document.querySelector('#tilda-helper-script') && (isTilda || isTildaEmail) && !isTildaCC) {
         const script = document.createElement('script');
         script.id = 'tilda-helper-script';
-        script.src = `https://cdn.jsdelivr.net/gh/roman-kosov/tilda-publishing-helper/tilda-show-blocks-helper.min.js`;
+        script.src = 'https://cdn.jsdelivr.net/gh/roman-kosov/tilda-publishing-helper/tilda-show-blocks-helper.min.js';
         if (document.body) {
             document.body.appendChild(script);
         }
