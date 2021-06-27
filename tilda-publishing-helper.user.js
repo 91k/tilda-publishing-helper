@@ -547,7 +547,6 @@ $(document).ready(function () {
 							});
 						});
 
-
 						styleBody += `
 .t806__answers .t806__answer .t-vote__btn-res {
 	opacity: 1 !important;
@@ -573,11 +572,10 @@ $(document).ready(function () {
 
 					/* Отмена overflow:visible для Zero блоков, которые могут перекрывать своим контентом соседние */
 					$('body').on('mouseover', '.record', function () {
-						var _this = $(this);
 						var t396 = '.record[data-record-cod="T396"]';
-						_this.prev(t396).css('overflow', 'hidden');
-						_this.next(t396).css('overflow', 'hidden');
-						_this.css('overflow', '');
+						$(this).prev(t396).css('overflow', 'hidden');
+						$(this).next(t396).css('overflow', 'hidden');
+						$(this).css('overflow', '');
 					});
 
 					/* Добавить кнопку для активации сетки */
