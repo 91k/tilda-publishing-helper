@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper - Double Click to open block
 // @namespace    https://roman-kosov.ru/donate
-// @version      2.1.1
+// @version      2.1.3
 // @description  Tilda Helepr: открытие блока по двойному нажатию мышкой
 // @author       Roman Kosov
 // @copyright    2019 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -33,14 +33,14 @@
 						.find('.t396__filter')
 						.attr('title', 'Двойной клик откроет редактирование Zero блока')
 						.dblclick(
-							() => t396_openeditor(rid), // eslint-disable-line
+							() => tp__openZero(rid), // eslint-disable-line
 						);
 				} else {
 					$(el)
 						.find('.r > div')
 						.attr('title', 'Двойной клик откроет контент блока')
 						.dblclick(
-							() => editRecordContent(rid), // eslint-disable-line
+							() => edrec__editRecordContent(rid), // eslint-disable-line
 						);
 				}
 			});
@@ -52,6 +52,8 @@
 
 		const document_records = document.querySelector('#allrecords');
 		const recordsObserver = new MutationObserver(() => activateDblclick());
-		recordsObserver.observe(document_records, { childList: true });
+		recordsObserver.observe(document_records, {
+			childList: true
+		});
 	});
 })(window);
