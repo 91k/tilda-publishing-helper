@@ -81,7 +81,7 @@
 		})(function ($) {
 			setTimeout(() => {
 				if (projectid === '') {
-					projectid = window.$projectid || window.tildaprojectid || window.projectid;
+					projectid = window.$projectid || window.tildaprojectid || window.projectid || 0;
 				}
 
 				const returnTo2008 = [
