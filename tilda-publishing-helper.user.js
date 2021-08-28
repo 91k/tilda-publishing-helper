@@ -1016,8 +1016,7 @@ span.js-gtm-localinput {
 						.then((response) => response.json())
 						.then((data) => {
 							if (data.endsubscription !== null && data.subscription_nextchargedate == null) {
-								const endsubscription = `${data.endsubscription}000`;
-								const diff = Math.ceil(Math.abs(parseInt(endsubscription, 10) - new Date().getTime()) / (1000 * 3600 * 24));
+								const diff = Math.ceil((parseInt(data.endsubscription * 1000, 10) - new Date().getTime()) / (1000 * 3600 * 24));
 
 								let text = '';
 								if (diff < 14 && diff > 3) {
