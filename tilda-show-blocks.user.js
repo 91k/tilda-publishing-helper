@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Показать блоки Tilda на странице
 // @namespace    https://roman-kosov.ru/donate
-// @version      1.0.4
-// @description  Tilda Helper: показать какие блоки используются на странице
+// @version      1.0.5
+// @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
 // @copyright    2018 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
 // @include      *
