@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
-// @version      53.1.0
+// @version      54.0.0
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
@@ -364,19 +364,18 @@ $(document).ready(function () {
 								});
 
 								/* Предупреждение для поля «SEO для Заголовка» */
-								const titleTag = $('[name="title_tag"]');
+								const field = $('[data-tpl-field="title_tag"]')
+								const titleTag = field.find('[name="title_tag"]');
 								if (!isEmpty(titleTag.val())) {
 									const id = $('[data-rec-id').attr('data-rec-id');
-									const title = $(`#rec${id}`).find('.t-title').val();
-									const t120 = $(`#rec${id}`).find('.t120__title').val();
-									if (typeof title === 'undefined') {
-										if (typeof t120 === 'undefined') {
-											$(titleTag)
-												.css('border', '1px solid red')
-												.before(
-													'<span style="color: red">Тег не применится, т.к. нет поля «Заголовок» в Контенте блока</span>',
-												);
-										}
+									const title = $(`#rec${id}`).find('[field="title"]').text() || $(`#rec${id}`).find('.t-title').text();
+									if (!title) {
+										$(titleTag).css('border', '1px solid red').parent().before('<span style="color: red">Тег не применится, т.к. нет не заполнено поле «Заголовок» в Контенте блока</span>&nbsp;<img src="/tpl/img/page/pe-help.svg" class="tilda-helper-tooltip" style="display:inline-block;opacity:0.2;width:16px;padding-bottom:3px">');
+										$(field).find('.tilda-helper-tooltip').tooltipster({
+											'theme':'pe-tooltip__tooltipster-noir',
+											'contentAsHTML': true,
+											'content': 'Данная подсказка появилась, т.к. вы установили <a href=&quot;https://greasyfork.org/ru/scripts/37669-tilda-publishing-helper&quot; target=&quot;_blank&quot;>Tilda Helper</a>'
+										});
 									}
 								}
 							}, 1000);
@@ -389,68 +388,28 @@ $(document).ready(function () {
 							setTimeout(() => {
 								/* Предупреждение о ссылках с кавычкой */
 								$("input[name*='link']").each((i, el) => {
-									if (
-										$(el).parent().children('span').length == 0 &&
-										$(el).val().includes('"')
-									) {
-										$(el)
-											.css('border', '1px solid red')
-											.before(
-												'<span style="color: red">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>',
-											);
+									if ($(el).parent().children('span').length == 0 &&$(el).val().includes('"')) {
+										$(el).css('border', '1px solid red').before('<span style="color: red">Уберите кавычки из этого поля — они могут привести к проблеме. Напишите, пожалуйста, об этом блоке в поддержку team@tilda.cc</span>');
 									}
 								});
 
 								$("input[name='zoom']").each((i, el) => {
-									if (
-										($(el).parent().children('span').length == 0 &&
-											parseInt($(el).val(), 10) > 20) ||
-										parseInt($(el).val(), 10) < 0
-									) {
-										$(el)
-											.css('border', '1px solid red')
-											.before(
-												'<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>',
-											);
+									if (($(el).parent().children('span').length == 0 && parseInt($(el).val(), 10) > 20) || parseInt($(el).val(), 10) < 0) {
+										$(el).css('border', '1px solid red').before('<span style="color: red">Значение в поле Zoom должно быть от 0 до 17 (для Яндекс.Карты) или от 1 до 20 (для Google Maps).</span>');
 									}
 								});
 
 								/* Если нет Header и Footer, то проверяем корректная ли ссылка на попап */
 								if (typeof $('.headerfooterpagearea').val() === 'undefined') {
 									$("input[name*='link'][value^='#popup']").each((i, el) => {
-										if (
-											$(el).parent().children('span').length == 0 &&
-											!$('#allrecords').text().includes($(el).val()) &&
-											$(el)
-											.parents('[data-rec-tplid]')
-											.attr('data-rec-tplid') != '868'
-										) {
-											$(el)
-												.css('border', '1px solid red')
-												.before(
-													'<span style="color: red">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>',
-												);
+										if ($(el).parent().children('span').length == 0 && !$('#allrecords').text().includes($(el).val()) && $(el).parents('[data-rec-tplid]').attr('data-rec-tplid') != '868') {
+											$(el).css('border', '1px solid red').before('<span style="color: red">Ссылка для открытия попапа недействительна. Такой попап отсутствует на этой странице</span>');
 										}
 									});
 
 									$("input[name*='link'][value^='#rec']").each((i, el) => {
-										if (
-											$(el).parent().children('span').length == 0 &&
-											typeof $('#allrecords')
-											.find(
-												$(
-													$(
-														"input[name*='link'][value^='#rec']",
-													).val(),
-												),
-											)
-											.val() === 'undefined'
-										) {
-											$(el)
-												.css('border', '1px solid red')
-												.before(
-													'<span style="color: red">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>',
-												);
+										if ($(el).parent().children('span').length == 0 && typeof $('#allrecords').find($($("input[name*='link'][value^='#rec']").val())).val() === 'undefined') {
+											$(el).css('border', '1px solid red').before('<span style="color: red">Якорная ссылка недействительна. Такой блок отсутствует на этой странице</span>');
 										}
 									});
 								}
@@ -460,9 +419,7 @@ $(document).ready(function () {
 									let option = '';
 									const name = $(el).attr('name');
 
-									$(
-										"#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b",
-									).each((i, el) => {
+									$("#allrecords .record:not([data-record-type='875'], [data-record-type='360']) .r center b").each((i, el) => {
 										let value = $(el).text();
 
 										/* Если блок T173 Якорная ссылка */
