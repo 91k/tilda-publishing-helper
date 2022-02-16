@@ -4,7 +4,7 @@
 // @version      54.0.0
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
-// @copyright    2017 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
+// @copyright    2017 - 2022, Roman Kosov (https://greasyfork.org/users/167647)
 // @match        https://tilda.cc/page/*
 // @match        https://tilda.cc/domains/*
 // @match        https://tilda.cc/projects/*
@@ -825,14 +825,14 @@ span.js-gtm-localinput {
 					text = 'Добавьте только номер счётчика';
 					if (typeof $('.js-ga-localinput').val() !== 'undefined') {
 						$('.js-ga-localinput')
-							.attr('placeholder', 'UA-56589716-1')
+							.attr('placeholder', 'UA-56581111-1')
 							.after(
 								`<span class='js-ga-localinput' style='display: none'>${text}<span>`,
 							);
 					}
 					if (typeof $('.js-metrika-localinput').val() !== 'undefined') {
 						$('.js-metrika-localinput')
-							.attr('placeholder', '25980874')
+							.attr('placeholder', '25981111')
 							.after(
 								`<span class='js-metrika-localinput' style='display: none'>${text}<span>`,
 							);
@@ -840,7 +840,7 @@ span.js-gtm-localinput {
 
 					if (typeof $("[name='googletmid']").val() !== 'undefined') {
 						$("[name='googletmid']")
-							.attr('placeholder', 'GTM-N842GS')
+							.attr('placeholder', 'GTM-N111GS')
 							.after(`<span class='js-gtm-localinput'>${text}<span>`);
 					}
 
