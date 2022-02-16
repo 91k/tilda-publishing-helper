@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Показать блоки Tilda на странице
 // @namespace    https://roman-kosov.ru/donate
-// @version      1.0.5
+// @version      1.0.6
 // @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
-// @copyright    2018 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
+// @copyright    2018 - 2022, Roman Kosov (https://greasyfork.org/users/167647)
 // @include      *
 // @exclude      https://tilda.cc/*
 // @run-at       context-menu
-// @icon         https://www.google.com/s2/favicons?domain=tilda.cc
+// @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
 // ==/UserScript==
 
 (function () {
