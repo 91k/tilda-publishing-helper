@@ -180,7 +180,7 @@
 							$(el)
 							.children('div#mainleft')
 							.children('.tp-record-edit-icons-left__wrapper')
-							.children('.tp-record-edit-icons-left__one:last-child[recid]')
+							.children('.tp-record-edit-icons-left__one:last-child[data-tilda-helper]')
 							.length < 1
 						) {
 							const rid = $(el).attr('recordid');
@@ -364,7 +364,7 @@ $(document).ready(function () {
 								});
 
 								/* Предупреждение для поля «SEO для Заголовка» */
-								const field = $('[data-tpl-field="title_tag"]')
+								const field = $('[data-tpl-field="title_tag"]');
 								const titleTag = field.find('[name="title_tag"]');
 								if (!isEmpty(titleTag.val())) {
 									const id = $('[data-rec-id').attr('data-rec-id');
