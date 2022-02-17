@@ -372,9 +372,9 @@ $(document).ready(function () {
 									if (!title) {
 										$(titleTag).css('border', '1px solid red').parent().before('<span style="color: red">Тег не применится, т.к. нет не заполнено поле «Заголовок» в Контенте блока</span>&nbsp;<img src="/tpl/img/page/pe-help.svg" class="tilda-helper-tooltip" style="display:inline-block;opacity:0.2;width:16px;padding-bottom:3px">');
 										$(field).find('.tilda-helper-tooltip').tooltipster({
-											'theme':'pe-tooltip__tooltipster-noir',
-											'contentAsHTML': true,
-											'content': 'Данная подсказка появилась, т.к. вы установили <a href=&quot;https://greasyfork.org/ru/scripts/37669-tilda-publishing-helper&quot; target=&quot;_blank&quot;>Tilda Helper</a>'
+											theme: 'pe-tooltip__tooltipster-noir',
+											contentAsHTML: true,
+											content: 'Данная подсказка появилась, т.к. вы установили <a href=&quot;https://greasyfork.org/ru/scripts/37669-tilda-publishing-helper&quot; target=&quot;_blank&quot;>Tilda Helper</a>'
 										});
 									}
 								}
