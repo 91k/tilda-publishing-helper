@@ -76,7 +76,9 @@
 				module.exports = factory(require('jquery'));
 			} else {
 				/* Browser globals */
-				factory(jQuery);
+                if (typeof window.jQuery === 'function') {
+                    factory(jQuery);
+                }
 			}
 		})(function ($) {
 			setTimeout(() => {
