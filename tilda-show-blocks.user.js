@@ -12,7 +12,7 @@
 // @exclude      https://tilda.education/*
 // @exclude      https://madeontilda.ru/*
 // @run-at       context-menu
-// @require      https://greasyfork.org/scripts/441018.js?version=1028179
+// @require      https://greasyfork.org/scripts/441018.js
 // @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
 // ==/UserScript==
 
