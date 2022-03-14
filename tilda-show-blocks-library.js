@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         Выводит информацию о используемых блоках, если сайт сделан на Тильде
 // @namespace    https://roman-kosov.ru/donate
-// @version      1.0.4
+// @version      1.0.5
 // @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
 // @copyright    2018 - 2022, Roman Kosov (https://greasyfork.org/users/167647)
-// @include      *
-// @exclude      tilda.cc
-// @exclude      help-ru.tilda.cc
-// @exclude      help.tilda.cc
-// @exclude      tilda.education
+// @include      http://*
+// @include      https://*
+// @exclude      https://tilda.cc/*
+// @exclude      https://*.tilda.cc/*
+// @exclude      https://tilda.education/*
+// @exclude      https://madeontilda.ru/*
 // @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
 // ==/UserScript==
 
