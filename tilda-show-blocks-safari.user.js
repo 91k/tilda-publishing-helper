@@ -13,7 +13,7 @@
 // @exclude      https://madeontilda.ru/*
 // @run-at       document-end
 // @require      https://greasyfork.org/scripts/441018.js
-// @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
+// @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
 
 (function () {

@@ -17,7 +17,7 @@
 // @exclude      https://news.tildacdn.com/*
 // @exclude      https://upwidget.tildacdn.com/*
 // @run-at       document-idle
-// @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
+// @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
 (async function (window) {
 	'use strict';

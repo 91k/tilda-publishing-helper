@@ -11,7 +11,7 @@
 // @exclude      https://*.tilda.cc/*
 // @exclude      https://tilda.education/*
 // @exclude      https://madeontilda.ru/*
-// @icon         https://www.google.com/s2/favicons?domain=https://tilda.cc
+// @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
 
 var blocks = {
