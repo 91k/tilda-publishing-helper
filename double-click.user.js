@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Tilda Publishing Helper - Double Click to open block
 // @namespace    https://roman-kosov.ru/donate
-// @version      2.1.3
+// @homepage     https://roman-kosov.ru
+// @version      2.1.4
 // @description  Tilda Helepr: открытие блока по двойному нажатию мышкой
 // @author       Roman Kosov
-// @copyright    2019 - 2021, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        https://tilda.cc/page/*
+// @copyright    2019 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
+// @match        https://tilda.*/page/*
 // ==/UserScript==
 (async function (window) {
 	'use strict';
