@@ -13,7 +13,7 @@
 // @exclude      https://madeontilda.ru/*
 // @exclude      /^https?://\S+\.(txt|png|jpg|jpeg|gif|xml|svg|manifest|log|ini)[^\/]*$/
 // @run-at       context-menu
-// @require      https://update.greasyfork.org/scripts/441018.js
+// @require      https://update.greasyfork.org/scripts/441018.js?ver=1.0.7
 // @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // @created      2018-1-21
 // ==/UserScript==
