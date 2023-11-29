@@ -6,7 +6,7 @@
 // @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
 // @copyright    2018 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        https://*
+// @match        *://*/*
 // @exclude      https://tilda.ru/*
 // @exclude      https://tilda.cc/*
 // @exclude      https://tilda.by/*
