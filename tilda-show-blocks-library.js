@@ -2,13 +2,14 @@
 // @name         Выводит информацию о используемых блоках, если сайт сделан на Тильде
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      1.0.7
+// @version      1.0.8
 // @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
 // @copyright    2018 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        *://*/*
-// @exclude      https://tilda.*
-// @exclude      https://*.tilda.*
+// @exclude      https://tilda.ru/*
+// @exclude      https://tilda.cc/*
+// @exclude      https://tilda.by/*
+// @exclude      https://tilda.kz/*
 // @exclude      https://tilda.education/*
 // @exclude      https://madeontilda.ru/*
 // @exclude      /^https?://\S+\.(txt|png|jpg|jpeg|gif|xml|svg|manifest|log|ini)[^\/]*$/
