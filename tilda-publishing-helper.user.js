@@ -2,12 +2,23 @@
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      55.0.7
+// @version      55.0.8
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        https://tilda.cc/page/*
-// @match        https://tilda.cc/projects/*
+// @match        https://tilda.cc/page/?pageid=*
+// @match        https://tilda.cc/projects/?projectid=*
+// @match        https://tilda.cc/projects/favicons/?projectid=
+// @match        https://tilda.cc/projects/payments/?projectid=*
+// @match        https://tilda.cc/projects/settings/?projectid=*
+// @match        https://tilda.cc/domains/*
+// @match        https://tilda.cc/identity/
+// @match        https://tilda.cc/identity/plan/
+// @match        https://tilda.cc/identity/courses/
+// @match        https://tilda.cc/identity/promocode/
+// @match        https://tilda.cc/identity/deleteaccount/
+// @exclude      https://tilda.cc/identity/apikeys/*
+// @exclude      https://tilda.cc/identity/changepassword/*
 // @run-at       document-idle
 // @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
@@ -52,7 +63,6 @@
 	) {
 		return;
 	} else if (
-		window.location.pathname === '/identity/chat/' ||
 		window.location.pathname === '/identity/apikeys/'
 	) {
 		return;
@@ -1284,7 +1294,7 @@ function unpublish(projectid, pageid) {
 				/* Добавляем новые стили к body */
 				$('body').append(`<style>${styleBody}</style>`);
 				// eslint-disable-next-line no-undef
-			}, typeof td__projectslist__init !== 'undefined' ? 500 : 1);
+			}, 2000);
 		});
 	}
 })(window);
