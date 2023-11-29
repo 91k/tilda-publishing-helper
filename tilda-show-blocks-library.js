@@ -2,7 +2,7 @@
 // @name         Выводит информацию о используемых блоках, если сайт сделан на Тильде
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      1.0.8
+// @version      1.0.9
 // @description  Показать какие блоки используются на странице сделанных в Тильде
 // @author       Roman Kosov
 // @copyright    2018 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
@@ -13,7 +13,6 @@
 // @exclude      https://tilda.kz/*
 // @exclude      https://tilda.education/*
 // @exclude      https://madeontilda.ru/*
-// @exclude      /^https?://\S+\.(txt|png|jpg|jpeg|gif|xml|svg|manifest|log|ini)[^\/]*$/
 // @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // @created      2018-1-21
 // ==/UserScript==
@@ -705,11 +704,8 @@ function addEditUi(rid, tplid) {
     if (typeof blocks[tplid] !== 'undefined') {
         data += `<div class="recordediticons secondleft tp-record-edit-icons-left__item-tpltitle">${blocks[tplid][0]}</div>`;
     }
+    div.classList.add('recordedit');
     div.innerHTML = data;
-    div.style.position = 'fixed';
-    div.style.left = '5px';
-    div.style.top = '5px';
-    div.style.zIndex = 2147483647;
 
     el.insertBefore(div, el.firstChild);
 }
@@ -739,17 +735,21 @@ document.querySelectorAll("iframe").forEach(function (el) {
 
     const style = document.createElement('style');
     style.innerHTML = `
-[data-record-type]:hover .recordediticons {
-    display: block;
-}
 
 .tp-record-edit-icons-left__one[onclick]:hover {
     background: #ddd;
 }
 
-.recordediticons {
-    z-index: 999999;
+.recordedit {
     display: none;
+    position: fixed;
+    left: 5px;
+    top: 5px;
+    z-index: 2147483647;
+}
+
+[data-record-type]:hover .recordedit {
+    display: block;
 }
 
 .recordediticons.mainleft,.recordediticons.secondleft {
