@@ -2,22 +2,12 @@
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      55.0.6
+// @version      55.0.7
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        https://tilda.*/page/*
-// @match        https://tilda.*/domains/*
-// @match        https://tilda.*/projects/*
-// @match        https://tilda.*/identity/*
-// @exclude      https://store.tilda.cc/*
-// @exclude      https://experts.tilda.cc/*
-// @exclude      https://members.tilda.cc/*
-// @exclude      https://feeds.tildacdn.com/*
-// @exclude      https://crm.tilda.cc/*
-// @exclude      https://news.tildacdn.com/*
-// @exclude      https://upwidget.tildacdn.com/*
-// @exclude      /^https?://\S+\.(txt|png|jpg|jpeg|gif|xml|svg|manifest|log|ini)[^\/]*$/
+// @match        https://tilda.cc/page/*
+// @match        https://tilda.cc/projects/*
 // @run-at       document-idle
 // @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
