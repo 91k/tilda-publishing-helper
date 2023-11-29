@@ -6,14 +6,15 @@
 // @description  Показать какие блоки используются на странице сделанных в Тильде (активируется автоматически)
 // @author       Roman Kosov
 // @copyright    2020 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
-// @match        *://*/*
-// @exclude      https://tilda.*
-// @exclude      https://*.tilda.*
+// @match        https://*
+// @exclude      https://tilda.ru/*
+// @exclude      https://tilda.cc/*
+// @exclude      https://tilda.by/*
+// @exclude      https://tilda.kz/*
 // @exclude      https://tilda.education/*
 // @exclude      https://madeontilda.ru/*
-// @exclude      /^https?://\S+\.(txt|png|jpg|jpeg|gif|xml|svg|manifest|log|ini)[^\/]*$/
 // @run-at       document-end
-// @require      https://update.greasyfork.org/scripts/441018.js?ver=1.0.7
+// @require      https://update.greasyfork.org/scripts/441018.js?ver=1.0.8
 // @icon         https://www.google.com/s2/favicons?domain=https://madeontilda.ru
 // ==/UserScript==
 
