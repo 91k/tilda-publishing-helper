@@ -1294,7 +1294,7 @@ function unpublish(projectid, pageid) {
 				/* Добавляем новые стили к body */
 				$('body').append(`<style>${styleBody}</style>`);
 				// eslint-disable-next-line no-undef
-			}, 2000);
+			}, window.location.pathname === '/page/' ? 500 : 2000);
 		});
 	}
 })(window);
