@@ -2,7 +2,7 @@
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      55.0.8
+// @version      55.0.9
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
@@ -948,18 +948,21 @@ span.js-gtm-localinput {
 							});
 
 							/* Пункты заявка и настройки */
-							$(`<table class="td-site__settings">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/tpl/img/td-icon-leads.png" width="20px" height="14px" style="padding:5px">
-                            </td>
-                            <td class="td-site__settings-title">
-                                <a href="./leads/?projectid=${id}">${leads}</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+							$(`
+<table class="td-site__settings">
+    <tbody>
+        <tr>
+            <td>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 28" width="20px" height="14px">
+                    <path class="st0" d="M9 .9H5v5H0v4h5v5h4v-5h5v-4H9zM16 5.9h24v4H16zM16 13.9h24v4H16zM16 21.9h24v4H16z"></path>
+                </svg>
+            </td>
+            <td class="td-site__settings-title">
+                <a href="./leads/?projectid=${id}">${leads}</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
             `).appendTo($(buttons).parent());
 						}
 					});
