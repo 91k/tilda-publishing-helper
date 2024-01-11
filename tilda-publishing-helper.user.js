@@ -2,7 +2,7 @@
 // @name         Tilda Publishing Helper
 // @namespace    https://roman-kosov.ru/donate
 // @homepage     https://roman-kosov.ru
-// @version      55.0.9
+// @version      55.0.10
 // @description  Тильда Хелпер: вспомогательные фичи, апгрейд Zero блока
 // @author       Roman Kosov
 // @copyright    2017 - 2077, Roman Kosov (https://greasyfork.org/users/167647)
@@ -852,41 +852,41 @@ span.js-gtm-localinput {
 					$('.js-ga-connect').removeClass('js-ga-connect');
 
 					/* Делаем проверку IP адреса у домена */
-					if (typeof $('#checkdns').val() === 'undefined') {
-						const domain = $("[name='customdomain']").val();
+					// if (typeof $('#checkdns').val() === 'undefined') {
+					// 	const domain = $("[name='customdomain']").val();
 
-						if (!isEmpty(domain)) {
-							$("[name='customdomain']").parent().append('<div id="checkdns"></div>');
+					// 	if (!isEmpty(domain)) {
+					// 		$("[name='customdomain']").parent().append('<div id="checkdns"></div>');
 
-							$.ajax(`https://static.roman-kosov.ru/getdns/?url=${domain}`).done(
-								(data) => {
-									$('#checkdns').empty();
-									let result =
-										'<h4>Проверка IP адреса домена из разных стран</h4><table><thead><tr><th>Местонахождение</th><th>Результат</th></tr></thead><tbody>';
-									const json = JSON.parse(data);
-									for (const i in json) {
-										if (json[i] !== null) {
-											let flag = i.slice(0, 2);
-											if (flag === 'uk') flag = 'gb';
-											const ip = json[i][0].A;
-											const isTildaIP = [
-													'185.165.123.36',
-													'185.165.123.206',
-													'185.203.72.17',
-													'77.220.207.191',
-												].some((i) => ip.includes(i)) ?
-												'isTildaIP' :
-												'';
-											result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
-										}
-									}
-									result +=
-										'</tbody></table><a href="https://roman-kosov.ru/helper/?dns" target="_blank"> Tilda Helper </a>';
-									$('#checkdns').append(result);
-								},
-							);
-						}
-					}
+					// 		$.ajax(`https://static.roman-kosov.ru/getdns/?url=${domain}`).done(
+					// 			(data) => {
+					// 				$('#checkdns').empty();
+					// 				let result =
+					// 					'<h4>Проверка IP адреса домена из разных стран</h4><table><thead><tr><th>Местонахождение</th><th>Результат</th></tr></thead><tbody>';
+					// 				const json = JSON.parse(data);
+					// 				for (const i in json) {
+					// 					if (json[i] !== null) {
+					// 						let flag = i.slice(0, 2);
+					// 						if (flag === 'uk') flag = 'gb';
+					// 						const ip = json[i][0].A;
+					// 						const isTildaIP = [
+					// 								'185.165.123.36',
+					// 								'185.165.123.206',
+					// 								'185.203.72.17',
+					// 								'77.220.207.191',
+					// 							].some((i) => ip.includes(i)) ?
+					// 							'isTildaIP' :
+					// 							'';
+					// 						result += `<tr><td><img src="/files/flags/${flag}.png"> ${flag.toLocaleUpperCase()}</td><td>${ip} <div class="${isTildaIP}"></div></td></tr>`;
+					// 					}
+					// 				}
+					// 				result +=
+					// 					'</tbody></table><a href="https://roman-kosov.ru/helper/?dns" target="_blank"> Tilda Helper </a>';
+					// 				$('#checkdns').append(result);
+					// 			},
+					// 		);
+					// 	}
+					// }
 
 					/* Добавляем подсказку по валютам */
 					if (typeof $('[name=currency_txt] + div').val() !== 'undefined') {
